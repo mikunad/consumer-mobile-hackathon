@@ -14,9 +14,9 @@ import { Suggestions, Draft } from "./suggestions";
 import { I, SYS, optColor, t } from "./ios";
 
 type Data = NonNullable<FunctionReturnType<typeof api.chat.thread>>;
-type Who = { _id: string; name: string; emoji: string } | null;
-type Face = { emoji: string; name: string };
-type BetItem = {
+export type Who = { _id: string; name: string; emoji: string } | null;
+export type Face = { emoji: string; name: string };
+export type BetItem = {
   type: "bet";
   _id: Id<"bets">;
   t: number;
@@ -42,7 +42,7 @@ type SettledItem = { type: "settled"; _id: string; t: number; betId: Id<"bets">;
 type Item = BetItem | SealedItem | StakeItem | SettledItem;
 type Kind = "yesno" | "overunder" | "multi";
 
-function stamp(ts: number) {
+export function stamp(ts: number) {
   const d = new Date(ts);
   const h = d.getHours() % 12 || 12;
   return h + ":" + String(d.getMinutes()).padStart(2, "0") + (d.getHours() < 12 ? " AM" : " PM");
@@ -71,7 +71,7 @@ export function Stack({ faces, size = 34 }: { faces: string[]; size?: number }) 
   );
 }
 
-function Bubble({ mine, color, children, tail, width }: { mine: boolean; color: string; children: React.ReactNode; tail: boolean; width?: number }) {
+export function Bubble({ mine, color, children, tail, width }: { mine: boolean; color: string; children: React.ReactNode; tail: boolean; width?: number }) {
   const side = mine ? "right" : "left";
   return (
     <View style={{ alignSelf: mine ? "flex-end" : "flex-start", width }}>
@@ -102,7 +102,7 @@ function Tapbacks({ faces, mine }: { faces: Face[]; mine: boolean }) {
   );
 }
 
-function Row({ who, mine, showName, last, children, faces }: { who: Who; mine: boolean; showName: boolean; last: boolean; children: React.ReactNode; faces?: Face[] }) {
+export function Row({ who, mine, showName, last, children, faces }: { who: Who; mine: boolean; showName: boolean; last: boolean; children: React.ReactNode; faces?: Face[] }) {
   const isAI = who?._id === "ai";
   return (
     <View style={{ gap: 2, marginTop: faces?.length ? 14 : 0 }}>
@@ -122,7 +122,7 @@ function Row({ who, mine, showName, last, children, faces }: { who: Who; mine: b
   );
 }
 
-function Poll({ b, mine }: { b: BetItem; mine: boolean }) {
+export function Poll({ b, mine }: { b: BetItem; mine: boolean }) {
   const settled = b.status === "settled" || b.status === "refunded";
   const fg = mine ? "#fff" : I.label;
   const sub = mine ? "rgba(255,255,255,0.8)" : I.secondary;

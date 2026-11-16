@@ -66,6 +66,7 @@ export function InvisibleInk({
   width = 250,
   height = 64,
   hint,
+  uncovered,
 }: {
   name: string;
   canRub: boolean;
@@ -73,6 +74,7 @@ export function InvisibleInk({
   width?: number;
   height?: number;
   hint: string;
+  uncovered?: boolean;
 }) {
   const [gone, setGone] = useState(false);
   const [tip, setTip] = useState(false);
@@ -81,6 +83,10 @@ export function InvisibleInk({
   const uncover = () => {
     Animated.timing(fade, { toValue: 0, duration: 700, useNativeDriver: true }).start(() => setGone(true));
   };
+  useEffect(() => {
+    if (uncovered) uncover();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uncovered]);
   const pan = useMemo(
     () =>
       PanResponder.create({
