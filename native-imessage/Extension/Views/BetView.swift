@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct BetView: View {
     @EnvironmentObject var model: AppModel
@@ -11,6 +12,8 @@ struct BetView: View {
     @State private var side: Int?
     @State private var amount: Double = 100
     @State private var confirmVeto = false
+    @State private var justRevealed = false
+    @State private var stage = 0
 
     var body: some View {
         Group {
@@ -26,6 +29,15 @@ struct BetView: View {
             ErrorText(text: error)
         }
         .task { await poll() }
+        .onChange(of: model.activeTick) { _, _ in Task { await load() } }
+        .onChange(of: uncovered) { _, now in if now { Task { await stageIn() } } }
+    }
+
+    private func stageIn() async {
+        for s in 1...3 {
+            withAnimation(.spring(duration: 0.5)) { stage = s }
+            try? await Task.sleep(for: .milliseconds(450))
+        }
     }
 
     private var noAccess: some View {
@@ -121,9 +133,9 @@ struct BetView: View {
         let pools = card.pools ?? [0, 0]
         let total = card.total ?? 0
         let points = max(0, card.points ?? 0)
-        let open = card.status == "open"
+        let open = card.status == "open" && card.revealed != true
         let chosen = side ?? card.mine?.option
-        SheetHeader(leading: "Cancel", leadingAction: { model.home() }, title: "Bet on \(name)", trailing: "locks \(clock(card.revealAt ?? nowMs()))")
+        SheetHeader(leading: "Cancel", leadingAction: { model.home() }, title: "Bet on \(name)", trailing: open ? "locks \(clock(card.revealAt ?? nowMs()))" : "locked")
         asker(card)
         InsetGroup {
             ForEach(0..<2, id: \.self) { i in
@@ -194,6 +206,11 @@ struct BetView: View {
             }
             Footnote(text: "The update card shows who it's about, the reveal time and who's in. Never the question.")
         } else {
+            if card.revealed == true && card.status == "open" {
+                CardBox {
+                    Label("Revealed: waiting for \(name) to call it", systemImage: "hourglass").font(.headline)
+                }
+            }
             PositionsBlock(card: card)
         }
     }
@@ -201,15 +218,20 @@ struct BetView: View {
     @ViewBuilder private func verdict(_ card: BetCard) -> some View {
         let options = labels(card)
         SheetHeader(leading: "Close", leadingAction: { model.home() }, title: "Your bet for today")
+        if justRevealed && !uncovered {
+            Text("It's time.").font(.largeTitle.bold()).transition(.opacity)
+        }
         Text("Your friends bet on whether…").font(.title2.bold())
         if card.status == "open" {
-            RubToReveal(name: card.subject?.name ?? "you", uncovered: $uncovered) { asker(card) }
+            RubToReveal(name: card.subject?.name ?? "you", uncovered: $uncovered) {
+                asker(card).scaleEffect(stage == 1 ? 1.04 : 1, anchor: .leading)
+            }
         } else {
             asker(card)
         }
-        if uncovered || card.status != "open" {
-            PositionsBlock(card: card)
-            if card.canDeclare == true {
+        if (uncovered && stage >= 2) || card.status != "open" {
+            PositionsBlock(card: card).transition(.move(edge: .bottom).combined(with: .opacity))
+            if card.canDeclare == true && (stage >= 3 || card.status != "open") {
                 Text("So... is it true?").font(.title2.bold()).padding(.top, 6)
                 HStack(spacing: 10) {
                     ForEach(0..<2, id: \.self) { i in
@@ -252,9 +274,16 @@ struct BetView: View {
     }
 
     private func poll() async {
+        var retries = 0
         while !Task.isCancelled {
             await load()
-            try? await Task.sleep(for: .seconds(8))
+            var wait = 8.0
+            if let at = card?.revealAt {
+                let left = at / 1000 - Date().timeIntervalSince1970
+                if left > 0 { wait = min(wait, left + 0.3) }
+                else if card?.access == "sealed" && retries < 10 { wait = 2; retries += 1 }
+            }
+            try? await Task.sleep(for: .seconds(wait))
         }
     }
 
@@ -262,7 +291,15 @@ struct BetView: View {
         guard let token = model.token else { return }
         do {
             let next: BetCard? = try await API.query("ext:card", ["token": token, "betId": betId, "now": nowMs()])
-            if let next, next.status != "open" { uncovered = true }
+            if let status = next?.status, status != "open" { uncovered = true }
+            if let next, next.access == "open", next.isSubject == true, next.status == "open", card?.access == "sealed" || (card == nil && !Reveals.seen(betId)) {
+                Reveals.markSeen(betId)
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                withAnimation(.easeOut(duration: 0.4)) { justRevealed = true }
+            }
+            if let next, next.access == "open", next.isSubject != true, next.revealed == true, card?.revealed == false {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+            }
             if let points = next?.points, card?.points != points { amount = max(1, min(card == nil ? 100 : amount, points.rounded(.down))) }
             card = next
             error = nil
@@ -288,8 +325,14 @@ struct BetView: View {
     }
 }
 
+enum Reveals {
+    static func seen(_ id: String) -> Bool { UserDefaults.standard.bool(forKey: "calledit.revealed." + id) }
+    static func markSeen(_ id: String) { UserDefaults.standard.set(true, forKey: "calledit.revealed." + id) }
+}
+
 struct PositionsBlock: View {
     let card: BetCard
+    @State private var grown = false
 
     var body: some View {
         let options = card.options ?? []
@@ -305,6 +348,15 @@ struct PositionsBlock: View {
                             Spacer()
                             Text("\(Int((card.pct?[safe: i] ?? 0).rounded()))%").font(.subheadline.monospacedDigit()).foregroundStyle(Theme.sub)
                         }
+                        GeometryReader { geo in
+                            ZStack(alignment: .leading) {
+                                Capsule().fill(Theme.verdict(i).opacity(0.15))
+                                Capsule().fill(Theme.verdict(i))
+                                    .frame(width: grown ? geo.size.width * min(1, max(0, (card.pct?[safe: i] ?? 0) / 100)) : 0)
+                            }
+                        }
+                        .frame(height: 6)
+                        .accessibilityHidden(true)
                         if people.isEmpty { Text("Nobody").font(.footnote).foregroundStyle(Theme.sub) }
                         ForEach(people, id: \.self) { p in
                             HStack(spacing: 8) {
@@ -318,6 +370,7 @@ struct PositionsBlock: View {
                 }
             }
         }
+        .onAppear { withAnimation(.easeOut(duration: 0.9).delay(0.15)) { grown = true } }
     }
 }
 

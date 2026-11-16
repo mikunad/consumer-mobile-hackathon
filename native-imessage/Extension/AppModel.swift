@@ -20,6 +20,7 @@ final class AppModel: ObservableObject {
     @Published var linkedRoomId: String?
     @Published var error: String?
     @Published var pendingRoomId: String?
+    @Published var activeTick = 0
 
     weak var controller: MessagesViewController?
     private var conversationKey: String?

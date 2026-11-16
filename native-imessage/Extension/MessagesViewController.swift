@@ -28,11 +28,13 @@ final class MessagesViewController: MSMessagesAppViewController {
         super.willBecomeActive(with: conversation)
         model.style = presentationStyle
         model.attach(conversation)
+        model.activeTick += 1
         if let message = conversation.selectedMessage { model.open(message) }
     }
 
     override func didSelect(_ message: MSMessage, conversation: MSConversation) {
         super.didSelect(message, conversation: conversation)
+        model.activeTick += 1
         model.open(message)
     }
 

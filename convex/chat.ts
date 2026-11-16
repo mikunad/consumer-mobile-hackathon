@@ -189,7 +189,8 @@ type Who = { _id: Id<"users">; name: string; emoji: string };
 
 export const thread = query({
   args: { token: v.optional(v.string()), groupId: v.id("groups"), now: v.number() },
-  handler: async (ctx, { token, groupId, now }) => {
+  handler: async (ctx, { token, groupId, now: clientNow }) => {
+    const now = Math.min(clientNow, Date.now());
     const user = await userByToken(ctx, token);
     const group = await ctx.db.get(groupId);
     if (!user || !group) return null;
@@ -277,7 +278,8 @@ export const thread = query({
 
 export const market = query({
   args: { token: v.optional(v.string()), betId: v.id("bets"), now: v.number() },
-  handler: async (ctx, { token, betId, now }) => {
+  handler: async (ctx, { token, betId, now: clientNow }) => {
+    const now = Math.min(clientNow, Date.now());
     const user = await userByToken(ctx, token);
     const bet = await ctx.db.get(betId);
     if (!user || !bet) return null;

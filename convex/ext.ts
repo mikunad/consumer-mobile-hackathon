@@ -85,7 +85,8 @@ async function betRoom(ctx: QueryCtx, bet: Doc<"bets">) {
 
 export const card = query({
   args: { token: v.optional(v.string()), betId: v.string(), now: v.number() },
-  handler: async (ctx, { token, betId, now }) => {
+  handler: async (ctx, { token, betId, now: clientNow }) => {
+    const now = Math.min(clientNow, Date.now());
     const id = ctx.db.normalizeId("bets", betId);
     const bet = id ? await ctx.db.get(id) : null;
     const user = await userByToken(ctx, token);

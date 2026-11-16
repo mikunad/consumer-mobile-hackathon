@@ -68,7 +68,7 @@ export const market = query({
     if (!bet || bet.hidden) return null;
     const round = await ctx.db.get(bet.roundId);
     if (!round) return null;
-    const now = nowArg ?? Date.now();
+    const now = Math.min(nowArg ?? Date.now(), Date.now());
     const user = await userByToken(ctx, token);
     if (user && bet.subjectUserId === user._id) return null;
     const isDefault = !round.groupId || round.groupId === (await defaultGroupId(ctx));

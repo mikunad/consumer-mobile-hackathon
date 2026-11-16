@@ -170,6 +170,41 @@ final class MessagesDriveTests: XCTestCase {
         dump("b3-board-inserted")
     }
 
+    func testWaitReveal() throws {
+        continueAfterFailure = true
+        openExtension()
+        linkIfNeeded()
+        tap("New bet")
+        sleep(2)
+        tap("Cancel")
+        sleep(3)
+        if let q = env["QUESTION"] { tap(q) } else { tap("A bet about you") }
+        sleep(4)
+        dump("w0-sealed")
+        let limit = Date().addingTimeInterval(Double(env["WAIT"] ?? "240") ?? 240)
+        var n = 1
+        let ink = el("Covered by invisible ink")
+        while !ink.exists && Date() < limit {
+            sleep(4)
+            dump("w\(n)")
+            n += 1
+        }
+        dump("x1-flipped")
+        for i in 0..<70 where ink.exists {
+            ink.coordinate(withNormalizedOffset: CGVector(dx: 0.1 + Double(i % 10) * 0.09, dy: 0.2 + Double(i / 10) * 0.1)).tap()
+            if i == 25 { dump("x2-rubbing") }
+        }
+        let shot = { (name: String) in try? XCUIScreen.main.screenshot().pngRepresentation.write(to: URL(fileURLWithPath: self.out + "/" + name + ".png")) }
+        shot("x3-dissolve")
+        usleep(500_000)
+        shot("x4-stage")
+        sleep(2)
+        dump("x5-revealed")
+        messages.swipeUp()
+        sleep(1)
+        dump("x6-buttons")
+    }
+
     func testOpenRecent() throws {
         continueAfterFailure = true
         openExtension()

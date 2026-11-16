@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct InkNoise: View {
     var body: some View {
@@ -60,6 +61,31 @@ struct RubToReveal<Content: View>: View {
     @Binding var uncovered: Bool
     @ViewBuilder var content: Content
     @State private var strokes: [CGPoint] = []
+    @State private var cleared: Set<Int> = []
+    @State private var size: CGSize = .zero
+    @State private var pulse = false
+    @State private var shine = false
+    private let cols = 20
+    private let rows = 6
+
+    private func scrub(_ p: CGPoint) {
+        strokes.append(p)
+        guard size.width > 0, size.height > 0 else { return }
+        for r in 0..<rows {
+            for c in 0..<cols {
+                let x = (CGFloat(c) + 0.5) / CGFloat(cols) * size.width
+                let y = (CGFloat(r) + 0.5) / CGFloat(rows) * size.height
+                if hypot(x - p.x, y - p.y) < 26 { cleared.insert(r * cols + c) }
+            }
+        }
+        if Double(cleared.count) / Double(cols * rows) >= 0.6 { reveal() }
+    }
+
+    private func reveal() {
+        guard !uncovered else { return }
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        withAnimation(.easeOut(duration: 0.35)) { uncovered = true }
+    }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -68,6 +94,18 @@ struct RubToReveal<Content: View>: View {
                 .accessibilityHidden(!uncovered)
             if !uncovered {
                 InkBubble(name: name)
+                    .overlay {
+                        GeometryReader { geo in
+                            LinearGradient(colors: [.clear, .white.opacity(0.55), .clear], startPoint: .leading, endPoint: .trailing)
+                                .frame(width: geo.size.width * 0.35)
+                                .rotationEffect(.degrees(18))
+                                .offset(x: shine ? geo.size.width * 1.1 : -geo.size.width * 0.5)
+                                .onAppear { size = geo.size }
+                                .onChange(of: geo.size) { _, s in size = s }
+                        }
+                        .allowsHitTesting(false)
+                        .clipped()
+                    }
                     .mask {
                         Canvas { ctx, size in
                             ctx.fill(Path(CGRect(origin: .zero, size: size)), with: .color(.black))
@@ -79,21 +117,30 @@ struct RubToReveal<Content: View>: View {
                     }
                     .overlay(alignment: .bottomTrailing) {
                         if strokes.isEmpty {
-                            Text("Rub to uncover").font(.footnote.weight(.semibold)).foregroundStyle(Theme.sub).padding(10)
+                            Label("Rub to reveal", systemImage: "hand.point.up")
+                                .font(.footnote.weight(.semibold))
+                                .foregroundStyle(Theme.accent)
+                                .padding(.horizontal, 10).padding(.vertical, 6)
+                                .background(.background, in: Capsule())
+                                .scaleEffect(pulse ? 1.06 : 0.96)
+                                .opacity(pulse ? 1 : 0.75)
+                                .padding(10)
+                                .transition(.opacity)
                         }
+                    }
+                    .onAppear {
+                        withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { pulse = true }
+                        withAnimation(.easeInOut(duration: 1.8).delay(0.4).repeatForever(autoreverses: false)) { shine = true }
                     }
                     .highPriorityGesture(
                         DragGesture(minimumDistance: 0)
-                            .onChanged { value in
-                                strokes.append(value.location)
-                                if strokes.count > 60 { withAnimation(.easeOut(duration: 0.4)) { uncovered = true } }
-                            }
+                            .onChanged { value in scrub(value.location) }
                     )
-                    .transition(.opacity)
+                    .transition(.opacity.combined(with: .scale(scale: 1.06)))
                     .accessibilityElement()
                     .accessibilityLabel("Covered by invisible ink")
                     .accessibilityAddTraits(.isButton)
-                    .accessibilityAction { uncovered = true }
+                    .accessibilityAction { reveal() }
             }
         }
     }
