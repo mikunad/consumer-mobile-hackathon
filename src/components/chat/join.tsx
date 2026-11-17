@@ -78,7 +78,7 @@ export function ChatJoin() {
       <Text style={[s.sub, { marginTop: -12, textAlign: "right" }]}>tap the square, then 😀 on your keyboard</Text>
       {err ? <Text style={{ color: C.no, fontFamily: F.bodyMed }}>{err}</Text> : null}
       <Button label={busy ? "Joining…" : "I'm in"} disabled={!ready || busy} onPress={submit} />
-      <Text style={[s.sub, { textAlign: "center", fontSize: 13 }]}>Joining means you're OK getting roasted by your crew. You can veto any bet about you at the reveal.</Text>
+      <Text style={[s.sub, { textAlign: "center", fontSize: 13 }]}>Joining means you&apos;re OK getting roasted by your crew. You can veto any bet about you at the reveal.</Text>
     </View>
   );
 }

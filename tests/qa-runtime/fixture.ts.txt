@@ -1,0 +1,44 @@
+import { internalMutation, internalQuery } from "./_generated/server";
+import { v } from "convex/values";
+import { hash, phoneHash } from "./v0Policy";
+
+const runID = "__QA_RUN_ID__";
+const actors = __QA_ACTORS__;
+const fixtureSets = __QA_FIXTURE_SETS__;
+
+export const seed = internalMutation({
+  args: { runID: v.string(), fixtureSetID: v.string() },
+  handler: async (ctx, args) => {
+    if (args.runID !== runID || !fixtureSets.includes(args.fixtureSetID) || (await ctx.db.query("v0Accounts").take(1)).length) throw new Error("Fresh isolated fixture required");
+    const now = Date.now();
+    const ids: Record<string, any> = {};
+    for (const [role, actor] of Object.entries(actors)) {
+      const id = await ctx.db.insert("v0Accounts", { displayName: actor.alias, createdAt: now - 120000, noBets: false, blockedTopics: [], notificationsEnabled: false });
+      await ctx.db.insert("v0Phones", { accountId: id, phoneHash: await phoneHash(actor.phone), lastFour: actor.phone.slice(-4), verifiedAt: now - 120000 });
+      ids[role] = id;
+    }
+    const groups = [];
+    for (const number of [1, 2]) {
+      const groupId = await ctx.db.insert("v0Groups", { name: `QA G${number} ${runID}`, creatorId: ids.creator, timezone: "UTC", createdAt: now - 90000, nextTurnAt: Number.MAX_SAFE_INTEGER });
+      groups.push(groupId);
+      for (const role of number === 1 ? ["creator", "friend", "subject"] : ["creator", "friend", "outsider"]) {
+        await ctx.db.insert("v0Memberships", { groupId, accountId: ids[role], alias: actors[role].alias, joinedAt: now - 60000, points: role === "friend" ? number === 1 ? 17 : 4 : 0, streak: 0 });
+      }
+    }
+    const format = args.fixtureSetID.endsWith("over-under") ? "over_under" : args.fixtureSetID.endsWith("yes-no") ? "yes_no" : "this_that";
+    const options = format === "yes_no" ? ["Yes", "No"] : format === "over_under" ? ["Over 2.5", "Under 2.5"] : [`PRIVATE_OPTION_A_${runID}`, `PRIVATE_OPTION_B_${runID}`];
+    const locator = await hash(`${runID}:bet-a`);
+    const betId = await ctx.db.insert("v0Bets", { groupId: groups[0], creatorId: ids.creator, subjectId: ids.subject, createdAt: now - 30000, cutoffAt: now + 600000, revealAt: now + 1200000, question: `SECRET_QUESTION_${runID}`, contextLine: `PRIVATE_CONTEXT_${runID}`, format, options, ...(format === "over_under" ? { line: 2.5 } : {}), source: "manual", state: "open", locator });
+    const unavailableLocator = await hash(`${runID}:unavailable`);
+    const unavailableBetId = await ctx.db.insert("v0Bets", { groupId: groups[0], creatorId: ids.creator, subjectId: ids.subject, createdAt: now - 30000, cutoffAt: now + 600000, revealAt: now + 1200000, question: `SECRET_VOIDED_${runID}`, contextLine: "Synthetic fixture", format: "yes_no", options: ["Yes", "No"], source: "manual", state: "voided", locator: unavailableLocator });
+    return { runID, fixtureSetID: args.fixtureSetID, actors: ids, groups, betId, locator, unavailableBetId, unavailableLocator };
+  },
+});
+
+export const inspect = internalQuery({
+  args: { runID: v.string() },
+  handler: async (ctx, args) => {
+    if (args.runID !== runID) throw new Error("Wrong fixture run");
+    return { accounts: (await ctx.db.query("v0Accounts").collect()).length, sessions: (await ctx.db.query("v0Sessions").collect()).length, memberships: (await ctx.db.query("v0Memberships").collect()).length, bets: (await ctx.db.query("v0Bets").collect()).length, picks: (await ctx.db.query("v0Picks").collect()).length, ledger: (await ctx.db.query("v0Ledger").collect()).length };
+  },
+});

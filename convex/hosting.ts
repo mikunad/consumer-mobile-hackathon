@@ -1,6 +1,6 @@
 import { internalMutation, internalQuery, httpAction } from "./_generated/server";
-import { internal } from "./_generated/api";
 import { v } from "convex/values";
+import { landingResponse } from "./v0Web";
 
 export const generateUploadUrl = internalMutation({
   args: {},
@@ -31,24 +31,4 @@ export const lookup = internalQuery({
       .first(),
 });
 
-export const serve = httpAction(async (ctx, request) => {
-  const url = new URL(request.url);
-  let path = decodeURIComponent(url.pathname);
-  if (path.endsWith("/")) path += "index.html";
-  let asset = await ctx.runQuery(internal.hosting.lookup, { path });
-  if (!asset && !path.includes(".", path.lastIndexOf("/"))) {
-    asset =
-      (await ctx.runQuery(internal.hosting.lookup, { path: path + ".html" })) ??
-      (await ctx.runQuery(internal.hosting.lookup, { path: "/index.html" }));
-  }
-  if (!asset) return new Response("Not found", { status: 404 });
-  const blob = await ctx.storage.get(asset.storageId);
-  if (!blob) return new Response("Not found", { status: 404 });
-  const immutable = path.startsWith("/_expo/") || path.startsWith("/assets/");
-  return new Response(blob, {
-    headers: {
-      "Content-Type": asset.contentType,
-      "Cache-Control": immutable ? "public, max-age=31536000, immutable" : "no-cache",
-    },
-  });
-});
+export const serve = httpAction(async (_ctx, request) => landingResponse(request));

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
@@ -28,7 +28,7 @@ export default function ChatList() {
   const enter = useMutation(api.chat.enter);
   const createGroup = useMutation(api.chat.createGroup);
   const join = useMutation(api.chat.join);
-  const [tried, setTried] = useState(false);
+  const tried = useRef(false);
   const [mode, setMode] = useState<null | "new" | "join">(null);
   const [name, setName] = useState("");
   const [err, setErr] = useState<string | null>(null);
@@ -37,8 +37,8 @@ export default function ChatList() {
     AsyncStorage.getItem("calledit.context").then((v) => setCtx(v ? "done" : "show"));
   }, []);
   useEffect(() => {
-    if (!token || !home?.user || tried) return;
-    setTried(true);
+    if (!token || !home?.user || tried.current) return;
+    tried.current = true;
     if (params.invite) join({ token, invite: params.invite }).catch(() => {});
     else enter({ token }).catch(() => {});
   }, [token, home, tried, params.invite, enter, join]);
@@ -47,7 +47,6 @@ export default function ChatList() {
   if (ctx === "show")
     return (
       <ConnectContext
-        friends={[...new Map(home.groups.flatMap((g) => g.people).map((p) => [p.name, p])).values()]}
         onDone={() => {
           AsyncStorage.setItem("calledit.context", "1");
           setCtx("done");
@@ -132,7 +131,7 @@ export default function ChatList() {
           </View>
         </Pressable>
       ))}
-      {home.groups.length === 0 ? <Text style={[t(15, "400", I.secondary), { textAlign: "center", marginTop: 40, paddingHorizontal: 30 }]}>No groups yet. Tap ✎ to start one, or Join with a friend's invite code.</Text> : null}
+      {home.groups.length === 0 ? <Text style={[t(15, "400", I.secondary), { textAlign: "center", marginTop: 40, paddingHorizontal: 30 }]}>No groups yet. Tap ✎ to start one, or Join with a friend&apos;s invite code.</Text> : null}
       <Text style={[t(12, "400", I.secondary), { textAlign: "center", marginTop: 30 }]}>
         {home.user.emoji} @{home.user.name}
       </Text>

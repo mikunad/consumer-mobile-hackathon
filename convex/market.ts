@@ -1,4 +1,5 @@
-import { query, QueryCtx } from "./_generated/server";
+import { query } from "./v0Legacy";
+import type { QueryCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { Doc, Id } from "./_generated/dataModel";
 import { HOUR, betLocked, defaultGroupId, multiplier, nextRound, percents, streakFor, supersededAt, userByToken } from "./lib";
@@ -68,7 +69,7 @@ export const market = query({
     if (!bet || bet.hidden) return null;
     const round = await ctx.db.get(bet.roundId);
     if (!round) return null;
-    const now = nowArg ?? Date.now();
+    const now = Math.min(nowArg ?? Date.now(), Date.now());
     const user = await userByToken(ctx, token);
     if (user && bet.subjectUserId === user._id) return null;
     const isDefault = !round.groupId || round.groupId === (await defaultGroupId(ctx));

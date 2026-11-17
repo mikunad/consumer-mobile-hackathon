@@ -1,0 +1,34 @@
+{
+  "source_revision": null,
+  "version": "1.0",
+  "build": null,
+  "build_channel": "release",
+  "environment": "staging",
+  "api_url": null,
+  "web_url": null,
+  "support_url": null,
+  "team_id": null,
+  "app_identifier_prefix": null,
+  "host_id": null,
+  "extension_id": null,
+  "app_group": null,
+  "keychain_group": null,
+  "signing_certificate_sha1": null,
+  "profiles": {
+    "host": {"uuid": null, "sha256": null},
+    "extension": {"uuid": null, "sha256": null}
+  },
+  "toolchain": {"xcode": null, "xcodegen": null},
+  "tests": {"source_revision": null, "run_reference": null},
+  "backend": {
+    "deployment": null,
+    "source_revision": null,
+    "config_version": null,
+    "schema_version": null,
+    "contract_version": null,
+    "rules_version": null,
+    "migration_reference": null,
+    "rollback_reference": null
+  },
+  "approval_reference": null
+}

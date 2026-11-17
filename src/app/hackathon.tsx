@@ -1,21 +1,19 @@
 import { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { fmt } from "@/lib/time";
-import { LateTag } from "@/components/ui";
 import { useQuery } from "convex/react";
 import { api } from "@convex/_generated/api";
 import { Id } from "@convex/_generated/dataModel";
 import { useStableQuery } from "@/lib/use-stable-query";
 import { useIdentity } from "@/lib/identity";
 import { C, F, tnum } from "@/lib/theme";
-import { useNow, useQueryNow } from "@/lib/time";
+import { fmt, useNow, useQueryNow } from "@/lib/time";
 import { multiplier } from "@/lib/odds";
 import { Join } from "@/components/join";
 import { DropHeader } from "@/components/drop-header";
 import { DropLands, useDropSeen } from "@/components/drop-lands";
 import { MarketCard } from "@/components/market-card";
-import { BottomTabs, Card, Flame, TickingNumber, Wordmark, s } from "@/components/ui";
+import { BottomTabs, Card, Flame, LateTag, TickingNumber, Wordmark, s } from "@/components/ui";
 import { NetText, Scorecard, TileState, isResolved, tileOf, useRevealed } from "@/components/scorecard";
 import { RevealBanner, RevealStory } from "@/components/reveal-story";
 

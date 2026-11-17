@@ -11,7 +11,7 @@ import { clock, fmt, useNow, useQueryNow } from "@/lib/time";
 import { MarketSheet } from "./market-sheet";
 import { InvisibleInk } from "./ink";
 import { Suggestions, Draft } from "./suggestions";
-import { I, SYS, optColor, t } from "./ios";
+import { I, optColor, t } from "./ios";
 
 type Data = NonNullable<FunctionReturnType<typeof api.chat.thread>>;
 type Who = { _id: string; name: string; emoji: string } | null;
@@ -311,7 +311,7 @@ function Composer({ data, token }: { data: Data; token: string }) {
             </View>
           ) : null}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6, alignItems: "center" }} keyboardShouldPersistTaps="handled">
-            <Text style={t(13, "600", I.secondary)}>I'm on</Text>
+            <Text style={t(13, "600", I.secondary)}>I&apos;m on</Text>
             {options.map((o, i) => (
               <Pressable key={i} onPress={() => setSide(i)} style={[chip(side === i), side === i ? { backgroundColor: optColor(kind, i).fg } : null]}>
                 <Text numberOfLines={1} style={t(14, "500", side === i ? "#fff" : I.label)}>{o}</Text>
@@ -366,7 +366,7 @@ export function Thread({ token, groupId }: { token: string; groupId: Id<"groups"
   if (data === null)
     return (
       <View style={{ flex: 1, backgroundColor: I.bg, padding: 24, paddingTop: 80 }}>
-        <Text style={t(17, "400", I.secondary)}>You're not in this group.</Text>
+        <Text style={t(17, "400", I.secondary)}>You&apos;re not in this group.</Text>
       </View>
     );
   const items = data.items as Item[];
@@ -411,7 +411,7 @@ export function Thread({ token, groupId }: { token: string; groupId: Id<"groups"
             </Pressable>
           ) : null}
         </View>
-        {items.length === 0 ? <Text style={[t(13, "400", I.secondary), { textAlign: "center", marginTop: 30 }]}>No bets yet. Type one below. The person it's about won't see it.</Text> : null}
+        {items.length === 0 ? <Text style={[t(13, "400", I.secondary), { textAlign: "center", marginTop: 30 }]}>No bets yet. Type one below. The person it&apos;s about won&apos;t see it.</Text> : null}
         {items.map((it, idx) => {
           const prev = items[idx - 1];
           const next = items[idx + 1];

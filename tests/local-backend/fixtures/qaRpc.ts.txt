@@ -1,0 +1,96 @@
+import { action, mutation, query } from "./_generated/server";
+import { v, ConvexError } from "convex/values";
+import { hash, once, requireMember, requireSession } from "./v0Policy";
+
+function namespace(runId: string) {
+  if (!/^e2e_[a-f0-9]{32}$/.test(runId)) throw new Error("Synthetic run namespace required");
+}
+
+export const echo = query({
+  args: { runId: v.string(), payload: v.any() },
+  handler: async (_ctx, args) => {
+    namespace(args.runId);
+    return args.payload;
+  },
+});
+
+export const failure = query({
+  args: { runId: v.string(), shape: v.union(v.literal("object"), v.literal("string"), v.literal("null")), code: v.string() },
+  handler: async (_ctx, args) => {
+    namespace(args.runId);
+    if (args.shape === "object") throw new ConvexError({ code: args.code, message: "Synthetic local contract error" });
+    if (args.shape === "string") throw new ConvexError(JSON.stringify({ code: args.code, message: "Synthetic local contract error" }));
+    throw new ConvexError(null);
+  },
+});
+
+export const storageBytes = action({
+  args: { runId: v.string(), bytes: v.bytes() },
+  handler: async (ctx, args) => {
+    namespace(args.runId);
+    const id = await ctx.storage.store(new Blob([args.bytes], { type: "application/octet-stream" }));
+    try {
+      const blob = await ctx.storage.get(id);
+      if (!blob) throw new Error("Missing synthetic storage object");
+      return { bytes: await blob.arrayBuffer(), length: blob.size };
+    } finally {
+      await ctx.storage.delete(id);
+    }
+  },
+});
+
+export const seed = mutation({
+  args: { runId: v.string(), token: v.string() },
+  handler: async (ctx, args) => {
+    namespace(args.runId);
+    if (!args.token.startsWith(`synthetic_${args.runId}_`)) throw new Error("Synthetic token required");
+    const now = Date.now();
+    const accountId = await ctx.db.insert("v0Accounts", { displayName: "Cora", createdAt: now, noBets: false, blockedTopics: [] });
+    const sessionId = await ctx.db.insert("v0Sessions", { accountId, tokenHash: await hash(args.token), deviceId: args.runId, createdAt: now, expiresAt: now + 600000 });
+    const groupId = await ctx.db.insert("v0Groups", { name: args.runId, creatorId: accountId, timezone: "UTC", createdAt: now, nextTurnAt: now + 3600000 });
+    await ctx.db.insert("v0Memberships", { groupId, accountId, joinedAt: now, alias: "Cora", points: 1000, streak: 0 });
+    return { accountId, sessionId, groupId };
+  },
+});
+
+export const writeOnce = mutation({
+  args: { token: v.string(), groupId: v.id("v0Groups"), requestId: v.string(), delta: v.number() },
+  handler: async (ctx, args) => {
+    const { account } = await requireSession(ctx, args.token);
+    const member = await requireMember(ctx, args.groupId, account._id);
+    return await once(ctx, account._id, "qa-local-contract", args.requestId, { groupId: args.groupId, delta: args.delta }, async () => {
+      const points = member.points + args.delta;
+      await ctx.db.patch(member._id, { points });
+      return { points };
+    });
+  },
+});
+
+export const seedProof = mutation({
+  args: { runId: v.string(), token: v.string() },
+  handler: async (ctx, args) => {
+    namespace(args.runId);
+    const { account } = await requireSession(ctx, args.token);
+    const now = Date.now();
+    const friend = await ctx.db.insert("v0Accounts", { displayName: "Finn", createdAt: now, noBets: false, blockedTopics: [] });
+    const outsider = await ctx.db.insert("v0Accounts", { displayName: "Oli", createdAt: now, noBets: false, blockedTopics: [] });
+    for (const [accountId, role] of [[friend, "friend"], [outsider, "outsider"]] as const) {
+      await ctx.db.insert("v0Sessions", { accountId, tokenHash: await hash(`${args.token}_${role}`), deviceId: `${args.runId}_${role}`, createdAt: now, expiresAt: now + 600000 });
+    }
+    const groupId = await ctx.db.insert("v0Groups", { name: `${args.runId}_proof`, creatorId: friend, timezone: "UTC", createdAt: now - 60000, nextTurnAt: now + 3600000 });
+    for (const [accountId, alias] of [[account._id, "Sage"], [friend, "Finn"]] as const) {
+      await ctx.db.insert("v0Memberships", { accountId, groupId, alias, joinedAt: now - 60000, points: 0, streak: 0 });
+    }
+    const betId = await ctx.db.insert("v0Bets", { groupId, creatorId: friend, subjectId: account._id, createdAt: now - 10000, question: "Will Sage suggest a puzzle?", contextLine: "Synthetic local proof contract", format: "yes_no", options: ["Yes", "No"], source: "manual", state: "revealed", cutoffAt: now - 5000, revealAt: now - 1000, locator: await hash(`${args.runId}:proof`) });
+    return { betId, groupId };
+  },
+});
+
+export const readMember = query({
+  args: { token: v.string(), groupId: v.id("v0Groups") },
+  handler: async (ctx, args) => {
+    const { account } = await requireSession(ctx, args.token);
+    const member = await requireMember(ctx, args.groupId, account._id);
+    return { points: member.points };
+  },
+});

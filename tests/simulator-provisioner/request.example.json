@@ -1,0 +1,18 @@
+{
+  "runID": "11111111-2222-4333-8444-555555555555",
+  "nativeSourceRevision": "REPLACE_WITH_INDEPENDENT_40_LOWERCASE_HEX",
+  "backendSourceRevision": "REPLACE_WITH_INDEPENDENT_40_LOWERCASE_HEX",
+  "fixtureSetID": "synthetic-v0-subject-locked",
+  "configVersion": "qa-synthetic-v0",
+  "runtimeID": "REPLACE_WITH_ACTUAL_AVAILABLE_RUNTIME_IDENTIFIER",
+  "deviceTypeID": "REPLACE_WITH_ACTUAL_DEVICE_TYPE_IDENTIFIER",
+  "apiPort": 8199,
+  "cardPort": 3211,
+  "lifetimeSeconds": 900,
+  "appPath": "/REPLACE_WITH_BUILT_QA_HOST.app",
+  "nativeBuildRecord": "/REPLACE_WITH_INDEPENDENT_NATIVE_BUILD_RECORD.json",
+  "backendBuildRecord": "/REPLACE_WITH_INDEPENDENT_BACKEND_BUILD_RECORD.json",
+  "controlPIDs": [0],
+  "controlPulsePath": "/REPLACE_WITH_PRIVATE_OPERATOR_DIRECTORY/control-pulse.json",
+  "sourceCardOrigin": "https://cards.qa-runtime.invalid"
+}

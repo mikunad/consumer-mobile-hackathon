@@ -1,4 +1,4 @@
-import { Component, ReactNode, useEffect, useRef, useState } from "react";
+import { Component, ReactNode, useEffect, useState } from "react";
 import { Animated, Modal, Platform, Pressable, ScrollView, Text, View, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Svg, { Circle, Line, Path } from "react-native-svg";
@@ -83,14 +83,14 @@ export function StoryView({ data, revealed, onClose }: { data: Results; revealed
   const [flipped, setFlipped] = useState(false);
   const n = steps.length;
   const bet = i < n ? data.bets.find((b) => b._id === steps[i]) ?? null : null;
-  const prog = useRef(new Animated.Value(0)).current;
-  const tint = useRef(new Animated.Value(0)).current;
+  const [prog] = useState(() => new Animated.Value(0));
+  const [tint] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
     prog.setValue(flipped ? 0.5 : 0);
     Animated.timing(prog, { toValue: bet && !flipped ? 0.5 : 1, duration: 380, useNativeDriver: false }).start();
     Animated.timing(tint, { toValue: flipped ? 1 : 0, duration: flipped ? 420 : 160, useNativeDriver: false }).start();
-  }, [i, flipped]);
+  }, [i, flipped, bet, prog, tint]);
 
   const forward = () => {
     if (bet && !flipped) {
@@ -176,11 +176,11 @@ export function StoryView({ data, revealed, onClose }: { data: Results; revealed
 }
 
 function useEnter(on: boolean) {
-  const v = useRef(new Animated.Value(on ? 1 : 0)).current;
+  const [v] = useState(() => new Animated.Value(on ? 1 : 0));
   useEffect(() => {
     v.setValue(0);
     Animated.spring(v, { toValue: 1, useNativeDriver: native, friction: 7, tension: 70 }).start();
-  }, [on]);
+  }, [on, v]);
   return {
     opacity: v,
     transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [18, 0] }) }],
@@ -247,7 +247,7 @@ function RoomOdds({ bet, start, end }: { bet: Bet; start: number; end: number })
 }
 
 function MyPick({ bet }: { bet: Bet }) {
-  if (!bet.mine) return <Text style={[s.sub, { fontSize: 15 }]}>You didn't call this one.</Text>;
+  if (!bet.mine) return <Text style={[s.sub, { fontSize: 15 }]}>You didn&apos;t call this one.</Text>;
   const col = OPTION_COLORS[bet.mine.option % 4];
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>

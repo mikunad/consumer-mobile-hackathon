@@ -63,7 +63,7 @@ export default function GroupScreen() {
               <Text style={s.h2}>
                 {today.aboutMe} {today.aboutMe === 1 ? "bet is" : "bets are"} riding on you
               </Text>
-              <Text style={s.sub}>You can't see them. Your friends can.</Text>
+              <Text style={s.sub}>You can&apos;t see them. Your friends can.</Text>
             </Card>
           ) : null}
           {round && me && today
@@ -159,7 +159,7 @@ function AddBet({ token, groupId, members }: { token: string; groupId: Id<"group
       </View>
       {members.length ? (
         <>
-          <Text style={s.sub}>About someone? They won't see it.</Text>
+          <Text style={s.sub}>About someone? They won&apos;t see it.</Text>
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
             {members.map((m) => (
               <Pressable

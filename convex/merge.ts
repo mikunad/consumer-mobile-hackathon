@@ -1,4 +1,4 @@
-import { internalMutation } from "./_generated/server";
+import { internalMutation } from "./v0Legacy";
 import { v } from "convex/values";
 import { START_POINTS } from "./lib";
 

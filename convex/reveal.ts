@@ -1,4 +1,5 @@
-import { query, QueryCtx } from "./_generated/server";
+import { query } from "./v0Legacy";
+import type { QueryCtx } from "./_generated/server";
 import { v } from "convex/values";
 import { Doc, Id } from "./_generated/dataModel";
 import { defaultGroupId, isMember, percents, userByToken } from "./lib";

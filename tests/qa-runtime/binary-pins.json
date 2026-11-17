@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "repository": "https://github.com/convex/convex-backend",
+  "release": "precompiled-2026-10-22-1447815",
+  "releaseCommit": "1447815c8c697c55a35ab0fff64aa7580ca01cc8",
+  "releaseAPI": "https://api.github.com/repos/convex/convex-backend/releases/421294120",
+  "executableName": "convex-local-backend",
+  "platforms": {
+    "darwin-arm64": {
+      "assetID": 667384006,
+      "url": "https://github.com/convex/convex-backend/releases/download/precompiled-2026-10-22-1447815/convex-local-backend-aarch64-apple-darwin.zip",
+      "archiveSHA256": "9caa539df14dff09317c1f1c22714ed77640e2e4a18ef630bc368fe8c6bb65df",
+      "executableSHA256": "a19fa79daa71902491ac2fef6af7fb8e6137f68fa0600f24ec86915a1c6c3614",
+      "verification": "Official release API archive digest matched downloaded archive; extracted executable bytes hashed on Linux, not executed on Darwin"
+    },
+    "linux-x64": {
+      "assetID": 667377511,
+      "url": "https://github.com/convex/convex-backend/releases/download/precompiled-2026-10-22-1447815/convex-local-backend-x86_64-unknown-linux-gnu.zip",
+      "archiveSHA256": "7be627d8a8c9175b66a55cf6c4ab63c5f6bde1c412f59fbbe93f64a24a11bd13",
+      "executableSHA256": "044eedfe569b1550d5003683aec7fceb4dcee3f82abf00ab9baf1c10d3ca0b4c",
+      "verification": "Official release API archive digest; extracted executable hash checked by Linux real-handler proof"
+    }
+  }
+}

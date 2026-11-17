@@ -1,0 +1,521 @@
+{
+  "v0Auth:requestCode": {
+    "kind": "action",
+    "scope": "anonymous_phone_verification",
+    "rule": "phone quota and cooldown; provider approval; no OTP returned",
+    "source": "v0Auth.ts",
+    "authenticated": false,
+    "minimumAssertions": [
+      "provider_or_pair_validation",
+      "bounded_failure_attempts",
+      "replay_expiry"
+    ]
+  },
+  "v0Auth:verifyCode": {
+    "kind": "action",
+    "scope": "anonymous_phone_verification",
+    "rule": "reserved provider challenge; bounded checks; verified stable phone account; one use",
+    "source": "v0Auth.ts",
+    "authenticated": false,
+    "minimumAssertions": [
+      "provider_or_pair_validation",
+      "bounded_failure_attempts",
+      "replay_expiry"
+    ]
+  },
+  "v0Auth:redeemPair": {
+    "kind": "action",
+    "scope": "anonymous_pair_redemption",
+    "rule": "durable device/code quota; strict expiry; one use; active originating session",
+    "source": "v0Auth.ts",
+    "authenticated": false,
+    "minimumAssertions": [
+      "provider_or_pair_validation",
+      "bounded_failure_attempts",
+      "replay_expiry"
+    ]
+  },
+  "v0Auth:me": {
+    "kind": "query",
+    "scope": "account_session",
+    "rule": "own account, active groups and policy only",
+    "source": "v0Auth.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Auth:revoke": {
+    "kind": "mutation",
+    "scope": "account_session",
+    "rule": "own current/all-device sessions, links, pairs, push and pending outbox",
+    "source": "v0Auth.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Auth:createPair": {
+    "kind": "mutation",
+    "scope": "account_session",
+    "rule": "own session-bound single-use pair; bounded starts",
+    "source": "v0Auth.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:create": {
+    "kind": "mutation",
+    "scope": "account_session",
+    "rule": "own explicit membership; idempotent bounded group creation",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:invite": {
+    "kind": "mutation",
+    "scope": "group_membership",
+    "rule": "active inviter; verified phone hash; neutral non-enumerating response",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:invitations": {
+    "kind": "query",
+    "scope": "account_session",
+    "rule": "only verified phones belonging to caller; active inviter; no forwarded-card admission",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:accept": {
+    "kind": "mutation",
+    "scope": "invited_phone",
+    "rule": "targeted unexpired invitation; active inviter; new interval; no earlier history",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:members": {
+    "kind": "query",
+    "scope": "group_membership",
+    "rule": "active room members; blocked/deleted accounts filtered",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:linkConversation": {
+    "kind": "mutation",
+    "scope": "group_membership",
+    "rule": "caller account/device key; no conflicting silent relink",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:resolveConversation": {
+    "kind": "query",
+    "scope": "account_device",
+    "rule": "caller account/device key and active membership; null when unknown",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:unlinkConversation": {
+    "kind": "mutation",
+    "scope": "account_device",
+    "rule": "caller account/device key only; idempotent explicit unlink",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:turn": {
+    "kind": "query",
+    "scope": "group_membership",
+    "rule": "current valid local-date turn; eligible creator/subject/viewer intervals; pass disabled pending policy",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:passTurn": {
+    "kind": "mutation",
+    "scope": "group_membership",
+    "rule": "assigned creator only; POLICY_PENDING instead of invented rotation",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:recap": {
+    "kind": "query",
+    "scope": "group_membership",
+    "rule": "visible time-window ledger; group/interval/block filters; no scheduled recap claim",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:board": {
+    "kind": "query",
+    "scope": "group_membership",
+    "rule": "room balances and block/deletion filters; no global wallet",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:proposeGoal": {
+    "kind": "mutation",
+    "scope": "group_membership",
+    "rule": "POLICY_PENDING; no goal mutation before approval",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Groups:confirmGoal": {
+    "kind": "mutation",
+    "scope": "group_membership",
+    "rule": "POLICY_PENDING; no confirmation mutation before approval",
+    "source": "v0Groups.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Bets:get": {
+    "kind": "query",
+    "scope": "bet_visibility",
+    "rule": "active interval predating bet; opaque locator; subject sealed until server reveal; derived unanswered void at reveal+24h; server capabilities/deadlines; no unapproved settlement",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "policyVersion": "v0-policy.1"
+  },
+  "v0Bets:list": {
+    "kind": "query",
+    "scope": "bet_visibility",
+    "rule": "group membership plus per-bet interval/block and subject redaction",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Bets:history": {
+    "kind": "query",
+    "scope": "bet_visibility",
+    "rule": "group final/void history filtered by interval/block/subject visibility",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Bets:create": {
+    "kind": "mutation",
+    "scope": "bet_visibility",
+    "rule": "active consenting different subject; safety/topic/future time validation; optional next20:00 group-local reveal or explicit override; lock/creator policy still POLICY_PENDING",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Bets:pick": {
+    "kind": "mutation",
+    "scope": "bet_visibility",
+    "rule": "eligible nonsubject; authoritative cutoff; option and confidence0.01..1; reject present riskPoints; unresolved lock policy stays POLICY_PENDING",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Bets:veto": {
+    "kind": "mutation",
+    "scope": "bet_visibility",
+    "rule": "eligible subject only before reveal; one quiet void; retry idempotency",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Bets:answer": {
+    "kind": "mutation",
+    "scope": "subject_after_reveal",
+    "rule": "eligible subject at reveal and before reveal+24h; server answeredAt starts1h challenge; idempotent receipt with current authorization; no settlement credit",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "policyVersion": "v0-policy.1"
+  },
+  "v0Bets:challenge": {
+    "kind": "mutation",
+    "scope": "bet_visibility",
+    "rule": "eligible nonsubject provisional state; fresh challenge only before answeredAt+1h; one record per account; authorized cached ACK cannot reopen voting or adjudicate majority",
+    "source": "v0Bets.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "policyVersion": "v0-policy.1"
+  },
+  "v0Proof:upload": {
+    "kind": "action",
+    "scope": "subject_after_reveal",
+    "rule": "eligible subject after reveal; bytes signature/MIME/512KiB/quota; idempotent private storage; derived24h unanswered timeout denies even before sweep",
+    "source": "v0Proof.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Proof:list": {
+    "kind": "query",
+    "scope": "proof_visibility",
+    "rule": "eligible membership interval after reveal; no void or public URL; derived24h unanswered timeout denies even before sweep",
+    "source": "v0Proof.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Proof:read": {
+    "kind": "action",
+    "scope": "proof_visibility",
+    "rule": "eligible post-reveal membership; authorization checked again after storage read; authenticated bytes; derived24h unanswered timeout denies even before sweep",
+    "source": "v0Proof.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Controls:get": {
+    "kind": "query",
+    "scope": "account_session",
+    "rule": "own no-bets/topics/consent settings and honest deletion caveat",
+    "source": "v0Controls.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Controls:update": {
+    "kind": "mutation",
+    "scope": "account_session",
+    "rule": "own validated preferences; cancels nonfinal subject bets; idempotent quota",
+    "source": "v0Controls.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Controls:alias": {
+    "kind": "mutation",
+    "scope": "group_membership",
+    "rule": "own current group alias; never identity or admission",
+    "source": "v0Controls.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Controls:leave": {
+    "kind": "mutation",
+    "scope": "group_membership",
+    "rule": "own interval ends; picks/subject bets/links/notifications cascade; no G2 transfer",
+    "source": "v0Controls.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Controls:deleteAccount": {
+    "kind": "mutation",
+    "scope": "account_session",
+    "rule": "own full private data/session cascade; pending provider cleanup is explicit",
+    "source": "v0Controls.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Controls:report": {
+    "kind": "mutation",
+    "scope": "bet_visibility",
+    "rule": "active group and eligible bet; bounded private report only",
+    "source": "v0Controls.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Controls:block": {
+    "kind": "mutation",
+    "scope": "shared_membership",
+    "rule": "other live account sharing a group; blocks targeted interactions and content",
+    "source": "v0Controls.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Suggestions:get": {
+    "kind": "action",
+    "scope": "safe_suggestions",
+    "rule": "active member; different consenting subject; scoped safe templates/history; bounded quota; no hosted provider enabled",
+    "source": "v0Suggestions.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Notifications:register": {
+    "kind": "mutation",
+    "scope": "account_device",
+    "rule": "own active session/device; strict APNs token; no actual provider send",
+    "source": "v0Notifications.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Notifications:unregister": {
+    "kind": "mutation",
+    "scope": "account_device",
+    "rule": "own device registration only",
+    "source": "v0Notifications.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Notifications:preferences": {
+    "kind": "query",
+    "scope": "account_session",
+    "rule": "own notification preference only",
+    "source": "v0Notifications.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  },
+  "v0Notifications:setPreferences": {
+    "kind": "mutation",
+    "scope": "account_session",
+    "rule": "own preference; opt-out removes tokens/outbox; idempotent",
+    "source": "v0Notifications.ts",
+    "authenticated": true,
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ]
+  }
+}

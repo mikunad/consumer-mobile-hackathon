@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "status": "blocked",
+  "reason": "Release gate, exact signed RC and dedicated QA operator proof are not available",
+  "candidateSha": null,
+  "backend": {
+    "sourceSha": null,
+    "sourceDigest": null,
+    "schemaVersion": null,
+    "configVersion": null,
+    "deploymentId": null
+  },
+  "policyVersion": null,
+  "distributionChannel": null,
+  "host": {
+    "bundleId": null,
+    "version": null,
+    "build": null,
+    "signedArtifactSha256": null
+  },
+  "extension": {
+    "bundleId": null,
+    "version": null,
+    "build": null
+  },
+  "runId": null,
+  "startedAt": null,
+  "finishedAt": null,
+  "operator": null,
+  "devices": [],
+  "providerRunIds": [],
+  "cases": [
+    {
+      "id": "R1",
+      "status": "blocked",
+      "assertions": [
+        {
+          "id": "R1.same-signed-rc.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R1.same-room-board.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R1.host-extension-session.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R1.manual-send-budget.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R1.pick-budget.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R1.install-return.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "status": "blocked",
+      "assertions": [
+        {
+          "id": "R2.static-voiceover-safe.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R2.offline-restart-safe.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R2.authorized-friend.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R2.server-reveal-refresh.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "status": "blocked",
+      "assertions": [
+        {
+          "id": "R3.outsider-denied.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R3.neutral-fallback.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R3.board-policy.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R3.no-last-room.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R3.account-switch.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        }
+      ]
+    },
+    {
+      "id": "R4",
+      "status": "blocked",
+      "assertions": [
+        {
+          "id": "R4.quiet-veto-leave.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R4.approved-finalization.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R4.correct-session-send.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R4.recipient-result.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R4.update-placement.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        }
+      ]
+    },
+    {
+      "id": "R5",
+      "status": "blocked",
+      "assertions": [
+        {
+          "id": "R5.actual-distributed-build.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R5.sms-fallback.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        },
+        {
+          "id": "R5.store-install-return.R",
+          "status": "blocked",
+          "evidenceReferences": [],
+          "observed": null,
+          "operator": null,
+          "devicePseudonyms": []
+        }
+      ]
+    }
+  ]
+}

@@ -71,7 +71,7 @@ function AdminPanel({ passcode }: { passcode: string }) {
       setMsg(String((e as { data?: string }).data ?? (e as Error).message));
     }
   };
-  const nextHour = Math.ceil((Date.now() + 1) / HOUR) * HOUR;
+  const [nextHour] = useState(() => Math.ceil((Date.now() + 1) / HOUR) * HOUR);
   return (
     <ScrollView style={s.screen} contentContainerStyle={[s.column, { paddingTop: 24, paddingBottom: 80, gap: 14 }]}>
       <Text style={s.h1}>Admin</Text>

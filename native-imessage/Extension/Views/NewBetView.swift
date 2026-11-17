@@ -2,235 +2,179 @@ import SwiftUI
 
 struct NewBetView: View {
     @EnvironmentObject var model: AppModel
-    @State private var subjectId: String?
-    @State private var kind = 0
-    @State private var line = 2.5
+    @State private var members: [GroupMember] = []
+    @State private var subjectID = ""
+    @State private var format = "yes_no"
+    @State private var question = ""
+    @State private var context = ""
     @State private var optionA = ""
     @State private var optionB = ""
-    @State private var question = ""
-    @State private var revealAt = NewBetView.fivePM()
-    @State private var side = 0
-    @State private var amount = 100
-    @State private var fromAI = false
-    @State private var ideas: [Suggestion]?
-    @State private var ideasError: String?
+    @State private var line = ""
+    @State private var reveal = Date()
+    @State private var ideas: [BetSuggestion] = []
+    @State private var source = "manual"
+    @State private var suggestedQuestion: String?
     @State private var busy = false
+    @State private var loadingIdeas = false
     @State private var error: String?
-    @State private var ready = false
-
-    private let kinds = ["yesno", "overunder", "multi"]
+    @State private var requestID = UUID().uuidString
+    @State private var lastPayload: Data?
 
     var body: some View {
-        if let room = model.linkedRoom, let me = model.me {
-            let friends = room.members.filter { $0.id != me.user._id }
-            let subject = friends.first { $0.id == subjectId }
-            SheetHeader(leading: "Cancel", leadingAction: { model.home() }, title: "New bet", trailing: "Post", trailingBold: true) {
-                guard valid else { error = missing; return }
-                Task { await create(room) }
-            }
-            SectionTitle(text: "About")
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: 16) {
-                    ForEach(friends) { friend in
-                        Button { subjectId = friend.id } label: {
-                            VStack(spacing: 6) {
-                                Avatar(name: friend.name, size: 56, ring: subjectId == friend.id ? Theme.accent : nil)
-                                Text(friend.name).font(.footnote.weight(subjectId == friend.id ? .semibold : .regular))
-                                    .foregroundStyle(subjectId == friend.id ? Theme.accent : .primary)
-                                    .lineLimit(1)
-                            }
-                            .frame(width: 68)
-                            .padding(.vertical, 6)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("subject-\(friend.name)")
-                    }
-                }
-                .padding(.horizontal, 6)
-            }
-            if friends.isEmpty {
-                Footnote(text: "Nobody else is in \(room.name) yet. Share invite code \(room.inviteCode ?? "") first.")
-            }
-            SectionTitle(text: "The bet")
+        if let group = model.linkedRoom {
+            Text("New bet").font(.largeTitle.bold())
             InsetGroup {
                 InsetRow {
-                    Picker("Format", selection: $kind) {
-                        Text("Yes / No").tag(0)
-                        Text("Over / Under").tag(1)
-                        Text("This or That").tag(2)
+                    Picker("About", selection: $subjectID) {
+                        Text("Choose a friend").tag("")
+                        ForEach(members.filter { !$0.noBets && $0.id != model.session?.accountID }) { member in Text(member.alias).tag(member.id) }
                     }
-                    .pickerStyle(.segmented)
+                    .accessibilityIdentifier("compose.subject")
                 }
                 InsetRow {
-                    TextField(placeholder(subject?.name), text: $question, axis: .vertical)
-                        .lineLimit(1...4)
-                        .accessibilityIdentifier("question")
-                }
-                switch kind {
-                case 1:
-                    InsetRow {
-                        Stepper(value: $line, in: 0.5...999.5, step: 1) {
-                            HStack { Text("Line"); Spacer(); Text(String(format: "%.1f", line)).monospacedDigit().foregroundStyle(Theme.sub) }
-                        }
+                    Picker("Format", selection: $format) {
+                        Text("Yes / No").tag("yes_no")
+                        Text("Over / Under").tag("over_under")
+                        Text("This / That").tag("this_that")
                     }
-                case 2:
-                    InsetRow { Text("Side A"); Spacer(); TextField("This", text: $optionA).multilineTextAlignment(.trailing) }
-                    InsetRow { Text("Side B"); Spacer(); TextField("That", text: $optionB).multilineTextAlignment(.trailing) }
-                default:
-                    InsetRow { Text("Sides"); Spacer(); Text("Yes · No").foregroundStyle(Theme.sub) }
+                    .accessibilityIdentifier("compose.format")
+                }
+                InsetRow { TextField("Your question", text: $question, axis: .vertical).accessibilityIdentifier("compose.question") }
+                if format == "over_under" {
+                    InsetRow { TextField("Numeric line", text: $line).keyboardType(.decimalPad).accessibilityIdentifier("compose.line") }
+                }
+                if format == "this_that" {
+                    InsetRow { TextField("This", text: $optionA).accessibilityIdentifier("compose.optionA") }
+                    InsetRow { TextField("That", text: $optionB).accessibilityIdentifier("compose.optionB") }
                 }
                 InsetRow(last: true) {
-                    DatePicker("Reveal", selection: $revealAt, displayedComponents: [.hourAndMinute, .date])
+                    DatePicker("Reveal", selection: $reveal).accessibilityIdentifier("compose.reveal")
+                        .environment(\.timeZone, TimeZone(identifier: group.timezone) ?? .current)
                 }
             }
-            SectionTitle(text: "Your call")
-            CardBox {
-                HStack(spacing: 8) {
-                    ForEach(0..<2, id: \.self) { i in
-                        Chip(title: labels[i], on: side == i) { side = i }
-                    }
-                }
-                HStack(spacing: 8) {
-                    ForEach([50, 100, 250], id: \.self) { value in
-                        Chip(title: "\(value) pts", on: amount == value) { amount = value }
-                    }
-                    Spacer()
-                    if let points = room.members.first(where: { $0.id == me.user._id })?.points {
-                        Text("\(pts(points)) left").font(.footnote.monospacedDigit()).foregroundStyle(Theme.sub)
-                    }
+            Footnote(text: "Reveal defaults to 8 PM in \(group.timezone), with per-bet changes allowed. Each bettor's final Confirm pick locks only their own choice. New confirmations end at reveal; the server validates every deadline.")
+            SectionTitle(text: "Suggestions")
+            InsetGroup {
+                InsetRow(last: true) {
+                    TextField("Optional context you type", text: $context, axis: .vertical)
+                        .accessibilityIdentifier("compose.context")
                 }
             }
-            if fromAI {
-                Footnote(text: "Created by AI · drafted from a sample chat")
+            Footnote(text: "Only templates, eligible past group bets and the context you type are used. Called It reads no chats, contacts or photos. Context is saved with your bet and is removed by data deletion.")
+            SoftButton(title: loadingIdeas ? "Loading safe suggestions…" : "Get suggestions") { Task { await suggestions(group.id) } }
+                .disabled(subjectID.isEmpty || loadingIdeas || busy)
+                .accessibilityIdentifier("compose.suggestions")
+            ForEach(ideas) { idea in
+                Button { apply(idea) } label: {
+                    CardBox {
+                        Text(idea.question).font(.headline).foregroundStyle(.primary)
+                        Text(idea.source == "history" ? "From eligible group history" : "Template")
+                            .font(.footnote).foregroundStyle(Theme.sub)
+                    }
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("compose.suggestion.\(idea.id)")
             }
+            if model.me?.policy.approved != true {
+                Footnote(text: "Some group rules still need confirmation. The server decides which actions are available.")
+            }
+            PrimaryButton(title: "Create card", busy: busy) { Task { await create(group.id) } }
+                .disabled(!valid || model.me?.policy.approved != true)
+                .accessibilityIdentifier("compose.create")
+            Footnote(text: "The server checks safety for suggestions and your edits. After creation, you still tap Send yourself in Messages. A cancelled draft does not mean a delivered message.")
             ErrorText(text: error)
-            PrimaryButton(title: "Post", busy: busy) {
-                guard valid else { error = missing; return }
-                Task { await create(room) }
-            }
-            .opacity(valid ? 1 : 0.5)
-            .accessibilityIdentifier("createBet")
-            Footnote(text: subject.map { "\($0.name) will only see \"@\($0.name)\" until the reveal. You tap Send." } ?? "The friend it's about only sees their name until the reveal. You tap Send.")
-            suggestions(room: room, friends: friends)
-                .task {
-                    guard !ready else { return }
-                    ready = true
-                    if let at = room.revealAt, at > nowMs() { revealAt = Date(timeIntervalSince1970: at / 1000) }
-                    if revealAt.timeIntervalSinceNow < 60 { revealAt = Date().addingTimeInterval(3600) }
-                    await loadIdeas(room.id)
+                .task(id: group.id) {
+                    if let next = RevealSchedule.nextDefault(in: group.timezone) { reveal = next }
+                    await loadMembers(group.id)
+                }
+                .task(id: subjectID) {
+                    ideas = []
+                    if !subjectID.isEmpty { await suggestions(group.id) }
                 }
         }
     }
 
-    @ViewBuilder private func suggestions(room: Room, friends: [Member]) -> some View {
-        SectionTitle(text: "✦ Suggested from your chat")
-        InsetGroup {
-            if let ideas {
-                if ideas.isEmpty { InsetRow(last: true) { Text("No ideas right now.").foregroundStyle(Theme.sub); Spacer() } }
-                ForEach(Array(ideas.enumerated()), id: \.element.id) { index, idea in
-                    Button { apply(idea, friends: friends) } label: {
-                        InsetRow(last: index == ideas.count - 1) {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(idea.question).font(.subheadline.weight(.semibold)).multilineTextAlignment(.leading)
-                                if let why = idea.why { Text(why).font(.footnote).foregroundStyle(Theme.sub).multilineTextAlignment(.leading) }
-                            }
-                            Spacer()
-                            Image(systemName: "plus.circle").foregroundStyle(Theme.accent)
-                        }
-                        .foregroundStyle(.primary)
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                }
-            } else if let ideasError {
-                InsetRow(last: true) { Text(ideasError).font(.footnote).foregroundStyle(Theme.sub); Spacer() }
-            } else {
-                InsetRow(last: true) { ProgressView(); Text("Drafting ideas…").foregroundStyle(Theme.sub); Spacer() }
-            }
-        }
-        Footnote(text: "Created by AI · drafted from a sample chat, never your messages.")
-    }
-
-    static func fivePM() -> Date {
-        var cal = Calendar(identifier: .gregorian)
-        cal.timeZone = TimeZone(identifier: "America/Los_Angeles") ?? .current
-        return cal.date(bySettingHour: 17, minute: 0, second: 0, of: Date()) ?? Date()
-    }
-
-    private func placeholder(_ name: String?) -> String {
-        let who = name ?? "they"
-        switch kind {
-        case 1: return "How many times will \(who) say \"literally\" tonight?"
-        case 2: return "What does \(who) order?"
-        default: return "Will \(who) be on time?"
-        }
-    }
-
-    private var labels: [String] {
-        switch kind {
-        case 1: return [String(format: "Over %.1f", line), String(format: "Under %.1f", line)]
-        case 2: return [optionA.isEmpty ? "Side A" : optionA, optionB.isEmpty ? "Side B" : optionB]
+    private var options: [String] {
+        switch format {
+        case "over_under": return ["Over " + line, "Under " + line]
+        case "this_that": return [optionA.trimmingCharacters(in: .whitespacesAndNewlines), optionB.trimmingCharacters(in: .whitespacesAndNewlines)]
         default: return ["Yes", "No"]
         }
     }
-
-    private var missing: String {
-        if subjectId == nil { return "Pick who it's about." }
-        if question.trimmingCharacters(in: .whitespaces).isEmpty { return "Write the question." }
-        return "Fill in both sides."
-    }
-
     private var valid: Bool {
-        guard subjectId != nil, !question.trimmingCharacters(in: .whitespaces).isEmpty else { return false }
-        if kind == 2 { return !optionA.trimmingCharacters(in: .whitespaces).isEmpty && !optionB.trimmingCharacters(in: .whitespaces).isEmpty }
-        return true
+        !subjectID.isEmpty && !question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            reveal.timeIntervalSince1970.isFinite && options.count == 2 && !options[0].isEmpty && !options[1].isEmpty &&
+            options[0] != options[1] && (format != "over_under" || Double(line)?.isFinite == true)
     }
 
-    private func apply(_ idea: Suggestion, friends: [Member]) {
-        kind = kinds.firstIndex(of: idea.kind) ?? 0
-        question = idea.question
-        if let l = idea.line { line = l }
-        if let o = idea.options, o.count == 2 { optionA = o[0]; optionB = o[1] }
-        if let match = friends.first(where: { $0.name.lowercased() == idea.subject.lowercased() }) { subjectId = match.id }
-        fromAI = true
-    }
-
-    private func loadIdeas(_ groupId: String) async {
+    private func loadMembers(_ groupID: String) async {
         guard let token = model.token else { return }
         do {
-            ideas = try await API.action("ai:suggest", ["token": token, "groupId": groupId]) ?? []
+            let result: [GroupMember]? = try await API.query("v0Groups:members", ["token": token, "groupId": groupID])
+            guard model.token == token else { return }
+            members = result ?? []
+            if let requested = model.requestedSubjectID, members.contains(where: { $0.id == requested && !$0.noBets }), requested != model.session?.accountID {
+                subjectID = requested
+            }
+        } catch { model.handle(error) }
+    }
+
+    private func suggestions(_ groupID: String) async {
+        guard let token = model.token, !subjectID.isEmpty, !loadingIdeas else { return }
+        let subject = subjectID
+        loadingIdeas = true
+        defer { loadingIdeas = false }
+        do {
+            let result: SuggestionsResult? = try await API.action("v0Suggestions:get", [
+                "token": token, "groupId": groupID, "subjectId": subject, "contextLine": context, "useHostedAi": false,
+            ])
+            guard model.token == token, subjectID == subject else { return }
+            guard result?.readsChat == false, result?.processing == "templates_and_group_history" else { throw NativeError.invalidLink }
+            ideas = (result?.suggestions ?? []).filter { $0.subjectId == subject && $0.subjectId != model.session?.accountID && $0.options.count == 2 }
+            error = nil
         } catch {
-            ideasError = error.localizedDescription
+            ideas = []
+            self.error = error.localizedDescription
+            model.handle(error)
         }
     }
 
-    private func create(_ room: Room) async {
-        guard let token = model.token, let subjectId else { return }
+    private func apply(_ idea: BetSuggestion) {
+        format = idea.format
+        question = idea.question
+        if let value = idea.line { line = String(value) }
+        optionA = idea.options[safe: 0] ?? ""
+        optionB = idea.options[safe: 1] ?? ""
+        source = idea.source
+        suggestedQuestion = idea.question
+    }
+
+    private func create(_ groupID: String) async {
+        guard let token = model.token, valid, !busy else { return }
         busy = true
         defer { busy = false }
+        let revealAt = reveal.timeIntervalSince1970 * 1000
         var args: [String: Any] = [
-            "token": token,
-            "groupId": room.id,
-            "subjectUserId": subjectId,
-            "kind": kinds[kind],
-            "question": question.trimmingCharacters(in: .whitespacesAndNewlines),
-            "option": side,
-            "amount": amount,
-            "ai": fromAI,
-            "revealAt": (revealAt.timeIntervalSince1970 * 1000).rounded(),
+            "token": token, "groupId": groupID, "subjectId": subjectID,
+            "question": question.trimmingCharacters(in: .whitespacesAndNewlines), "contextLine": context,
+            "format": format, "options": options, "cutoffAt": revealAt,
+            "revealAt": revealAt, "source": question == suggestedQuestion ? source : "manual",
         ]
-        if kind == 1 { args["line"] = line }
-        if kind == 2 { args["options"] = [optionA.trimmingCharacters(in: .whitespaces), optionB.trimmingCharacters(in: .whitespaces)] }
+        if format == "over_under", let value = Double(line) { args["line"] = value }
         do {
-            guard let betId: String = try await API.mutation("chat:createBet", args) else { return }
-            let card: BetCard? = try? await API.query("ext:card", ["token": token, "betId": betId, "now": nowMs()])
-            let subject = card?.subject ?? room.members.first(where: { $0.id == subjectId }).map { Person(_id: $0.id, name: $0.name, emoji: $0.emoji) }
-            let message = Cards.bet(roomId: room.id, betId: betId, subject: subject, revealAt: card?.revealAt ?? revealAt.timeIntervalSince1970 * 1000, voters: Cards.voterNames(card), session: nil)
-            error = nil
-            model.screen = .bet(room: room.id, bet: betId)
-            model.send(message)
+            let payload = try JSONSerialization.data(withJSONObject: args, options: .sortedKeys)
+            if payload != lastPayload { requestID = UUID().uuidString; lastPayload = payload }
+            args["requestId"] = requestID
+            guard let created: CreatedBet = try await API.mutation("v0Bets:create", args), created.groupId == groupID,
+                  let url = URL(string: created.card.url) else { throw NativeError.invalidLink }
+            let locator = try CardLocator(url: url, configuration: Config.load())
+            let bet: NativeBet? = try await API.query("v0Bets:get", ["token": token, "locator": locator.value])
+            guard model.token == token, let bet, bet.betId == created.betId, bet.groupId == groupID else { return }
+            model.go(.bet(locator.value))
+            model.send(bet)
         } catch {
             self.error = error.localizedDescription
+            model.handle(error)
         }
     }
 }

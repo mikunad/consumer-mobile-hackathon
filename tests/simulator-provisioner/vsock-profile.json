@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "profileID": "revyl-tart-vsock8080-no-ip-v1",
+  "inspectorSource": "tests/mac-enforcement/control-sockets.c",
+  "inspectorSourceSHA256": "c0ddc25f00b9d99675d52fed1618e938ee28a8ed34715c7846f36eb44e379a99",
+  "agentPath": "/opt/homebrew/Cellar/tart-guest-agent/0.14.1/bin/tart-guest-agent",
+  "agentSHA256": "5dcc2c8043f79604896d60f91dffe6e98bf39d75ad1555b8dbbb8b6ba8bfe043",
+  "sdkConstants": {"afVsockFromSDK": 40, "sockInfoVsockFromSDK": 7, "streamTypeFromSDK": 1},
+  "localPort": 8080,
+  "hostCID": 2,
+  "compiler": {"driver": "/usr/bin/xcrun", "sdk": "macosx", "sdkVersion": "27.0", "flags": ["-Wall", "-Wextra", "-Werror", "-O2", "-lproc"]},
+  "externalIPAllows": 0,
+  "classification": "intentional provider management channel; not arbitrary non-IP or covert-channel coverage"
+}

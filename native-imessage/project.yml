@@ -4,45 +4,107 @@ options:
   deploymentTarget:
     iOS: "17.0"
   createIntermediateGroups: true
+configs:
+  Debug: debug
+  QA: debug
+  Release: release
+configFiles:
+  Debug: Configuration/QA.xcconfig
+  QA: Configuration/QA.xcconfig
+  Release: Configuration/Release.xcconfig
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    DEVELOPMENT_TEAM: 6555P5TAV6
-    CODE_SIGN_STYLE: Automatic
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
     TARGETED_DEVICE_FAMILY: "1,2"
+  configs:
+    Debug:
+      DEVELOPMENT_TEAM: 6555P5TAV6
+      CODE_SIGN_STYLE: Automatic
+      EXCLUDED_SOURCE_FILE_NAMES: "QA*.swift"
+    QA:
+      DEVELOPMENT_TEAM: 6555P5TAV6
+      CODE_SIGN_STYLE: Automatic
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) QA"
+    Release:
+      DEVELOPMENT_TEAM: $(CALLED_IT_DEVELOPMENT_TEAM)
+      CODE_SIGN_STYLE: Manual
+      EXCLUDED_SOURCE_FILE_NAMES: "QA*.swift"
+targetTemplates:
+  Runtime:
+    preBuildScripts:
+      - path: Configuration/prepare-info-plist.sh
+        name: Prepare runtime Info.plist
+        shell: /bin/bash
+        showEnvVars: false
+        inputFiles:
+          - $(SRCROOT)/$(CALLED_IT_BASE_INFO_PLIST)
+          - $(SRCROOT)/Configuration/prepare-info-plist.sh
+        outputFiles:
+          - $(DERIVED_FILE_DIR)/Runtime-Info.plist
+    info:
+      properties:
+        UIUserInterfaceStyle: Light
+        CalledItAPIURL: $(CALLED_IT_API_URL)
+        CalledItWebURL: $(CALLED_IT_WEB_URL)
+        CalledItExpectedAPIHost: $(CALLED_IT_EXPECTED_API_HOST)
+        CalledItExpectedCardHost: $(CALLED_IT_EXPECTED_CARD_HOST)
+        CalledItBuildChannel: $(CALLED_IT_BUILD_CHANNEL)
+        CalledItReleaseEnvironment: $(CALLED_IT_ENVIRONMENT)
+        CalledItSourceRevision: $(CALLED_IT_SOURCE_REVISION)
+        CalledItExpectedBackendSourceRevision: $(CALLED_IT_EXPECTED_BACKEND_SOURCE_REVISION)
+        CalledItExpectedBackendDeploymentID: $(CALLED_IT_EXPECTED_BACKEND_DEPLOYMENT_ID)
+        CalledItExpectedBackendConfigVersion: $(CALLED_IT_EXPECTED_BACKEND_CONFIG_VERSION)
+        CalledItAppGroup: $(CALLED_IT_APP_GROUP)
+        CalledItKeychainGroup: $(CALLED_IT_KEYCHAIN_GROUP)
+        CalledItSupportURL: $(CALLED_IT_SUPPORT_URL)
+        CalledItAPNsEnvironment: $(CALLED_IT_APNS_ENVIRONMENT)
+        CalledItFixtureMode: false
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
 targets:
   CalledItMessages:
+    templates: [Runtime]
     type: application
     platform: iOS
-    sources: [App]
+    sources: [App, Shared, QA]
     info:
       path: App/Info.plist
       properties:
-        CFBundleDisplayName: CalledIt Messages
+        CFBundleDisplayName: Called It
         UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        UIUserInterfaceStyle: Light
+        CFBundleURLTypes:
+          - CFBundleURLName: com.mikunad.calledit.host
+            CFBundleURLSchemes: [calledit-host]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.mikunad.calledit.messages
         PRODUCT_NAME: CalledItMessages
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_ENTITLEMENTS: Configuration/Host.entitlements
+        CALLED_IT_BASE_INFO_PLIST: App/Info.plist
+      configs:
+        QA:
+          PRODUCT_BUNDLE_IDENTIFIER: com.mikunad.calledit.qa.host
+          INFOPLIST_FILE: $(DERIVED_FILE_DIR)/Runtime-Info.plist
+        Release:
+          PROVISIONING_PROFILE_SPECIFIER: $(CALLED_IT_HOST_PROFILE)
     dependencies:
       - target: CalledItExtension
         embed: true
   CalledItExtension:
+    templates: [Runtime]
     type: app-extension.messages
     platform: iOS
-    sources: [Extension]
+    sources: [Extension, Shared, QA]
     info:
       path: Extension/Info.plist
       properties:
         CFBundleDisplayName: Called It
-        UIUserInterfaceStyle: Light
         NSExtension:
           NSExtensionPointIdentifier: com.apple.message-payload-provider
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).MessagesViewController
@@ -51,24 +113,55 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.mikunad.calledit.messages.ext
         PRODUCT_NAME: CalledItExtension
         ASSETCATALOG_COMPILER_APPICON_NAME: iMessage App Icon
+        CODE_SIGN_ENTITLEMENTS: Configuration/Shared.entitlements
+        CALLED_IT_BASE_INFO_PLIST: Extension/Info.plist
+      configs:
+        QA:
+          PRODUCT_BUNDLE_IDENTIFIER: com.mikunad.calledit.qa.host.messages
+          INFOPLIST_FILE: $(DERIVED_FILE_DIR)/Runtime-Info.plist
+        Release:
+          PROVISIONING_PROFILE_SPECIFIER: $(CALLED_IT_EXTENSION_PROFILE)
+  CalledItCoreTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests, TestSupport, Shared, App/HostAuthenticationModel.swift]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mikunad.calledit.messages.coretests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: ""
+        BUNDLE_LOADER: ""
+      configs:
+        QA:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: QA
+        Release:
+          EXCLUDED_SOURCE_FILE_NAMES: "*"
   CalledItUITests:
     type: bundle.ui-testing
     platform: iOS
-    sources: [UITests]
+    sources: [UITests, TestSupport]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.mikunad.calledit.messages.uitests
         GENERATE_INFOPLIST_FILE: YES
+      configs:
+        QA:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: QA
+        Release:
+          EXCLUDED_SOURCE_FILE_NAMES: "*"
     dependencies:
       - target: CalledItMessages
 schemes:
   CalledItMessages:
+    run:
+      config: QA
+    archive:
+      config: Release
     build:
       targets:
         CalledItMessages: all
+        CalledItCoreTests: [test]
         CalledItUITests: [test]
     test:
-      targets: [CalledItUITests]
-      environmentVariables:
-        SHOTS_DIR: $(SHOTS_DIR)
-        PAIR_CODE: $(PAIR_CODE)
+      config: QA
+      targets: [CalledItCoreTests, CalledItUITests]

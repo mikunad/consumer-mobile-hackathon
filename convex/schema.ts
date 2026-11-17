@@ -1,7 +1,9 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { v0Tables } from "./v0Schema";
 
 export default defineSchema({
+  ...v0Tables,
   users: defineTable({
     name: v.string(),
     emoji: v.string(),

@@ -1,0 +1,842 @@
+[
+  {
+    "path": "admin:addBet",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:adjustCounter",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:check",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:createRound",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:deleteBet",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:editBet",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:lockBet",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:overview",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:setRoundTimes",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:settle",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:settleFromCounter",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "admin:settlePreview",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "ai:draftBets",
+    "kind": "action",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "ai:suggest",
+    "kind": "action",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:createBet",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:createGroup",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:declare",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:demoReplay",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:demoRestore",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:demoRevealAt",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:demoStatus",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:enter",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:home",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:join",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:market",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:stake",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:thread",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "chat:veto",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "ext:board",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "ext:card",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "ext:createPair",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "ext:me",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "ext:redeemPair",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "game:leaderboard",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "game:myHistory",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "game:placeStake",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "game:today",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "groups:addBet",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "groups:addMember",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "groups:create",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "groups:get",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "groups:mine",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "groups:searchUsers",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "groups:settle",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "hosting:serve",
+    "kind": "httpAction",
+    "requiredPolicy": "neutral-install-landing-no-private-reads",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "market:market",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "market:people",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "reveal:dropResults",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "reveal:myScorecards",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "users:join",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "users:me",
+    "kind": "query",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "users:ping",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "users:setProfile",
+    "kind": "mutation",
+    "requiredPolicy": "legacy-disable-or-apply-full-v0-policy",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Auth:createPair",
+    "kind": "mutation",
+    "requiredPolicy": "account_session",
+    "policy": "own session-bound single-use pair; bounded starts",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Auth:me",
+    "kind": "query",
+    "requiredPolicy": "account_session",
+    "policy": "own account, active groups and policy only",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Auth:redeemPair",
+    "kind": "action",
+    "requiredPolicy": "anonymous_pair_redemption",
+    "policy": "durable device/code quota; strict expiry; one use; active originating session",
+    "minimumAssertions": [
+      "provider_or_pair_validation",
+      "bounded_failure_attempts",
+      "replay_expiry"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Auth:requestCode",
+    "kind": "action",
+    "requiredPolicy": "anonymous_phone_verification",
+    "policy": "phone quota and cooldown; provider approval; no OTP returned",
+    "minimumAssertions": [
+      "provider_or_pair_validation",
+      "bounded_failure_attempts",
+      "replay_expiry"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Auth:revoke",
+    "kind": "mutation",
+    "requiredPolicy": "account_session",
+    "policy": "own current/all-device sessions, links, pairs, push and pending outbox",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Auth:verifyCode",
+    "kind": "action",
+    "requiredPolicy": "anonymous_phone_verification",
+    "policy": "reserved provider challenge; bounded checks; verified stable phone account; one use",
+    "minimumAssertions": [
+      "provider_or_pair_validation",
+      "bounded_failure_attempts",
+      "replay_expiry"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:answer",
+    "kind": "mutation",
+    "requiredPolicy": "subject_after_reveal",
+    "policy": "eligible subject at reveal and before reveal+24h; server answeredAt starts1h challenge; idempotent receipt with current authorization; no settlement credit",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:challenge",
+    "kind": "mutation",
+    "requiredPolicy": "bet_visibility",
+    "policy": "eligible nonsubject provisional state; fresh challenge only before answeredAt+1h; one record per account; authorized cached ACK cannot reopen voting or adjudicate majority",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:create",
+    "kind": "mutation",
+    "requiredPolicy": "bet_visibility",
+    "policy": "active consenting different subject; safety/topic/future time validation; optional next20:00 group-local reveal or explicit override; lock/creator policy still POLICY_PENDING",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:get",
+    "kind": "query",
+    "requiredPolicy": "bet_visibility",
+    "policy": "active interval predating bet; opaque locator; subject sealed until server reveal; derived unanswered void at reveal+24h; server capabilities/deadlines; no unapproved settlement",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:history",
+    "kind": "query",
+    "requiredPolicy": "bet_visibility",
+    "policy": "group final/void history filtered by interval/block/subject visibility",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:list",
+    "kind": "query",
+    "requiredPolicy": "bet_visibility",
+    "policy": "group membership plus per-bet interval/block and subject redaction",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:pick",
+    "kind": "mutation",
+    "requiredPolicy": "bet_visibility",
+    "policy": "eligible nonsubject; authoritative cutoff; option and confidence0.01..1; reject present riskPoints; unresolved lock policy stays POLICY_PENDING",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Bets:veto",
+    "kind": "mutation",
+    "requiredPolicy": "bet_visibility",
+    "policy": "eligible subject only before reveal; one quiet void; retry idempotency",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Controls:alias",
+    "kind": "mutation",
+    "requiredPolicy": "group_membership",
+    "policy": "own current group alias; never identity or admission",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Controls:block",
+    "kind": "mutation",
+    "requiredPolicy": "shared_membership",
+    "policy": "other live account sharing a group; blocks targeted interactions and content",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Controls:deleteAccount",
+    "kind": "mutation",
+    "requiredPolicy": "account_session",
+    "policy": "own full private data/session cascade; pending provider cleanup is explicit",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Controls:get",
+    "kind": "query",
+    "requiredPolicy": "account_session",
+    "policy": "own no-bets/topics/consent settings and honest deletion caveat",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Controls:leave",
+    "kind": "mutation",
+    "requiredPolicy": "group_membership",
+    "policy": "own interval ends; picks/subject bets/links/notifications cascade; no G2 transfer",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Controls:report",
+    "kind": "mutation",
+    "requiredPolicy": "bet_visibility",
+    "policy": "active group and eligible bet; bounded private report only",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Controls:update",
+    "kind": "mutation",
+    "requiredPolicy": "account_session",
+    "policy": "own validated preferences; cancels nonfinal subject bets; idempotent quota",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:accept",
+    "kind": "mutation",
+    "requiredPolicy": "invited_phone",
+    "policy": "targeted unexpired invitation; active inviter; new interval; no earlier history",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:board",
+    "kind": "query",
+    "requiredPolicy": "group_membership",
+    "policy": "room balances and block/deletion filters; no global wallet",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:confirmGoal",
+    "kind": "mutation",
+    "requiredPolicy": "group_membership",
+    "policy": "POLICY_PENDING; no confirmation mutation before approval",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:create",
+    "kind": "mutation",
+    "requiredPolicy": "account_session",
+    "policy": "own explicit membership; idempotent bounded group creation",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:invitations",
+    "kind": "query",
+    "requiredPolicy": "account_session",
+    "policy": "only verified phones belonging to caller; active inviter; no forwarded-card admission",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:invite",
+    "kind": "mutation",
+    "requiredPolicy": "group_membership",
+    "policy": "active inviter; verified phone hash; neutral non-enumerating response",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:linkConversation",
+    "kind": "mutation",
+    "requiredPolicy": "group_membership",
+    "policy": "caller account/device key; no conflicting silent relink",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:members",
+    "kind": "query",
+    "requiredPolicy": "group_membership",
+    "policy": "active room members; blocked/deleted accounts filtered",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:passTurn",
+    "kind": "mutation",
+    "requiredPolicy": "group_membership",
+    "policy": "assigned creator only; POLICY_PENDING instead of invented rotation",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:proposeGoal",
+    "kind": "mutation",
+    "requiredPolicy": "group_membership",
+    "policy": "POLICY_PENDING; no goal mutation before approval",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:recap",
+    "kind": "query",
+    "requiredPolicy": "group_membership",
+    "policy": "visible time-window ledger; group/interval/block filters; no scheduled recap claim",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:resolveConversation",
+    "kind": "query",
+    "requiredPolicy": "account_device",
+    "policy": "caller account/device key and active membership; null when unknown",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:turn",
+    "kind": "query",
+    "requiredPolicy": "group_membership",
+    "policy": "current valid local-date turn; eligible creator/subject/viewer intervals; pass disabled pending policy",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Groups:unlinkConversation",
+    "kind": "mutation",
+    "requiredPolicy": "account_device",
+    "policy": "caller account/device key only; idempotent explicit unlink",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Notifications:preferences",
+    "kind": "query",
+    "requiredPolicy": "account_session",
+    "policy": "own notification preference only",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Notifications:register",
+    "kind": "mutation",
+    "requiredPolicy": "account_device",
+    "policy": "own active session/device; strict APNs token; no actual provider send",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Notifications:setPreferences",
+    "kind": "mutation",
+    "requiredPolicy": "account_session",
+    "policy": "own preference; opt-out removes tokens/outbox; idempotent",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Notifications:unregister",
+    "kind": "mutation",
+    "requiredPolicy": "account_device",
+    "policy": "own device registration only",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Proof:list",
+    "kind": "query",
+    "requiredPolicy": "proof_visibility",
+    "policy": "eligible membership interval after reveal; no void or public URL; derived24h unanswered timeout denies even before sweep",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Proof:read",
+    "kind": "action",
+    "requiredPolicy": "proof_visibility",
+    "policy": "eligible post-reveal membership; authorization checked again after storage read; authenticated bytes; derived24h unanswered timeout denies even before sweep",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Proof:upload",
+    "kind": "action",
+    "requiredPolicy": "subject_after_reveal",
+    "policy": "eligible subject after reveal; bytes signature/MIME/512KiB/quota; idempotent private storage; derived24h unanswered timeout denies even before sweep",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Runtime:attestation",
+    "kind": "query",
+    "requiredPolicy": "anonymous-neutral-attestation",
+    "verification": "blocked-runtime-policy-matrix"
+  },
+  {
+    "path": "v0Suggestions:get",
+    "kind": "action",
+    "requiredPolicy": "safe_suggestions",
+    "policy": "active member; different consenting subject; scoped safe templates/history; bounded quota; no hosted provider enabled",
+    "minimumAssertions": [
+      "anonymous_AUTH_REQUIRED",
+      "revoked_AUTH_REQUIRED",
+      "scope_specific_valid_fixture"
+    ],
+    "verification": "blocked-runtime-policy-matrix"
+  }
+]

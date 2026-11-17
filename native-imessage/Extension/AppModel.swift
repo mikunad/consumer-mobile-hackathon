@@ -4,10 +4,8 @@ import SwiftUI
 import UIKit
 
 enum Screen: Equatable {
-    case home
-    case link
-    case newBet
-    case bet(room: String, bet: String)
+    case home, groups, newBet, settings
+    case bet(String)
     case board(String)
 }
 
@@ -15,222 +13,247 @@ enum Screen: Equatable {
 final class AppModel: ObservableObject {
     @Published var screen: Screen = .home
     @Published var style: MSMessagesAppPresentationStyle = .compact
-    @Published var token: String? = Keychain.load()
-    @Published var me: MeResult?
-    @Published var linkedRoomId: String?
+    @Published private(set) var session: SharedSession?
+    @Published private(set) var me: AccountSnapshot?
+    @Published private(set) var linkedRoomId: String?
     @Published var error: String?
-    @Published var pendingRoomId: String?
-
+    @Published var notice: String?
+    @Published private(set) var pendingBet: NativeBet?
+    @Published var activeTick = 0
+    @Published var isActive = false
+    @Published private(set) var requestedSubjectID: String?
     weak var controller: MessagesViewController?
     private var conversationKey: String?
+    private var sessions: [String: MSSession] = [:]
+    private var activation: Task<Void, Never>?
 
-    var linkedRoom: Room? { me?.rooms.first { $0.id == linkedRoomId } }
+    var token: String? { session?.token }
+    var linkedRoom: GroupSummary? { me?.groups.first { $0.id == linkedRoomId } }
 
-    func attach(_ conversation: MSConversation) {
+    func attach(_ conversation: MSConversation, selectedMessage: MSMessage? = nil) {
+        isActive = true
         let remotes = conversation.remoteParticipantIdentifiers.map(\.uuidString).sorted().joined(separator: ",")
         let digest = SHA256.hash(data: Data(remotes.utf8)).map { String(format: "%02x", $0) }.joined()
         let key = conversation.localParticipantIdentifier.uuidString + ":" + digest
+        if conversationKey != key {
+            screen = .home
+            pendingBet = nil
+            linkedRoomId = nil
+            sessions = [:]
+        }
         conversationKey = key
-        linkedRoomId = Links.room(for: key)
-        Task { await refresh() }
+        activation?.cancel()
+        activation = Task {
+            reloadSharedSession()
+            await refresh()
+            guard !Task.isCancelled else { return }
+            if let message = selectedMessage ?? conversation.selectedMessage { await open(message) }
+        }
     }
 
-    func refresh() async {
-        guard let token else { return }
+    private func reloadSharedSession() {
         do {
-            let result: MeResult? = try await API.query("ext:me", ["token": token])
-            guard let result else { return signOut() }
-            me = result
-            error = nil
-            resolvePending()
+            let next = try SessionStore.load(configuration: Config.load())
+            if next != session { clearPrivateState() }
+            session = next
         } catch {
+            session = nil
+            clearPrivateState()
             self.error = error.localizedDescription
         }
     }
 
-    func signedIn(_ pair: PairResult) async {
-        Keychain.save(pair.token)
-        token = pair.token
-        await refresh()
-    }
-
-    func signOut() {
-        Keychain.delete()
-        token = nil
+    private func clearPrivateState() {
         me = nil
+        linkedRoomId = nil
+        pendingBet = nil
+        requestedSubjectID = nil
+        sessions = [:]
         screen = .home
     }
 
-    func link(_ roomId: String) {
-        linkedRoomId = roomId
-        if let conversationKey { Links.set(roomId, for: conversationKey) }
-        screen = .home
-    }
-
-    func open(_ message: MSMessage) {
-        guard let url = message.url, let parts = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
-        let q = Dictionary((parts.queryItems ?? []).map { ($0.name, $0.value ?? "") }, uniquingKeysWith: { a, _ in a })
-        guard let room = q["r"], !room.isEmpty else { return }
-        pendingRoomId = room
-        resolvePending()
-        if let bet = q["b"], !bet.isEmpty {
-            screen = .bet(room: room, bet: bet)
-        } else if parts.host == "board" || q["board"] != nil {
-            screen = .board(room)
+    func refresh() async {
+        guard let token, let conversationKey else { return }
+        do {
+            let result: AccountSnapshot? = try await API.query("v0Auth:me", ["token": token])
+            guard self.token == token, !Task.isCancelled else { return }
+            guard let result, result.account.id == session?.accountID else { throw APIError(code: "AUTH_REQUIRED") }
+            struct Link: Decodable { let groupId: String }
+            let link: Link? = try await API.query("v0Groups:resolveConversation", ["token": token, "conversationKey": conversationKey])
+            guard self.token == token, self.conversationKey == conversationKey, !Task.isCancelled else { return }
+            me = result
+            linkedRoomId = result.groups.contains(where: { $0.id == link?.groupId }) ? link?.groupId : nil
+            if let accountID = session?.accountID {
+                try ConversationLinks.set(linkedRoomId, for: conversationKey, accountID: accountID, configuration: Config.load())
+            }
+            error = nil
+        } catch {
+            handle(error)
         }
     }
 
-    private func resolvePending() {
-        guard let room = pendingRoomId, let me else { return }
-        guard me.rooms.contains(where: { $0.id == room }) else { return }
-        if linkedRoomId != room {
-            linkedRoomId = room
-            if let conversationKey { Links.set(room, for: conversationKey) }
+    func handle(_ failure: Error) {
+        if (failure as? APIError)?.code == "AUTH_REQUIRED" {
+            if let configuration = try? Config.load(), let session {
+                try? SessionStore.delete(configuration: configuration)
+                try? SharedState.clearAccount(session.accountID, configuration: configuration)
+            }
+            session = nil
+            clearPrivateState()
         }
-        pendingRoomId = nil
+        error = failure.localizedDescription
     }
 
-    var notMemberOfPending: Bool {
-        guard let room = pendingRoomId, let me else { return false }
-        return !me.rooms.contains { $0.id == room }
+    func deletedAccount(notice: String) {
+        handle(APIError(code: "AUTH_REQUIRED"))
+        self.notice = notice
+        error = nil
     }
 
-    func home() {
-        screen = .home
+    func signOut() async {
+        guard let session else { return }
+        do {
+            try await VerifiedPhoneAuthentication().revoke(session: session)
+            guard self.session == session else { return }
+            let configuration = try Config.load()
+            try SessionStore.delete(configuration: configuration)
+            try SharedState.clearAccount(session.accountID, configuration: configuration)
+            self.session = nil
+            clearPrivateState()
+        } catch { handle(error) }
     }
 
-    func go(_ next: Screen) {
-        screen = next
+    func link(_ groupID: String) async {
+        guard let token, let conversationKey, let accountID = session?.accountID,
+              me?.groups.contains(where: { $0.id == groupID }) == true else { return }
+        do {
+            let _: Ignored? = try await API.mutation("v0Groups:linkConversation", [
+                "token": token, "groupId": groupID, "conversationKey": conversationKey, "requestId": UUID().uuidString,
+            ])
+            guard self.token == token, self.conversationKey == conversationKey else { return }
+            try ConversationLinks.set(groupID, for: conversationKey, accountID: accountID, configuration: Config.load())
+            linkedRoomId = groupID
+            if let pendingBet, pendingBet.groupId == groupID,
+               let locator = try? locator(for: pendingBet.card) { screen = .bet(locator.value) }
+            else { screen = .home }
+            error = nil
+        } catch { handle(error) }
+    }
+
+    func unlink() async {
+        guard let token, let accountID = session?.accountID, let conversationKey else { return }
+        do {
+            let _: Ignored? = try await API.mutation("v0Groups:unlinkConversation", [
+                "token": token, "conversationKey": conversationKey, "requestId": UUID().uuidString,
+            ])
+            guard self.token == token, self.conversationKey == conversationKey else { return }
+            try ConversationLinks.set(nil, for: conversationKey, accountID: accountID, configuration: Config.load())
+            linkedRoomId = nil
+            pendingBet = nil
+            sessions = [:]
+            screen = .groups
+        } catch { handle(error) }
+    }
+
+    func compose(subjectID: String? = nil) {
+        requestedSubjectID = subjectID
+        go(.newBet)
+    }
+
+    private func open(_ message: MSMessage) async {
+        do {
+            guard let url = message.url else { throw NativeError.invalidLink }
+            let configuration = try Config.load()
+            let locator = try CardLocator(url: url, configuration: configuration)
+            try SecureSessionPersistence().setPendingCard(locator, configuration: configuration)
+            guard let token, let conversationKey else { return }
+            let bet: NativeBet? = try await API.query("v0Bets:get", ["token": token, "locator": locator.value])
+            guard self.token == token, self.conversationKey == conversationKey, !Task.isCancelled else { return }
+            guard let bet, try self.locator(for: bet.card) == locator else { throw NativeError.invalidLink }
+            guard case .unavailable = bet.content else {
+                pendingBet = bet
+                if let linkedRoomId, linkedRoomId != bet.groupId {
+                    screen = .groups
+                    error = "This card doesn't belong to this conversation's linked group. It hasn't changed your link."
+                    return
+                }
+                sessions[bet.betId] = message.session
+                screen = linkedRoomId == bet.groupId ? .bet(locator.value) : .groups
+                return
+            }
+            throw APIError(code: "NOT_AVAILABLE")
+        } catch { handle(error) }
+    }
+
+    func locator(for metadata: CardMetadata) throws -> CardLocator {
+        guard let url = URL(string: metadata.url) else { throw NativeError.invalidLink }
+        return try CardLocator(url: url, configuration: Config.load())
+    }
+
+    func home() { screen = .home }
+    func go(_ screen: Screen) {
+        self.screen = screen
         if style != .expanded { controller?.requestPresentationStyle(.expanded) }
     }
-
-    func openWeb() {
-        controller?.extensionContext?.open(Config.web)
+    func openHost() {
+        guard let url = URL(string: "calledit-host://signin") else { return }
+        controller?.extensionContext?.open(url)
     }
 
-    func send(_ message: MSMessage) {
-        guard let conversation = controller?.activeConversation else {
-            error = "Open a conversation first."
+    func send(_ bet: NativeBet) {
+        guard bet.groupId == linkedRoomId, me?.groups.contains(where: { $0.id == bet.groupId }) == true,
+              let conversation = controller?.activeConversation else {
+            error = "Link this conversation to the card's group before sending."
             return
         }
-        conversation.insert(message) { [weak self] err in
-            guard let err else { return }
-            Task { @MainActor in self?.error = err.localizedDescription }
-        }
-        controller?.requestPresentationStyle(.compact)
-    }
-
-    var selectedSession: MSSession? { controller?.activeConversation?.selectedMessage?.session }
-}
-
-enum Links {
-    private static let key = "calledit.links"
-
-    static func room(for conversation: String) -> String? {
-        (UserDefaults.standard.dictionary(forKey: key) as? [String: String])?[conversation] ?? UserDefaults.standard.string(forKey: key + ".last")
-    }
-
-    static func set(_ room: String, for conversation: String) {
-        var all = (UserDefaults.standard.dictionary(forKey: key) as? [String: String]) ?? [:]
-        all[conversation] = room
-        UserDefaults.standard.set(all, forKey: key)
-        UserDefaults.standard.set(room, forKey: key + ".last")
+        do {
+            _ = try locator(for: bet.card)
+            let session = sessions[bet.betId] ?? MSSession()
+            sessions[bet.betId] = session
+            let message = try Cards.message(metadata: bet.card, session: session)
+            conversation.insert(message) { [weak self] failure in
+                guard let failure else { return }
+                Task { @MainActor in self?.error = failure.localizedDescription }
+            }
+            controller?.requestPresentationStyle(.compact)
+        } catch { handle(error) }
     }
 }
 
 enum Cards {
-    static func voterNames(_ card: BetCard?) -> [String] {
-        guard let card else { return [] }
-        if let who = card.who, !who.isEmpty { return who.map(\.name) }
-        return (card.sides ?? []).flatMap { $0 }.map(\.name)
-    }
-
-    static func initials(_ names: [String]) -> String {
-        names.prefix(4).map { String($0.prefix(1)).uppercased() }.joined(separator: " ")
-    }
-
-    static func bet(roomId: String, betId: String, subject: Person?, revealAt: Double?, voters: [String], session: MSSession?) -> MSMessage {
-        let name = subject?.name ?? "a friend"
+    static func message(metadata: CardMetadata, session: MSSession) throws -> MSMessage {
+        guard let url = URL(string: metadata.url) else { throw NativeError.invalidLink }
+        let locator = try CardLocator(url: url, configuration: Config.load())
         let layout = MSMessageTemplateLayout()
-        layout.caption = "Bet about \(name)"
-        if let revealAt {
-            layout.subcaption = revealAt <= nowMs() ? "Revealed, tap to see the result" : "Reveals \(clock(revealAt))"
-        }
-        layout.trailingSubcaption = voters.isEmpty ? nil : "\(voters.count) in · \(initials(voters))"
-        layout.imageTitle = "Tap to open in Called It"
-        layout.image = art(name: name)
-        let message = MSMessage(session: session ?? MSSession())
+        layout.caption = "Secret bet on " + metadata.subjectAlias
+        layout.subcaption = "Open in Called It · Get the app to play"
+        layout.trailingSubcaption = metadata.bettorCount > 0 ? "\(metadata.bettorCount) in · " + metadata.bettorInitials.prefix(4).joined(separator: " ") : nil
+        layout.imageTitle = "Called It"
+        layout.image = art(name: metadata.subjectAlias)
+        let message = MSMessage(session: session)
         message.layout = layout
-        message.url = url("bet", ["r": roomId, "b": betId])
-        message.summaryText = "Called It bet"
-        message.accessibilityLabel = "Called It bet about \(name)"
+        message.url = try locator.url(configuration: Config.load())
+        message.summaryText = "Called It · Open in Messages"
+        message.accessibilityLabel = "Called It card about " + metadata.subjectAlias
         return message
-    }
-
-    static func result(roomId: String, betId: String, card: BetCard, session: MSSession?) -> MSMessage {
-        let name = card.subject?.name ?? "Someone"
-        let layout = MSMessageTemplateLayout()
-        if card.status == "refunded" {
-            layout.caption = "\(name) vetoed a bet"
-            layout.subcaption = "Everyone got their points back"
-        } else {
-            layout.caption = "\(name) called it"
-            if card.revealed == true, let win = card.winningOption, let options = card.options, options.indices.contains(win) {
-                layout.subcaption = "It was \(options[win])"
-            } else {
-                layout.subcaption = "Settled"
-            }
-        }
-        let voters = voterNames(card)
-        layout.trailingSubcaption = voters.isEmpty ? nil : "\(voters.count) in · \(initials(voters))"
-        layout.imageTitle = "Tap to open in Called It"
-        layout.image = art(name: name)
-        let message = MSMessage(session: session ?? MSSession())
-        message.layout = layout
-        message.url = url("bet", ["r": roomId, "b": betId])
-        message.summaryText = "Called It result"
-        message.accessibilityLabel = "Called It result"
-        return message
-    }
-
-    static func board(_ board: BoardResult, session: MSSession?) -> MSMessage {
-        let layout = MSMessageTemplateLayout()
-        layout.caption = "\(board.room.name) leaderboard"
-        layout.subcaption = board.rows.prefix(3).map { "\($0.name) \(pts($0.points))" }.joined(separator: " · ")
-        layout.imageTitle = "Tap to open in Called It"
-        layout.image = art(name: board.room.name)
-        let message = MSMessage(session: session ?? MSSession())
-        message.layout = layout
-        message.url = url("board", ["r": board.room._id])
-        message.summaryText = "Called It leaderboard"
-        message.accessibilityLabel = "\(board.room.name) leaderboard"
-        return message
-    }
-
-    private static func url(_ host: String, _ query: [String: String]) -> URL? {
-        var parts = URLComponents()
-        parts.scheme = "calledit"
-        parts.host = host
-        parts.queryItems = query.sorted { $0.key > $1.key }.map { URLQueryItem(name: $0.key, value: $0.value) }
-        return parts.url
     }
 
     private static func art(name: String) -> UIImage {
         let size = CGSize(width: 600, height: 300)
-        return UIGraphicsImageRenderer(size: size).image { ctx in
+        return UIGraphicsImageRenderer(size: size).image { context in
             UIColor(Theme.bubble).setFill()
-            ctx.fill(CGRect(origin: .zero, size: size))
-            var rng = SeededRandom(seed: 7)
+            context.fill(CGRect(origin: .zero, size: size))
+            var random = SeededRandom(seed: 7)
             for _ in 0..<5000 {
-                let x = CGFloat(rng.next() % 600), y = CGFloat(rng.next() % 300)
-                UIColor(white: 0.45 + CGFloat(rng.next() % 35) / 100, alpha: 1).setFill()
-                ctx.fill(CGRect(x: x, y: y, width: 2.5, height: 2.5))
+                let x = CGFloat(random.next() % 600), y = CGFloat(random.next() % 300)
+                UIColor(white: 0.45 + CGFloat(random.next() % 35) / 100, alpha: 1).setFill()
+                context.fill(CGRect(x: x, y: y, width: 2.5, height: 2.5))
             }
-            let attrs: [NSAttributedString.Key: Any] = [
+            let attributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.preferredFont(forTextStyle: .largeTitle).withSize(56),
                 .foregroundColor: UIColor.systemBlue,
             ]
-            ("@" + name as NSString).draw(at: CGPoint(x: 36, y: 30), withAttributes: attrs)
+            ("@" + String(name.prefix(40)) as NSString).draw(at: CGPoint(x: 36, y: 30), withAttributes: attributes)
         }
     }
 }

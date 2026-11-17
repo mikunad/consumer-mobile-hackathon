@@ -73,8 +73,8 @@ export function MarketSheet({ betId, token, onClose }: { betId: Id<"bets">; toke
           <Text style={[t(15, "400", I.secondary), { padding: 24 }]}>Loading…</Text>
         ) : m === null ? (
           <View style={{ padding: 24, gap: 8 }}>
-            <Text style={t(22, "700")}>Today's bet is about you</Text>
-            <Text style={t(15, "400", I.secondary)}>You'll see it at the reveal.</Text>
+            <Text style={t(22, "700")}>Today&apos;s bet is about you</Text>
+            <Text style={t(15, "400", I.secondary)}>You&apos;ll see it at the reveal.</Text>
           </View>
         ) : (
           <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 30, gap: 14, maxWidth: 560, width: "100%", alignSelf: "center" }} keyboardShouldPersistTaps="handled">
@@ -170,7 +170,7 @@ export function MarketSheet({ betId, token, onClose }: { betId: Id<"bets">; toke
                     onPress={() => pick !== null && run(async () => { await stake({ token, betId, option: pick, amount: amt }); onClose(); })}
                   />
                 </View>
-                <Text style={[t(13, "400", I.secondary), { textAlign: "center" }]}>{name} won't see this bet until {timeOf(m.revealAt)}.</Text>
+                <Text style={[t(13, "400", I.secondary), { textAlign: "center" }]}>{name} won&apos;t see this bet until {timeOf(m.revealAt)}.</Text>
               </>
             ) : null}
             {err ? <Text style={t(15, "500", RED)}>{err}</Text> : null}

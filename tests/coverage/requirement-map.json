@@ -1,0 +1,1130 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    "key-user-journeys.md",
+    "system-design.md"
+  ],
+  "requirements": [
+    {
+      "id": "JOURNEY-L51",
+      "source": "key-user-journeys.md",
+      "lines": [
+        51,
+        51
+      ],
+      "caseIds": [
+        "J1.1",
+        "R1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L52",
+      "source": "key-user-journeys.md",
+      "lines": [
+        52,
+        52
+      ],
+      "caseIds": [
+        "J1.2",
+        "R1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L71",
+      "source": "key-user-journeys.md",
+      "lines": [
+        71,
+        71
+      ],
+      "caseIds": [
+        "J2.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L72",
+      "source": "key-user-journeys.md",
+      "lines": [
+        72,
+        72
+      ],
+      "caseIds": [
+        "J2.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L73",
+      "source": "key-user-journeys.md",
+      "lines": [
+        73,
+        73
+      ],
+      "caseIds": [
+        "J2.1",
+        "R5"
+      ]
+    },
+    {
+      "id": "JOURNEY-L97",
+      "source": "key-user-journeys.md",
+      "lines": [
+        97,
+        97
+      ],
+      "caseIds": [
+        "J3.2",
+        "R1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L98",
+      "source": "key-user-journeys.md",
+      "lines": [
+        98,
+        98
+      ],
+      "caseIds": [
+        "J3.3",
+        "J3.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L99",
+      "source": "key-user-journeys.md",
+      "lines": [
+        99,
+        99
+      ],
+      "caseIds": [
+        "J3.1",
+        "N1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L115",
+      "source": "key-user-journeys.md",
+      "lines": [
+        115,
+        115
+      ],
+      "caseIds": [
+        "J4.1",
+        "SEC3",
+        "R2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L116",
+      "source": "key-user-journeys.md",
+      "lines": [
+        116,
+        116
+      ],
+      "caseIds": [
+        "J4.2",
+        "SEC1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L117",
+      "source": "key-user-journeys.md",
+      "lines": [
+        117,
+        117
+      ],
+      "caseIds": [
+        "J4.3",
+        "R4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L132",
+      "source": "key-user-journeys.md",
+      "lines": [
+        132,
+        132
+      ],
+      "caseIds": [
+        "J5.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L133",
+      "source": "key-user-journeys.md",
+      "lines": [
+        133,
+        133
+      ],
+      "caseIds": [
+        "J5.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L134",
+      "source": "key-user-journeys.md",
+      "lines": [
+        134,
+        134
+      ],
+      "caseIds": [
+        "J5.5",
+        "R4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L153",
+      "source": "key-user-journeys.md",
+      "lines": [
+        153,
+        153
+      ],
+      "caseIds": [
+        "J6.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L154",
+      "source": "key-user-journeys.md",
+      "lines": [
+        154,
+        154
+      ],
+      "caseIds": [
+        "J6.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L155",
+      "source": "key-user-journeys.md",
+      "lines": [
+        155,
+        155
+      ],
+      "caseIds": [
+        "J6.3",
+        "SEC1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L156",
+      "source": "key-user-journeys.md",
+      "lines": [
+        156,
+        156
+      ],
+      "caseIds": [
+        "J6.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L170",
+      "source": "key-user-journeys.md",
+      "lines": [
+        170,
+        170
+      ],
+      "caseIds": [
+        "J7.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L171",
+      "source": "key-user-journeys.md",
+      "lines": [
+        171,
+        171
+      ],
+      "caseIds": [
+        "J7.3",
+        "N1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L172",
+      "source": "key-user-journeys.md",
+      "lines": [
+        172,
+        172
+      ],
+      "caseIds": [
+        "J7.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L197",
+      "source": "key-user-journeys.md",
+      "lines": [
+        197,
+        197
+      ],
+      "caseIds": [
+        "J8.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L39",
+      "source": "key-user-journeys.md",
+      "lines": [
+        39,
+        39
+      ],
+      "caseIds": [
+        "J1.1",
+        "J6.1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L40",
+      "source": "key-user-journeys.md",
+      "lines": [
+        40,
+        40
+      ],
+      "caseIds": [
+        "J1.1",
+        "J1.2"
+      ],
+      "amendment": "Explicit verified invitation acceptance overrides automatic admission; no pre-join history"
+    },
+    {
+      "id": "JOURNEY-L41",
+      "source": "key-user-journeys.md",
+      "lines": [
+        41,
+        41
+      ],
+      "caseIds": [
+        "J1.1",
+        "J2.1",
+        "J9.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L64",
+      "source": "key-user-journeys.md",
+      "lines": [
+        64,
+        64
+      ],
+      "caseIds": [
+        "J2.1",
+        "J9.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L65",
+      "source": "key-user-journeys.md",
+      "lines": [
+        65,
+        65
+      ],
+      "caseIds": [
+        "J2.1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L66",
+      "source": "key-user-journeys.md",
+      "lines": [
+        66,
+        66
+      ],
+      "caseIds": [
+        "J2.2",
+        "SEC2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L67",
+      "source": "key-user-journeys.md",
+      "lines": [
+        67,
+        67
+      ],
+      "caseIds": [
+        "J2.1",
+        "J2.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L85",
+      "source": "key-user-journeys.md",
+      "lines": [
+        85,
+        85
+      ],
+      "caseIds": [
+        "J3.1",
+        "N1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L86",
+      "source": "key-user-journeys.md",
+      "lines": [
+        86,
+        86
+      ],
+      "caseIds": [
+        "J6.1",
+        "J1.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L87",
+      "source": "key-user-journeys.md",
+      "lines": [
+        87,
+        87
+      ],
+      "caseIds": [
+        "J3.2",
+        "J3.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L109",
+      "source": "key-user-journeys.md",
+      "lines": [
+        109,
+        109
+      ],
+      "caseIds": [
+        "J4.1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L110",
+      "source": "key-user-journeys.md",
+      "lines": [
+        110,
+        110
+      ],
+      "caseIds": [
+        "J4.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L111",
+      "source": "key-user-journeys.md",
+      "lines": [
+        111,
+        111
+      ],
+      "caseIds": [
+        "J4.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L125",
+      "source": "key-user-journeys.md",
+      "lines": [
+        125,
+        125
+      ],
+      "caseIds": [
+        "J5.1",
+        "N1",
+        "N2",
+        "N3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L126",
+      "source": "key-user-journeys.md",
+      "lines": [
+        126,
+        126
+      ],
+      "caseIds": [
+        "J5.1",
+        "J5.2",
+        "J5.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L127",
+      "source": "key-user-journeys.md",
+      "lines": [
+        127,
+        127
+      ],
+      "caseIds": [
+        "J5.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L128",
+      "source": "key-user-journeys.md",
+      "lines": [
+        128,
+        128
+      ],
+      "caseIds": [
+        "J7.1",
+        "N2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L146",
+      "source": "key-user-journeys.md",
+      "lines": [
+        146,
+        146
+      ],
+      "caseIds": [
+        "J6.1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L147",
+      "source": "key-user-journeys.md",
+      "lines": [
+        147,
+        147
+      ],
+      "caseIds": [
+        "J6.1",
+        "J6.2",
+        "J6.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L148",
+      "source": "key-user-journeys.md",
+      "lines": [
+        148,
+        148
+      ],
+      "caseIds": [
+        "J6.1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L149",
+      "source": "key-user-journeys.md",
+      "lines": [
+        149,
+        149
+      ],
+      "caseIds": [
+        "J1.3",
+        "J5.5"
+      ]
+    },
+    {
+      "id": "JOURNEY-L164",
+      "source": "key-user-journeys.md",
+      "lines": [
+        164,
+        164
+      ],
+      "caseIds": [
+        "J7.1"
+      ]
+    },
+    {
+      "id": "JOURNEY-L165",
+      "source": "key-user-journeys.md",
+      "lines": [
+        165,
+        165
+      ],
+      "caseIds": [
+        "J7.2",
+        "J7.3"
+      ]
+    },
+    {
+      "id": "JOURNEY-L166",
+      "source": "key-user-journeys.md",
+      "lines": [
+        166,
+        166
+      ],
+      "caseIds": [
+        "J7.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L182",
+      "source": "key-user-journeys.md",
+      "lines": [
+        182,
+        182
+      ],
+      "caseIds": [
+        "J8.5"
+      ]
+    },
+    {
+      "id": "JOURNEY-L186",
+      "source": "key-user-journeys.md",
+      "lines": [
+        186,
+        186
+      ],
+      "caseIds": [
+        "J8.1",
+        "J8.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L187",
+      "source": "key-user-journeys.md",
+      "lines": [
+        187,
+        187
+      ],
+      "caseIds": [
+        "J8.1",
+        "J8.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L188",
+      "source": "key-user-journeys.md",
+      "lines": [
+        188,
+        188
+      ],
+      "caseIds": [
+        "J4.3",
+        "J8.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L189",
+      "source": "key-user-journeys.md",
+      "lines": [
+        189,
+        189
+      ],
+      "caseIds": [
+        "J8.2",
+        "J8.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L190",
+      "source": "key-user-journeys.md",
+      "lines": [
+        190,
+        190
+      ],
+      "caseIds": [
+        "J8.3",
+        "J8.4"
+      ]
+    },
+    {
+      "id": "JOURNEY-L206",
+      "source": "key-user-journeys.md",
+      "lines": [
+        206,
+        206
+      ],
+      "caseIds": [
+        "J9.1"
+      ],
+      "amendment": "Explicit verified invitation acceptance overrides automatic admission; no pre-join history"
+    },
+    {
+      "id": "JOURNEY-L207",
+      "source": "key-user-journeys.md",
+      "lines": [
+        207,
+        207
+      ],
+      "caseIds": [
+        "J8.2",
+        "J9.2"
+      ]
+    },
+    {
+      "id": "JOURNEY-L208",
+      "source": "key-user-journeys.md",
+      "lines": [
+        208,
+        208
+      ],
+      "caseIds": [
+        "J9.3",
+        "R5"
+      ]
+    },
+    {
+      "id": "JOURNEY-L209",
+      "source": "key-user-journeys.md",
+      "lines": [
+        209,
+        209
+      ],
+      "caseIds": [
+        "J7.2",
+        "J9.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L11",
+      "source": "system-design.md",
+      "lines": [
+        11,
+        11
+      ],
+      "caseIds": [
+        "J1.1",
+        "J9.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L12",
+      "source": "system-design.md",
+      "lines": [
+        12,
+        12
+      ],
+      "caseIds": [
+        "SEC1",
+        "SEC3",
+        "J4.1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L31",
+      "source": "system-design.md",
+      "lines": [
+        31,
+        31
+      ],
+      "caseIds": [
+        "J1.1",
+        "J3.2",
+        "J5.2",
+        "J9.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L32",
+      "source": "system-design.md",
+      "lines": [
+        32,
+        32
+      ],
+      "caseIds": [
+        "N1",
+        "J5.4",
+        "SEC1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L33",
+      "source": "system-design.md",
+      "lines": [
+        33,
+        33
+      ],
+      "caseIds": [
+        "J6.1",
+        "J6.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L37",
+      "source": "system-design.md",
+      "lines": [
+        37,
+        37
+      ],
+      "caseIds": [
+        "SEC2",
+        "SEC5"
+      ]
+    },
+    {
+      "id": "SYSTEM-L41",
+      "source": "system-design.md",
+      "lines": [
+        41,
+        41
+      ],
+      "caseIds": [
+        "J7.2",
+        "J9.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L45",
+      "source": "system-design.md",
+      "lines": [
+        45,
+        45
+      ],
+      "caseIds": [
+        "SEC2",
+        "J8.1",
+        "N3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L46",
+      "source": "system-design.md",
+      "lines": [
+        46,
+        46
+      ],
+      "caseIds": [
+        "J1.1",
+        "N1",
+        "J7.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L47",
+      "source": "system-design.md",
+      "lines": [
+        47,
+        47
+      ],
+      "caseIds": [
+        "J1.2",
+        "J9.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L48",
+      "source": "system-design.md",
+      "lines": [
+        48,
+        48
+      ],
+      "caseIds": [
+        "J9.1",
+        "J9.2",
+        "J7.1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L49",
+      "source": "system-design.md",
+      "lines": [
+        49,
+        49
+      ],
+      "caseIds": [
+        "J3.1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L50",
+      "source": "system-design.md",
+      "lines": [
+        50,
+        50
+      ],
+      "caseIds": [
+        "J3.4",
+        "J6.4",
+        "J5.2"
+      ]
+    },
+    {
+      "id": "SYSTEM-L51",
+      "source": "system-design.md",
+      "lines": [
+        51,
+        51
+      ],
+      "caseIds": [
+        "J3.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L52",
+      "source": "system-design.md",
+      "lines": [
+        52,
+        52
+      ],
+      "caseIds": [
+        "J5.2",
+        "J5.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L53",
+      "source": "system-design.md",
+      "lines": [
+        53,
+        53
+      ],
+      "caseIds": [
+        "J8.2",
+        "J8.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L63",
+      "source": "system-design.md",
+      "lines": [
+        63,
+        66
+      ],
+      "caseIds": [
+        "J1.1",
+        "J1.2",
+        "J9.1"
+      ],
+      "amendment": "Explicit verified invitation acceptance overrides automatic admission; no pre-join history"
+    },
+    {
+      "id": "SYSTEM-L70",
+      "source": "system-design.md",
+      "lines": [
+        70,
+        74
+      ],
+      "caseIds": [
+        "J3.1",
+        "J6.1",
+        "J1.3",
+        "N1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L78",
+      "source": "system-design.md",
+      "lines": [
+        78,
+        81
+      ],
+      "caseIds": [
+        "J4.2",
+        "J3.2",
+        "SEC1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L86",
+      "source": "system-design.md",
+      "lines": [
+        86,
+        90
+      ],
+      "caseIds": [
+        "J5.1",
+        "J5.2",
+        "J5.3",
+        "J5.5",
+        "J7.1",
+        "N1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L108",
+      "source": "system-design.md",
+      "lines": [
+        108,
+        108
+      ],
+      "caseIds": [
+        "J6.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L112",
+      "source": "system-design.md",
+      "lines": [
+        112,
+        113
+      ],
+      "caseIds": [
+        "J6.1",
+        "J6.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L119",
+      "source": "system-design.md",
+      "lines": [
+        119,
+        119
+      ],
+      "caseIds": [
+        "J6.1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L121",
+      "source": "system-design.md",
+      "lines": [
+        121,
+        123
+      ],
+      "caseIds": [
+        "J6.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L125",
+      "source": "system-design.md",
+      "lines": [
+        125,
+        125
+      ],
+      "caseIds": [
+        "J6.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L127",
+      "source": "system-design.md",
+      "lines": [
+        127,
+        127
+      ],
+      "caseIds": [
+        "J7.1",
+        "J3.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L131",
+      "source": "system-design.md",
+      "lines": [
+        131,
+        131
+      ],
+      "caseIds": [
+        "SEC2",
+        "J2.2"
+      ]
+    },
+    {
+      "id": "SYSTEM-L135",
+      "source": "system-design.md",
+      "lines": [
+        135,
+        135
+      ],
+      "caseIds": [
+        "J2.2",
+        "J9.1"
+      ],
+      "amendment": "Explicit verified invitation acceptance overrides automatic admission; no pre-join history"
+    },
+    {
+      "id": "SYSTEM-L137",
+      "source": "system-design.md",
+      "lines": [
+        137,
+        137
+      ],
+      "caseIds": [
+        "SEC2",
+        "J2.2",
+        "J1.2"
+      ]
+    },
+    {
+      "id": "SYSTEM-L142",
+      "source": "system-design.md",
+      "lines": [
+        142,
+        144
+      ],
+      "caseIds": [
+        "SEC1",
+        "SEC3",
+        "J6.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L148",
+      "source": "system-design.md",
+      "lines": [
+        148,
+        148
+      ],
+      "caseIds": [
+        "J8.5"
+      ]
+    },
+    {
+      "id": "SYSTEM-L150",
+      "source": "system-design.md",
+      "lines": [
+        150,
+        150
+      ],
+      "caseIds": [
+        "J8.3"
+      ]
+    },
+    {
+      "id": "SYSTEM-L154",
+      "source": "system-design.md",
+      "lines": [
+        154,
+        155
+      ],
+      "caseIds": [
+        "SEC5"
+      ]
+    },
+    {
+      "id": "SYSTEM-L13",
+      "source": "system-design.md",
+      "lines": [
+        13,
+        13
+      ],
+      "caseIds": [
+        "J8.5",
+        "J6.1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L15",
+      "source": "system-design.md",
+      "lines": [
+        15,
+        15
+      ],
+      "caseIds": [
+        "J3.3",
+        "J7.1"
+      ]
+    },
+    {
+      "id": "SYSTEM-L16",
+      "source": "system-design.md",
+      "lines": [
+        16,
+        16
+      ],
+      "caseIds": [
+        "J3.2",
+        "J6.4"
+      ]
+    },
+    {
+      "id": "SYSTEM-L30",
+      "source": "system-design.md",
+      "lines": [
+        30,
+        30
+      ],
+      "caseIds": [
+        "J2.2",
+        "J7.2",
+        "J8.4",
+        "N2",
+        "N3"
+      ]
+    }
+  ],
+  "sourceDigests": {
+    "key-user-journeys.md": "0a9a9a29d018d60db0bb02f35434bfca7e0d5d4c56b96ff68044c8b1fbe185f1",
+    "system-design.md": "1c9d67477d8d0b7526a1cf04da07e1e9dad080cc29708f80fd764b01f4e3e351"
+  }
+}

@@ -88,7 +88,7 @@ export default function BetPage() {
           ) : null}
         </View>
         {d === undefined ? <Text style={[s.sub, { color: C.faint }]}>Loading…</Text> : null}
-        {d === null ? <Text style={s.body}>This market isn't around anymore.</Text> : null}
+        {d === null ? <Text style={s.body}>This market isn&apos;t around anymore.</Text> : null}
         {d ? <Body d={d} token={token} now={now} /> : null}
       </ScrollView>
     </View>
@@ -136,7 +136,7 @@ function Body({ d, token, now }: { d: Detail; token: string | null; now: number 
             </Text>
           </View>
         ) : sides ? (
-          <Text style={s.sub}>Nobody's in yet. First call sets the odds.</Text>
+          <Text style={s.sub}>Nobody&apos;s in yet. First call sets the odds.</Text>
         ) : null}
       </View>
 

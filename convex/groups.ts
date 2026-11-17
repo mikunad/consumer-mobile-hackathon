@@ -1,4 +1,4 @@
-import { mutation, query } from "./_generated/server";
+import { mutation, query } from "./v0Legacy";
 import { v, ConvexError } from "convex/values";
 import { HOUR, defaultGroupId, isMember, normalizeUsername, requireUser, userByToken } from "./lib";
 import { ensureRound, insertBet, settleBet } from "./admin";

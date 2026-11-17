@@ -1,5 +1,5 @@
 "use node";
-import { action } from "./_generated/server";
+import { action } from "./v0Legacy";
 import { api } from "./_generated/api";
 import { v, ConvexError } from "convex/values";
 

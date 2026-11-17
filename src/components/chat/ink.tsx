@@ -1,11 +1,11 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { Animated, Easing, PanResponder, Pressable, Text, View } from "react-native";
 import { I, t } from "./ios";
 
 const DOTS = 90;
 
 function Particles({ width, height }: { width: number; height: number }) {
-  const phases = useRef([0, 1, 2].map(() => new Animated.Value(0))).current;
+  const [phases] = useState(() => [0, 1, 2].map(() => new Animated.Value(0)));
   useEffect(() => {
     const loops = phases.map((p, i) =>
       Animated.loop(
@@ -21,13 +21,13 @@ function Particles({ width, height }: { width: number; height: number }) {
   const dots = useMemo(
     () =>
       Array.from({ length: DOTS }, (_, i) => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: 1 + Math.random() * 1.8,
+        x: ((i * 37 + 11) % DOTS) / DOTS * width,
+        y: ((i * 53 + 7) % DOTS) / DOTS * height,
+        r: 1 + (i % 10) / 10 * 1.8,
         g: i % 3,
-        dx: (Math.random() - 0.5) * 8,
-        dy: (Math.random() - 0.5) * 8,
-        dark: Math.random() > 0.35,
+        dx: ((i * 7) % 17 - 8) / 2,
+        dy: ((i * 11) % 17 - 8) / 2,
+        dark: i % 3 !== 0,
       })),
     [width, height],
   );
@@ -76,11 +76,10 @@ export function InvisibleInk({
 }) {
   const [gone, setGone] = useState(false);
   const [tip, setTip] = useState(false);
-  const fade = useRef(new Animated.Value(1)).current;
-  const moves = useRef(0);
-  const uncover = () => {
+  const [fade] = useState(() => new Animated.Value(1));
+  const uncover = useCallback(() => {
     Animated.timing(fade, { toValue: 0, duration: 700, useNativeDriver: true }).start(() => setGone(true));
-  };
+  }, [fade]);
   const pan = useMemo(
     () =>
       PanResponder.create({
@@ -89,18 +88,18 @@ export function InvisibleInk({
         onPanResponderGrant: () => {
           if (!canRub) setTip(true);
         },
-        onPanResponderMove: () => {
+        onPanResponderMove: (_, gesture) => {
           if (!canRub) return;
-          moves.current += 1;
-          fade.setValue(Math.max(0.15, 1 - moves.current / 14));
-          if (moves.current > 10) uncover();
+          const distance = Math.hypot(gesture.dx, gesture.dy);
+          fade.setValue(Math.max(0.15, 1 - distance / 70));
+          if (distance > 50) uncover();
         },
-        onPanResponderRelease: () => {
-          if (canRub && moves.current <= 10) Animated.timing(fade, { toValue: 1, duration: 300, useNativeDriver: true }).start(() => (moves.current = 0));
+        onPanResponderRelease: (_, gesture) => {
+          if (canRub && Math.hypot(gesture.dx, gesture.dy) <= 50) Animated.timing(fade, { toValue: 1, duration: 300, useNativeDriver: true }).start();
           setTimeout(() => setTip(false), 1600);
         },
       }),
-    [canRub, fade],
+    [canRub, fade, uncover],
   );
   if (gone && children) return <>{children}</>;
   return (

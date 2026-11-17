@@ -2,366 +2,282 @@ import SwiftUI
 
 struct BetView: View {
     @EnvironmentObject var model: AppModel
-    let roomId: String
-    let betId: String
-    @State private var card: BetCard?
-    @State private var error: String?
-    @State private var busy = false
+    let locator: String
+    @State private var card: NativeBet?
+    @State private var serverClock: ServerClock?
+    @State private var side = 0
+    @State private var confidence = 50.0
     @State private var uncovered = false
-    @State private var side: Int?
-    @State private var amount: Double = 100
-    @State private var confirmVeto = false
+    @State private var busy = false
+    @State private var error: String?
+    @State private var mutationIDs: [String: String] = [:]
+    @State private var saveConfirmation: String?
+    @State private var confirmation = PickConfirmationState()
 
     var body: some View {
         Group {
-            if let card {
-                switch card.access {
-                case "sealed": sealed(card)
-                case "open": open(card)
-                default: noAccess
+            if let card, model.isActive {
+                switch card.content {
+                case .sealed(let canVeto): sealed(card, canVeto: canVeto)
+                case .unavailable: unavailable
+                case .bet(let details): opened(card, details)
                 }
-            } else if error == nil {
-                ProgressView().frame(maxWidth: .infinity).padding(40)
-            }
+            } else if confirmation.isUncertain {
+                CardBox {
+                    Text("Confirmation couldn't be verified").font(.headline)
+                    Text("Your draft isn't shown as locked. Reconnect and refresh to recover any server-confirmed pick before making changes.")
+                    Button("Refresh confirmation") { Task { await load() } }
+                        .disabled(busy).accessibilityIdentifier("bet.refreshConfirmation")
+                }
+            } else if error == nil { ProgressView().frame(maxWidth: .infinity).padding(40) }
             ErrorText(text: error)
         }
-        .task { await poll() }
+        .accessibilityIdentifier("bet.screen")
+        .task(id: model.isActive) { if model.isActive { await poll() } }
+        .onChange(of: model.activeTick) { _, _ in Task { await load() } }
+        .onChange(of: model.isActive) { _, active in if !active { card = nil; uncovered = false } }
+        .onChange(of: side) { _, _ in saveConfirmation = nil }
+        .onChange(of: confidence) { _, _ in saveConfirmation = nil }
     }
 
-    private var noAccess: some View {
+    private var unavailable: some View {
         CardBox {
-            Text("This bet is for another group").font(.headline)
-            Button("Join with invite code") { model.screen = .link }
+            Text("This card isn't available").font(.title2.bold())
+            Text("It may be outside your membership period or no longer active. A forwarded card doesn't grant access.")
+            Button("Groups and invitations") { model.go(.groups) }
+        }
+        .accessibilityIdentifier("bet.unavailable")
+    }
+
+    @ViewBuilder private func sealed(_ bet: NativeBet, canVeto: Bool) -> some View {
+        Text("A secret bet about you").font(.largeTitle.bold())
+        InkBubble(name: bet.card.subjectAlias)
+            .accessibilityIdentifier("bet.sealed")
+        TimelineView(.periodic(from: .now, by: 1)) { _ in
+            Text(deadline(bet.revealAt, prefix: "Reveals"))
+                .font(.subheadline.monospacedDigit()).foregroundStyle(Theme.sub)
+        }
+        CardBox {
+            Text("\(bet.card.bettorCount) friends are in").font(.headline)
+            Text(bet.card.bettorInitials.joined(separator: " · ")).font(.subheadline)
+        }
+        Footnote(text: "Only locked metadata is available before the server reveals the question. Rubbing or changing your device clock can't reveal it early.")
+        if canVeto {
+            Button("Quietly veto this bet", role: .destructive) { Task { await mutate("v0Bets:veto", bet: bet) } }
+                .frame(minHeight: 44)
+                .disabled(busy)
+                .accessibilityIdentifier("bet.veto")
+            Footnote(text: "One tap removes it quietly. No card update or group announcement is sent.")
         }
     }
 
-    @ViewBuilder private func sealed(_ card: BetCard) -> some View {
-        let name = card.subject?.name ?? "you"
-        let revealAt = card.revealAt ?? nowMs()
-        SheetHeader(title: "About you", trailing: "Done", trailingBold: true) { model.home() }
-        VStack(alignment: .leading, spacing: 4) {
-            Text("Today's bet is about you").font(.largeTitle.bold())
-            TimelineView(.periodic(from: .now, by: 1)) { t in
-                Text("Unlocks at \(clock(revealAt)) · in \(countdown(to: revealAt, from: t.date))")
-                    .font(.subheadline.monospacedDigit()).foregroundStyle(Theme.sub)
-            }
+    @ViewBuilder private func opened(_ bet: NativeBet, _ details: BetDetails) -> some View {
+        Text(bet.state == "provisional" ? "Awaiting the group" : "Called It").font(.largeTitle.bold())
+        if details.canAnswer {
+            RubToReveal(name: bet.card.subjectAlias, uncovered: $uncovered) { QuestionBubble(text: details.question) }
+        } else {
+            QuestionBubble(text: details.question).accessibilityIdentifier("bet.question")
         }
-        CardBox {
-            HStack(alignment: .top, spacing: 8) {
-                CIAvatar(size: 28)
-                InkBubble(name: name)
-            }
-            HStack(spacing: 10) {
-                AvatarStack(people: bettorFaces(card))
-                Text((card.bettors?.count ?? 0) == 1 ? "1 friend bet" : "\(card.bettors?.count ?? 0) friends bet").font(.subheadline.weight(.semibold))
-                Spacer()
-                Text("\(pts(card.total ?? 0)) pts in").font(.subheadline.monospacedDigit()).foregroundStyle(Theme.sub)
-            }
-        }
-        SectionTitle(text: "Who bet · sides hidden")
-        InsetGroup {
-            let who = card.who ?? []
-            if who.isEmpty {
-                ForEach(Array((card.bettors ?? []).enumerated()), id: \.offset) { i, emoji in
-                    InsetRow(last: i == (card.bettors?.count ?? 1) - 1) { Avatar(emoji: emoji, size: 30); Spacer() }
+        if !details.canAnswer || uncovered {
+            if let pick = confirmation.confirmed {
+                CardBox {
+                    Label("Your pick is confirmed and locked", systemImage: "lock.fill")
+                        .font(.headline).accessibilityIdentifier("bet.confirmedPick")
+                    Text("\(details.options[safe: pick.option] ?? "—") · confidence \(ConfidenceInput.displayValue(for: pick.confidence)) / 100")
+                        .accessibilityIdentifier("bet.savedPick")
+                    Text("Your choice and confidence can't change. Other members have their own confirmation; this doesn't lock the whole bet.")
+                        .font(.footnote).foregroundStyle(Theme.sub)
                 }
-                if card.bettors?.isEmpty ?? true { InsetRow(last: true) { Text("Nobody yet").foregroundStyle(Theme.sub) } }
+                if let saveConfirmation { Text(saveConfirmation).font(.subheadline).accessibilityIdentifier("bet.saveConfirmation") }
+            } else if details.canPick || confirmation.pending != nil {
+                TimelineView(.periodic(from: .now, by: 1)) { _ in
+                    Text(deadline(bet.revealAt, prefix: "New confirmations end at reveal")).font(.subheadline.monospacedDigit())
+                }
+                Footnote(text: "Draft your choice and confidence here. Confirm pick is final once the server records it; neither can change afterward.")
+                InsetGroup {
+                    ForEach(0..<2, id: \.self) { index in
+                        Button { side = index } label: {
+                            InsetRow(last: index == 1) {
+                                Text(details.options[index]).foregroundStyle(.primary)
+                                Spacer()
+                                Image(systemName: side == index ? "checkmark.circle.fill" : "circle")
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(busy || !confirmation.canEdit(serverCanPick: details.canPick))
+                        .accessibilityLabel(details.options[index])
+                        .accessibilityAddTraits(side == index ? .isSelected : [])
+                        .accessibilityIdentifier("bet.option.\(index)")
+                    }
+                }
+                CardBox {
+                    Text("Confidence: \(Int(confidence)) / 100").font(.headline)
+                    Slider(value: $confidence, in: ConfidenceInput.range, step: 1)
+                        .disabled(busy || !confirmation.canEdit(serverCanPick: details.canPick))
+                        .accessibilityLabel("Confidence")
+                        .accessibilityValue("\(Int(confidence)) out of 100")
+                        .accessibilityIdentifier("bet.confidence")
+                }
+                if let pending = confirmation.pending {
+                    Text(confirmation.isUncertain ? "Confirmation hasn't been verified. Retry the same pick or refresh; editing stays disabled until it is resolved." : "Waiting for the server to confirm your pick.")
+                        .font(.subheadline).accessibilityIdentifier("bet.confirmationPending")
+                    PrimaryButton(title: "Retry confirmation", busy: busy) {
+                        Task { await mutate("v0Bets:pick", bet: bet, args: ["option": pending.option, "confidence": pending.confidence]) }
+                    }
+                    .accessibilityIdentifier("bet.retryConfirmation")
+                    Button("Refresh confirmation") { Task { await load() } }
+                        .disabled(busy).accessibilityIdentifier("bet.refreshConfirmation")
+                } else {
+                    PrimaryButton(title: "Confirm pick", busy: busy) {
+                        Task { await mutate("v0Bets:pick", bet: bet, args: ["option": side, "confidence": ConfidenceInput.normalized(confidence)]) }
+                    }
+                    .disabled(!confirmation.canEdit(serverCanPick: details.canPick))
+                    .accessibilityIdentifier("bet.confirmPick")
+                }
+                Footnote(text: "Correct calls earn 1–100 confidence points × the streak bonus. Wrong calls earn zero and don't reduce your group points. The server applies the confirmed scoring rules.")
             } else {
-                ForEach(Array(who.enumerated()), id: \.offset) { i, p in
-                    InsetRow(last: i == who.count - 1) {
-                        Avatar(name: p.name, size: 30)
-                        Text(p.name)
+                Text(["open", "locked"].contains(bet.state) ? "The server isn't accepting a new pick from you." : bet.state.capitalized)
+                    .font(.headline).accessibilityIdentifier("bet.state")
+            }
+            if ["revealed", "provisional", "finalized"].contains(bet.state) {
+                positions(details)
+                ProofView(betID: bet.betId, canUpload: details.canAnswer)
+            }
+            if details.canAnswer {
+                Text("What happened?").font(.title2.bold())
+                if let at = details.answerDeadline { Text(deadline(at, prefix: "Answer by")).font(.footnote) }
+                ForEach(0..<2, id: \.self) { index in
+                    PrimaryButton(title: details.options[index], color: Theme.verdict(index), busy: busy) {
+                        Task { await mutate("v0Bets:answer", bet: bet, args: ["option": index]) }
+                    }
+                    .accessibilityIdentifier("bet.answer.\(index)")
+                }
+                Footnote(text: "Proof is optional; upload it before answering. Unanswered bets void 24 hours after reveal. Your recorded answer starts a one-hour challenge window; the server owns both deadlines.")
+            }
+            if let provisional = details.provisionalOutcome {
+                Text("Provisional: \(details.options[safe: provisional] ?? "—")").font(.headline)
+                if let at = details.challengeDeadline { Text(deadline(at, prefix: "Challenges close")).font(.footnote) }
+                Footnote(text: "The challenge window lasts one hour from the recorded answer. The server confirms the final result.")
+            }
+            if details.canChallenge {
+                Button("Challenge this answer") { Task { await mutate("v0Bets:challenge", bet: bet) } }
+                    .frame(minHeight: 44).disabled(busy).accessibilityIdentifier("bet.challenge")
+            }
+            if let outcome = details.outcome {
+                CardBox {
+                    Text("Final result: \(details.options[safe: outcome] ?? "—")").font(.title2.bold())
+                    Text("Group points and streaks are calculated by the server.").font(.footnote)
+                }
+                PrimaryButton(title: "Prepare result card") { model.send(bet) }
+                    .accessibilityIdentifier("bet.sendResult")
+                Footnote(text: "This prepares a neutral update to this bet's Messages session. You tap Send. It doesn't silently edit a previously sent card or post in the background.")
+            } else if bet.state != "voided" {
+                SoftButton(title: "Prepare card update") { model.send(bet) }
+                    .accessibilityIdentifier("bet.sendUpdate")
+            }
+        }
+    }
+
+    private func positions(_ details: BetDetails) -> some View {
+        VStack(alignment: .leading) {
+            SectionTitle(text: "Group picks")
+            InsetGroup {
+                ForEach(details.picks) { pick in
+                    InsetRow(last: pick.id == details.picks.last?.id) {
+                        Text(pick.alias)
                         Spacer()
-                        Text("\(pts(p.amount)) pts").monospacedDigit().foregroundStyle(Theme.sub)
-                    }
-                }
-            }
-        }
-        Footnote(text: "You'll see the question at \(clock(revealAt)), then you say what really happened.")
-    }
-
-    private func bettorFaces(_ card: BetCard) -> [(name: String?, emoji: String?)] {
-        if let who = card.who, !who.isEmpty { return who.map { (name: $0.name, emoji: $0.emoji) } }
-        return (card.bettors ?? []).map { (name: nil, emoji: $0) }
-    }
-
-    @ViewBuilder private func open(_ card: BetCard) -> some View {
-        if card.isSubject == true {
-            verdict(card)
-        } else {
-            takeSide(card)
-        }
-        if card.status == "settled" || card.status == "refunded" {
-            ResultBlock(card: card)
-            PrimaryButton(title: "Send result") {
-                model.send(Cards.result(roomId: roomId, betId: betId, card: card, session: model.selectedSession))
-            }
-        }
-    }
-
-    private func labels(_ card: BetCard) -> [String] {
-        let o = card.options ?? []
-        return [o[safe: 0] ?? "Yes", o[safe: 1] ?? "No"]
-    }
-
-    private func asker(_ card: BetCard) -> some View {
-        HStack(alignment: .bottom, spacing: 8) {
-            if card.ai == true || card.author == nil { CIAvatar(size: 28) } else { Avatar(name: card.author?.name, size: 28) }
-            VStack(alignment: .leading, spacing: 3) {
-                Text(card.ai == true ? "Created by AI" : (card.author?.name ?? "Called It")).font(.caption).foregroundStyle(Theme.sub).padding(.leading, 12)
-                QuestionBubble(text: card.question ?? "")
-            }
-            Spacer(minLength: 30)
-        }
-    }
-
-    @ViewBuilder private func takeSide(_ card: BetCard) -> some View {
-        let name = card.subject?.name ?? "them"
-        let options = labels(card)
-        let pools = card.pools ?? [0, 0]
-        let total = card.total ?? 0
-        let points = max(0, card.points ?? 0)
-        let open = card.status == "open"
-        let chosen = side ?? card.mine?.option
-        SheetHeader(leading: "Cancel", leadingAction: { model.home() }, title: "Bet on \(name)", trailing: "locks \(clock(card.revealAt ?? nowMs()))")
-        asker(card)
-        InsetGroup {
-            ForEach(0..<2, id: \.self) { i in
-                let pool = pools[safe: i] ?? 0
-                let pct = Int((card.pct?[safe: i] ?? 50).rounded())
-                let locked = card.mine != nil && card.mine?.option != i
-                Button {
-                    if open && !locked { side = i }
-                } label: {
-                    InsetRow(last: i == 1) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(options[i] + (card.status == "settled" && card.winningOption == i ? "  ✓ won" : ""))
-                                .font(.body.weight(chosen == i ? .semibold : .regular))
-                            Text("\(pct)% picked this · pays \(multiple(total: total, pool: pool))")
-                                .font(.footnote).foregroundStyle(Theme.sub)
-                        }
-                        Spacer()
-                        Image(systemName: chosen == i ? "checkmark.circle.fill" : "circle")
-                            .font(.title3)
-                            .foregroundStyle(chosen == i ? Theme.accent : Color(.tertiaryLabel))
-                    }
-                    .foregroundStyle(.primary)
-                    .opacity(locked ? 0.45 : 1)
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        if open && points < 1 {
-            CardBox { Text("No points left in this group").font(.headline) }
-        } else if open {
-            SectionTitle(text: "How sure are you")
-            CardBox {
-                HStack(alignment: .firstTextBaseline, spacing: 4) {
-                    Text(pts(amount)).font(.largeTitle.bold().monospacedDigit())
-                    Text("pts").font(.title3).foregroundStyle(.secondary)
-                    Spacer()
-                    Text("\(pts(points - amount)) left of \(pts(points))").font(.subheadline).foregroundStyle(.secondary)
-                }
-                if points > 1 {
-                    Slider(value: $amount, in: 1...points, step: 1).tint(Theme.accent).accessibilityIdentifier("stakeSlider")
-                }
-                HStack(spacing: 8) {
-                    ForEach([50.0, 100, 250].filter { $0 <= points }, id: \.self) { v in
-                        Chip(title: pts(v), on: amount == v) { amount = v }
-                    }
-                    Chip(title: "All in", on: amount == points) { amount = points }
-                }
-            }
-            .onChange(of: points) { _, p in amount = min(max(1, amount), max(1, p)) }
-            HStack(spacing: 8) {
-                let people = (card.sides ?? []).flatMap { $0 }
-                AvatarStack(people: people.map { (name: $0.name, emoji: $0.emoji) }, size: 26)
-                Text(alreadyBet(people)).font(.subheadline).foregroundStyle(Theme.sub).lineLimit(1)
-                Spacer()
-                if let s = chosen {
-                    Text("Win ≈ \(pts(win(amount, pool: pools[safe: s] ?? 0, total: total)))").font(.subheadline.weight(.bold).monospacedDigit())
-                }
-            }
-            .padding(.horizontal, 4)
-            PrimaryButton(title: card.mine == nil ? "Call it" : "Add \(pts(amount)) more", busy: busy) {
-                guard let s = chosen else { error = "Pick a side first."; return }
-                Task { await mutate("chat:stake", ["option": s, "amount": Int(amount)]) }
-            }
-            .opacity(chosen == nil || amount < 1 ? 0.5 : 1)
-            Footnote(text: "\(name) won't see this bet until \(clock(card.revealAt ?? nowMs())).")
-            SoftButton(title: "Send update") {
-                model.send(Cards.bet(roomId: roomId, betId: betId, subject: card.subject, revealAt: card.revealAt, voters: Cards.voterNames(card), session: model.selectedSession))
-            }
-            Footnote(text: "The update card shows who it's about, the reveal time and who's in. Never the question.")
-        } else {
-            PositionsBlock(card: card)
-        }
-    }
-
-    @ViewBuilder private func verdict(_ card: BetCard) -> some View {
-        let options = labels(card)
-        SheetHeader(leading: "Close", leadingAction: { model.home() }, title: "Your bet for today")
-        Text("Your friends bet on whether…").font(.title2.bold())
-        if card.status == "open" {
-            RubToReveal(name: card.subject?.name ?? "you", uncovered: $uncovered) { asker(card) }
-        } else {
-            asker(card)
-        }
-        if uncovered || card.status != "open" {
-            PositionsBlock(card: card)
-            if card.canDeclare == true {
-                Text("So... is it true?").font(.title2.bold()).padding(.top, 6)
-                HStack(spacing: 10) {
-                    ForEach(0..<2, id: \.self) { i in
-                        PrimaryButton(title: card.kind == "yesno" ? (i == 0 ? "Yeah, guilty" : "Nope, never") : options[i], color: Theme.verdict(i), busy: busy) {
-                            Task { await mutate("chat:declare", ["winningOption": i]) }
+                        VStack(alignment: .trailing) {
+                            Text(details.options[safe: pick.option] ?? "—")
+                            Text("Confidence \(ConfidenceInput.displayValue(for: pick.confidence)) / 100").font(.footnote).foregroundStyle(Theme.sub)
                         }
                     }
                 }
-                HStack {
-                    Footnote(text: "Honor system. Proof is optional.")
-                    Spacer()
-                    Button("Veto") { confirmVeto = true }
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(Theme.sub)
-                        .confirmationDialog("Veto this bet? Everyone gets their points back.", isPresented: $confirmVeto, titleVisibility: .visible) {
-                            Button("Veto", role: .destructive) { Task { await mutate("chat:veto", [:]) } }
-                        }
-                }
             }
         }
     }
 
-    private func alreadyBet(_ people: [SidePerson]) -> String {
-        let names = people.map { $0.me == true ? "You" : $0.name }
-        switch names.count {
-        case 0: return "Nobody's bet yet"
-        case 1: return "\(names[0]) already bet"
-        case 2: return "\(names[0]) and \(names[1]) already bet"
-        default: return "\(names[0]) and \(names.count - 1) others already bet"
-        }
-    }
-
-    private func multiple(total: Double, pool: Double) -> String {
-        guard pool > 0, total > 0 else { return "—" }
-        return String(format: "%.1f×", total / pool)
-    }
-
-    private func win(_ stake: Double, pool: Double, total: Double) -> Double {
-        stake / (pool + stake) * (total + stake)
+    private func deadline(_ at: Double, prefix: String) -> String {
+        let remaining = max(0, Int((at - (serverClock?.now() ?? at)) / 1000))
+        return "\(prefix) \(clock(at)) · \(remaining / 3600):\(String(format: "%02d:%02d", remaining % 3600 / 60, remaining % 60))"
     }
 
     private func poll() async {
-        while !Task.isCancelled {
+        while !Task.isCancelled && model.isActive {
             await load()
-            try? await Task.sleep(for: .seconds(8))
+            var interval = 8.0
+            if let card, let serverClock {
+                var deadlines = [card.cutoffAt, card.revealAt]
+                if case .bet(let details) = card.content { deadlines += [details.answerDeadline, details.challengeDeadline].compactMap { $0 } }
+                deadlines = deadlines.filter { $0 > serverClock.now() }
+                if let next = deadlines.min() { interval = min(interval, max(0.3, (next - serverClock.now()) / 1000 + 0.2)) }
+            }
+            do { try await Task.sleep(for: .seconds(interval)) }
+            catch { return }
         }
     }
 
     private func load() async {
-        guard let token = model.token else { return }
+        guard let token = model.token, model.isActive else { return }
         do {
-            let next: BetCard? = try await API.query("ext:card", ["token": token, "betId": betId, "now": nowMs()])
-            if let next, next.status != "open" { uncovered = true }
-            if let points = next?.points, card?.points != points { amount = max(1, min(card == nil ? 100 : amount, points.rounded(.down))) }
+            let next: NativeBet? = try await API.query("v0Bets:get", ["token": token, "locator": locator])
+            guard model.token == token, model.isActive, !Task.isCancelled else { return }
+            guard let next, next.groupId == model.linkedRoomId,
+                  try model.locator(for: next.card).value == locator else { throw NativeError.invalidLink }
             card = next
+            serverClock = ServerClock(serverTime: next.serverTime)
+            if case .bet(let details) = next.content {
+                confirmation.resolve(details.myPick)
+            }
+            if let pick = confirmation.confirmed {
+                side = pick.option
+                confidence = ConfidenceInput.controlValue(for: pick.confidence)
+            }
             error = nil
         } catch {
-            if card == nil { self.error = error.localizedDescription }
+            card = nil
+            self.error = error.localizedDescription
+            model.handle(error)
         }
     }
 
-    private func mutate(_ path: String, _ args: [String: Any]) async {
-        guard let token = model.token else { return }
+    private func mutate(_ path: String, bet: NativeBet, args: [String: Any] = [:]) async {
+        guard let token = model.token, !busy else { return }
         busy = true
         defer { busy = false }
-        var all = args
-        all["token"] = token
-        all["betId"] = betId
+        var args = args
+        let fingerprint = path + String(data: (try? JSONSerialization.data(withJSONObject: args, options: .sortedKeys)) ?? Data(), encoding: .utf8)!
+        let requestID = mutationIDs[fingerprint] ?? UUID().uuidString
+        mutationIDs[fingerprint] = requestID
+        args["token"] = token
+        args["betId"] = bet.betId
+        args["requestId"] = requestID
         do {
-            let _: Ignored? = try await API.mutation(path, all)
-            error = nil
+            if path == "v0Bets:pick" {
+                guard let option = args["option"] as? Int, let confidence = args["confidence"] as? Double else { throw APIError(code: "INVALID_INPUT") }
+                try confirmation.begin(option: option, confidence: confidence)
+                guard let receipt: PickReceipt = try await API.mutation(path, args) else { throw APIError(code: "TRANSPORT") }
+                guard model.token == token else { return }
+                try confirmation.accept(receipt)
+                saveConfirmation = "The server confirmed and locked your pick."
+            } else {
+                let _: Ignored? = try await API.mutation(path, args)
+            }
+            guard model.token == token else { return }
+            mutationIDs.removeValue(forKey: fingerprint)
             await load()
         } catch {
             self.error = error.localizedDescription
-        }
-    }
-}
-
-struct PositionsBlock: View {
-    let card: BetCard
-
-    var body: some View {
-        let options = card.options ?? []
-        let sides = card.sides ?? []
-        SectionTitle(text: "Everyone's positions")
-        InsetGroup {
-            ForEach(0..<2, id: \.self) { i in
-                let people = sides[safe: i] ?? []
-                InsetRow(last: i == 1) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Text(options[safe: i] ?? "").font(.headline)
-                            Spacer()
-                            Text("\(Int((card.pct?[safe: i] ?? 0).rounded()))%").font(.subheadline.monospacedDigit()).foregroundStyle(Theme.sub)
-                        }
-                        if people.isEmpty { Text("Nobody").font(.footnote).foregroundStyle(Theme.sub) }
-                        ForEach(people, id: \.self) { p in
-                            HStack(spacing: 8) {
-                                Avatar(name: p.name, size: 24)
-                                Text(p.me == true ? "You" : p.name).font(.subheadline)
-                                Spacer()
-                                Text("\(pts(p.amount)) pts").font(.footnote.monospacedDigit()).foregroundStyle(Theme.sub)
-                            }
-                        }
-                    }
+            model.handle(error)
+            if path == "v0Bets:pick" {
+                if let code = (error as? APIError)?.code, code != "TRANSPORT" && code != "UNKNOWN" { confirmation.reject() }
+                else { confirmation.markUncertain() }
+                await load()
+                if model.token == token, let card, case .bet(let details) = card.content, details.myPick != nil {
+                    saveConfirmation = "Your server-confirmed pick was recovered."
+                    self.error = nil
+                    model.error = nil
                 }
-            }
+            } else if (error as? APIError)?.code == "CONFLICT" { await load() }
         }
     }
-}
-
-struct ResultBlock: View {
-    let card: BetCard
-
-    var body: some View {
-        CardBox {
-            if card.status == "refunded" {
-                Text("Vetoed").font(.title3.weight(.bold))
-                Text("Everyone got their points back.").font(.subheadline).foregroundStyle(Theme.sub)
-            } else if let win = card.winningOption {
-                Text("It was \(card.options?[safe: win] ?? "")").font(.title3.weight(.bold)).foregroundStyle(Theme.verdict(win))
-                Text("PAYOUTS").font(.footnote).foregroundStyle(Theme.sub)
-                ForEach(rows(win), id: \.0) { row in
-                    HStack {
-                        Text(row.0)
-                        Spacer()
-                        Text(row.1).font(.subheadline.weight(.bold).monospacedDigit()).foregroundStyle(row.2 ? Theme.green : Theme.red)
-                    }
-                }
-            }
-        }
-    }
-
-    private func rows(_ win: Int) -> [(String, String, Bool)] {
-        let sides = card.sides ?? []
-        let total = card.total ?? 0
-        let pool = card.pools?[safe: win] ?? 0
-        var out: [(String, String, Bool)] = []
-        for (i, people) in sides.enumerated() {
-            for p in people {
-                let who = p.me == true ? "You" : p.name
-                if i == win, pool > 0 {
-                    out.append((who, "+\(pts(p.amount / pool * total - p.amount))", true))
-                } else {
-                    out.append((who, "−\(pts(p.amount))", false))
-                }
-            }
-        }
-        return out
-    }
-}
-
-extension Array {
-    subscript(safe index: Int) -> Element? { indices.contains(index) ? self[index] : nil }
 }

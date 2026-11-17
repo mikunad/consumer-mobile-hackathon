@@ -1,0 +1,8 @@
+[
+  { "utc": "2026-03-08T09:59:59Z", "zone": "America/Los_Angeles", "localDate": "2026-03-08", "localHour": "01" },
+  { "utc": "2026-03-08T10:00:00Z", "zone": "America/Los_Angeles", "localDate": "2026-03-08", "localHour": "03" },
+  { "utc": "2026-11-01T08:59:59Z", "zone": "America/Los_Angeles", "localDate": "2026-11-01", "localHour": "01" },
+  { "utc": "2026-11-01T09:00:00Z", "zone": "America/Los_Angeles", "localDate": "2026-11-01", "localHour": "01" },
+  { "utc": "2026-11-16T15:59:00Z", "zone": "Asia/Tokyo", "localDate": "2026-11-17", "localHour": "00" },
+  { "utc": "2026-11-16T15:59:00Z", "zone": "UTC", "localDate": "2026-11-16", "localHour": "15" }
+]

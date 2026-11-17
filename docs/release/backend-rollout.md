@@ -1,0 +1,35 @@
+# Backend pinning, migration and rollback plan
+
+**Plan only. No live commands are executed or authorized here.** Integrator owns backend/source/package changes. Never use inherited `CONVEX_DEPLOY_KEY` for tests or discovery; never infer running backend code from `main`, a branch name or a native URL.
+
+## Environment ledger
+
+Keep a private candidate ledger with three independent rows: isolated local/mock tests, approved staging deployment and selected production deployment. Record each deployment's nonsecret identifier, API/HTTP origins, owning team/project, source SHA, schema/function tree digests, config/rules version, migration checkpoint, push environment/topic, provider adapters and observation time/operator. Reference secret-store entries by name only. Staging is a separate Convex project/approved preview, never a QA group inside the current live deployment. No copied production data, phone numbers, sessions or provider credentials.
+
+Release candidate config pins the intended backend revision/config; it does **not attest the deployment**. Integrator's v0.1 contract supplies `v0Runtime:attestation`: explicit operator-provisioned app, environment, source SHA, schema/contract/config versions, deployment ID and `testAdapters=false`. Unconfigured/null/mismatching metadata is blocked by the release checker. Integrator must additionally provide a sanitized deployment receipt/log and an authorized read-only observation with time/origin. Save only the response value JSON for `candidate.py --attestation`; scripts never call the endpoint. This metadata is self-reported, not cryptographic code proof. The current contract checkpoint has not deployed/configured this endpoint or rehearsed a migration/rollback. Do not claim a release manifest proves that an unqueried endpoint is running its stated revision.
+
+## Manifest/evidence contract
+
+`inspection.json` includes native/host full source SHA, Git tree inventory digests for `convex`, `native-imessage`, `release`, `tests`, `vitest.config.ts`, `docs/release`, package/lock, bundle/build/version/environment/toolchain, test source SHA/run reference, pinned backend/schema/contract/config/rules versions, signed executable/profile hashes and exported IPA hash. The schema/functions are pinned by the source tree inventory (not live DB state). Integrator adds backend deployment receipt, migration version/checkpoint, compatible client versions, E2E case-by-case evidence, artifact signing identity/team/IDs, privacy metadata approval and operator approvals. A test revision/run reference names evidence; it does not assert a passing result. Keep test fixture seed/run IDs separate from release runtime configuration.
+
+Bind all evidence to one coordinated candidate. A new source, backend schema/function/config, provider routing, metadata-relevant behavior or binary invalidates affected checks; rerun rather than carrying stale green screenshots. An unresolved product rule is a blocked policy version, not a test oracle guessed by release engineering.
+
+## Promotion sequence (Captain gates each live phase)
+
+1. Complete offline mocked/in-memory tests with network denied and production credentials stripped. Assert all public API authorization/privacy and the PR3 server-clock behavior across every entry point. Do not run legacy `deploy:convex` as a check: it calls `convex dev --once` and can deploy.
+2. Integrator prepares an additive migration against synthetic old/new state. Inventory existing records, active bets/picks/ledgers, auth and membership mappings, storage references, pending scheduled functions and client versions. Validate schema with enforcement on; add optional fields/tables, backfill idempotently in bounded checkpoints, then tighten only after evidence. Never fabricate verified phone ownership for a legacy username.
+3. With staging permission, deploy the pinned backend and reviewed migration to the isolated target only. Target and namespace assertions precede every mutation. Use nonproduction auth/AI/APNs adapters or separately authorized dedicated QA provider traffic. Keep public clock/reset/seed hooks absent from distributable backend and binary; injected test-only adapters must not become production bypasses.
+4. Run all nine journeys and native/backend contract, concurrency, retry/idempotency, timezone/DST, deletion/media and scheduled lifecycle tests on the exact candidate. Rehearse interruption/resume and rollback on synthetic data. Record migration progress/count/invariant summaries without account secrets.
+5. Prepare the production change plan and get explicit Captain go: snapshot/backup authorization and retention/access, change window/operator, migration dry-run summary, compatibility matrix, rollback checkpoint, alerts and stop conditions. Do not export real data merely to make the plan feel complete.
+6. After authorization, deploy additive compatible server behavior before its client consumer. Stale existing clients and queued scheduled jobs run against the new backend: preserve their contract or reject safely without privacy/ledger bypass. Version notification outbox events; old jobs must not send duplicate or secret-bearing payloads. New provider/capability activation needs its own approval.
+7. Verify deployed version/config and invariants using approved synthetic canaries only, then build/inspect the client pinned to that approved environment. Gate physical evidence, Apple upload and external invitations separately. No direct native-client rollout by this track.
+
+## Rollback and containment
+
+Before promotion, integrator names the last **compatible** backend SHA/config and specifies whether old clients and already-enqueued jobs can safely run against it. A Git rollback is not a data rollback. Do not redeploy an older schema after irreversible fields/data/state changes; use an additive forward fix or compatible behavior rollback. Do not restore deleted personal data, duplicate settlements, resurrect memberships or send replayed pushes from a backup.
+
+Rehearsal must assert one ledger settlement per bet, balances/approved points invariants, cutoff/reveal authorization, neutral queued notifications, membership interval privacy and deletion/revocation persistence before/after rollback. Record migration checkpoint and replay/idempotency keys, not production records. Resolve provider side effects separately: push already delivered and Messages snapshots cannot be recalled by redeployment.
+
+Stop on any privacy/auth/ledger mismatch, unverified target, migration failure, unknown running version or stale evidence. Captain chooses containment (approved disablement of creation/AI/push, pause invitations/expire TestFlight, compatible hotfix). Never reset real groups or silently point production clients to staging. The release track supplies this runbook, not live deployment or restoration scripts.
+
+Source: [Convex production and staging](https://docs.convex.dev/production/overview) documents separate environments, additive schema evolution, function compatibility and current-version execution of scheduled functions.

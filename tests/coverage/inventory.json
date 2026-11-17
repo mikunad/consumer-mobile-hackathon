@@ -1,0 +1,3624 @@
+{
+  "schemaVersion": 1,
+  "baseline": "d23f9e7e8799988505a2d6bf5c6c1981716aa6d9",
+  "scope": "Full V0; Linq V1 excluded. An implemented backend assertion does not satisfy native or physical proof.",
+  "cases": [
+    {
+      "id": "J1.1",
+      "title": "Activation and first manual card",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J1.1.single-room.B",
+          "layer": "B",
+          "expectation": "Activation and first manual card: single room",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.single-room.U",
+          "layer": "U",
+          "expectation": "Activation and first manual card: single room",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.single-room.R",
+          "layer": "R",
+          "expectation": "Activation and first manual card: single room",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.consenting-subject.B",
+          "layer": "B",
+          "expectation": "Activation and first manual card: consenting subject",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.consenting-subject.U",
+          "layer": "U",
+          "expectation": "Activation and first manual card: consenting subject",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.consenting-subject.R",
+          "layer": "R",
+          "expectation": "Activation and first manual card: consenting subject",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.neutral-card.B",
+          "layer": "B",
+          "expectation": "Activation and first manual card: neutral card",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.neutral-card.U",
+          "layer": "U",
+          "expectation": "Activation and first manual card: neutral card",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.neutral-card.R",
+          "layer": "R",
+          "expectation": "Activation and first manual card: neutral card",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.cold-send-budget.B",
+          "layer": "B",
+          "expectation": "Activation and first manual card: cold send budget",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.cold-send-budget.U",
+          "layer": "U",
+          "expectation": "Activation and first manual card: cold send budget",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.cold-send-budget.R",
+          "layer": "R",
+          "expectation": "Activation and first manual card: cold send budget",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.warm-send-budget.B",
+          "layer": "B",
+          "expectation": "Activation and first manual card: warm send budget",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.warm-send-budget.U",
+          "layer": "U",
+          "expectation": "Activation and first manual card: warm send budget",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        },
+        {
+          "id": "J1.1.warm-send-budget.R",
+          "layer": "R",
+          "expectation": "Activation and first manual card: warm send budget",
+          "status": "blocked",
+          "reason": "Activation API and clean simulator/QA phones"
+        }
+      ]
+    },
+    {
+      "id": "J1.2",
+      "title": "Conversation mapping across devices",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J1.2.same-room.B",
+          "layer": "B",
+          "expectation": "Conversation mapping across devices: same room",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.same-room.U",
+          "layer": "U",
+          "expectation": "Conversation mapping across devices: same room",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.same-room.R",
+          "layer": "R",
+          "expectation": "Conversation mapping across devices: same room",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.unknown-chat.B",
+          "layer": "B",
+          "expectation": "Conversation mapping across devices: unknown chat",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.unknown-chat.U",
+          "layer": "U",
+          "expectation": "Conversation mapping across devices: unknown chat",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.unknown-chat.R",
+          "layer": "R",
+          "expectation": "Conversation mapping across devices: unknown chat",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.same-participants-distinct-chat.B",
+          "layer": "B",
+          "expectation": "Conversation mapping across devices: same participants distinct chat",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.same-participants-distinct-chat.U",
+          "layer": "U",
+          "expectation": "Conversation mapping across devices: same participants distinct chat",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        },
+        {
+          "id": "J1.2.same-participants-distinct-chat.R",
+          "layer": "R",
+          "expectation": "Conversation mapping across devices: same participants distinct chat",
+          "status": "blocked",
+          "reason": "Shared link model and three-phone RC"
+        }
+      ]
+    },
+    {
+      "id": "J1.3",
+      "title": "Draft cancellation and retry",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J1.3.delivery-truth.B",
+          "layer": "B",
+          "expectation": "Draft cancellation and retry: delivery truth",
+          "status": "blocked",
+          "reason": "Canonical draft/idempotency API"
+        },
+        {
+          "id": "J1.3.delivery-truth.U",
+          "layer": "U",
+          "expectation": "Draft cancellation and retry: delivery truth",
+          "status": "blocked",
+          "reason": "Canonical draft/idempotency API"
+        },
+        {
+          "id": "J1.3.idempotent-create.B",
+          "layer": "B",
+          "expectation": "Draft cancellation and retry: idempotent create",
+          "status": "blocked",
+          "reason": "Canonical draft/idempotency API"
+        },
+        {
+          "id": "J1.3.idempotent-create.U",
+          "layer": "U",
+          "expectation": "Draft cancellation and retry: idempotent create",
+          "status": "blocked",
+          "reason": "Canonical draft/idempotency API"
+        },
+        {
+          "id": "J1.3.cancel-resume.B",
+          "layer": "B",
+          "expectation": "Draft cancellation and retry: cancel resume",
+          "status": "blocked",
+          "reason": "Canonical draft/idempotency API"
+        },
+        {
+          "id": "J1.3.cancel-resume.U",
+          "layer": "U",
+          "expectation": "Draft cancellation and retry: cancel resume",
+          "status": "blocked",
+          "reason": "Canonical draft/idempotency API"
+        }
+      ]
+    },
+    {
+      "id": "J2.1",
+      "title": "Install and return to original bet",
+      "requiredLayers": [
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J2.1.embedded-extension.U",
+          "layer": "U",
+          "expectation": "Install and return to original bet: embedded extension",
+          "status": "blocked",
+          "reason": "Signed distributed RC and QA operator"
+        },
+        {
+          "id": "J2.1.embedded-extension.R",
+          "layer": "R",
+          "expectation": "Install and return to original bet: embedded extension",
+          "status": "blocked",
+          "reason": "Signed distributed RC and QA operator"
+        },
+        {
+          "id": "J2.1.opaque-locator.U",
+          "layer": "U",
+          "expectation": "Install and return to original bet: opaque locator",
+          "status": "blocked",
+          "reason": "Signed distributed RC and QA operator"
+        },
+        {
+          "id": "J2.1.opaque-locator.R",
+          "layer": "R",
+          "expectation": "Install and return to original bet: opaque locator",
+          "status": "blocked",
+          "reason": "Signed distributed RC and QA operator"
+        },
+        {
+          "id": "J2.1.after-install-return.U",
+          "layer": "U",
+          "expectation": "Install and return to original bet: after install return",
+          "status": "blocked",
+          "reason": "Signed distributed RC and QA operator"
+        },
+        {
+          "id": "J2.1.after-install-return.R",
+          "layer": "R",
+          "expectation": "Install and return to original bet: after install return",
+          "status": "blocked",
+          "reason": "Signed distributed RC and QA operator"
+        }
+      ]
+    },
+    {
+      "id": "J2.2",
+      "title": "Verified host and extension identity",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J2.2.verified-otp.B",
+          "layer": "B",
+          "expectation": "Verified host and extension identity: verified otp",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        },
+        {
+          "id": "J2.2.verified-otp.U",
+          "layer": "U",
+          "expectation": "Verified host and extension identity: verified otp",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        },
+        {
+          "id": "J2.2.one-sign-in.B",
+          "layer": "B",
+          "expectation": "Verified host and extension identity: one sign in",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        },
+        {
+          "id": "J2.2.one-sign-in.U",
+          "layer": "U",
+          "expectation": "Verified host and extension identity: one sign in",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        },
+        {
+          "id": "J2.2.shared-session.B",
+          "layer": "B",
+          "expectation": "Verified host and extension identity: shared session",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        },
+        {
+          "id": "J2.2.shared-session.U",
+          "layer": "U",
+          "expectation": "Verified host and extension identity: shared session",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        },
+        {
+          "id": "J2.2.logout-expiry.B",
+          "layer": "B",
+          "expectation": "Verified host and extension identity: logout expiry",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        },
+        {
+          "id": "J2.2.logout-expiry.U",
+          "layer": "U",
+          "expectation": "Verified host and extension identity: logout expiry",
+          "status": "blocked",
+          "reason": "Phone auth contract and shared entitlement build"
+        }
+      ]
+    },
+    {
+      "id": "J2.3",
+      "title": "Pending locator and account switch",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J2.3.pending-locator.B",
+          "layer": "B",
+          "expectation": "Pending locator and account switch: pending locator",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        },
+        {
+          "id": "J2.3.pending-locator.U",
+          "layer": "U",
+          "expectation": "Pending locator and account switch: pending locator",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        },
+        {
+          "id": "J2.3.restart-return.B",
+          "layer": "B",
+          "expectation": "Pending locator and account switch: restart return",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        },
+        {
+          "id": "J2.3.restart-return.U",
+          "layer": "U",
+          "expectation": "Pending locator and account switch: restart return",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        },
+        {
+          "id": "J2.3.clear-stale-data.B",
+          "layer": "B",
+          "expectation": "Pending locator and account switch: clear stale data",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        },
+        {
+          "id": "J2.3.clear-stale-data.U",
+          "layer": "U",
+          "expectation": "Pending locator and account switch: clear stale data",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        },
+        {
+          "id": "J2.3.outsider-denied.B",
+          "layer": "B",
+          "expectation": "Pending locator and account switch: outsider denied",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        },
+        {
+          "id": "J2.3.outsider-denied.U",
+          "layer": "U",
+          "expectation": "Pending locator and account switch: outsider denied",
+          "status": "blocked",
+          "reason": "Shared locator/session models and QA target"
+        }
+      ]
+    },
+    {
+      "id": "J3.1",
+      "title": "Local daily turn rotation",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J3.1.one-turn.B",
+          "layer": "B",
+          "expectation": "Local daily turn rotation: one turn",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.one-turn.U",
+          "layer": "U",
+          "expectation": "Local daily turn rotation: one turn",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.neutral-push.B",
+          "layer": "B",
+          "expectation": "Local daily turn rotation: neutral push",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.neutral-push.U",
+          "layer": "U",
+          "expectation": "Local daily turn rotation: neutral push",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.fair-rotation.B",
+          "layer": "B",
+          "expectation": "Local daily turn rotation: fair rotation",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.fair-rotation.U",
+          "layer": "U",
+          "expectation": "Local daily turn rotation: fair rotation",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.noon-pass.B",
+          "layer": "B",
+          "expectation": "Local daily turn rotation: noon pass",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.noon-pass.U",
+          "layer": "U",
+          "expectation": "Local daily turn rotation: noon pass",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.dst-retries.B",
+          "layer": "B",
+          "expectation": "Local daily turn rotation: dst retries",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        },
+        {
+          "id": "J3.1.dst-retries.U",
+          "layer": "U",
+          "expectation": "Local daily turn rotation: dst retries",
+          "status": "blocked",
+          "reason": "Approved rotation policy and worker contract"
+        }
+      ]
+    },
+    {
+      "id": "J3.2",
+      "title": "Durable confidence pick",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J3.2.durable-once.B",
+          "layer": "B",
+          "expectation": "Durable confidence pick: durable once",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        },
+        {
+          "id": "J3.2.durable-once.U",
+          "layer": "U",
+          "expectation": "Durable confidence pick: durable once",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        },
+        {
+          "id": "J3.2.latency-budget.B",
+          "layer": "B",
+          "expectation": "Durable confidence pick: latency budget",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        },
+        {
+          "id": "J3.2.latency-budget.U",
+          "layer": "U",
+          "expectation": "Durable confidence pick: latency budget",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        },
+        {
+          "id": "J3.2.subject-denied.B",
+          "layer": "B",
+          "expectation": "Durable confidence pick: subject denied",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        },
+        {
+          "id": "J3.2.subject-denied.U",
+          "layer": "U",
+          "expectation": "Durable confidence pick: subject denied",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        },
+        {
+          "id": "J3.2.offline-truth.B",
+          "layer": "B",
+          "expectation": "Durable confidence pick: offline truth",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        },
+        {
+          "id": "J3.2.offline-truth.U",
+          "layer": "U",
+          "expectation": "Durable confidence pick: offline truth",
+          "status": "blocked",
+          "reason": "Canonical confidence pick API and native UI"
+        }
+      ]
+    },
+    {
+      "id": "J3.3",
+      "title": "Editable unique pick",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J3.3.edit.chat.stake.B",
+          "layer": "B",
+          "expectation": "Editable unique pick: edit.chat.stake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.edit.chat.stake.U",
+          "layer": "U",
+          "expectation": "Editable unique pick: edit.chat.stake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.edit.game.placeStake.B",
+          "layer": "B",
+          "expectation": "Editable unique pick: edit.game.placeStake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.edit.game.placeStake.U",
+          "layer": "U",
+          "expectation": "Editable unique pick: edit.game.placeStake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.duplicate.chat.stake.B",
+          "layer": "B",
+          "expectation": "Editable unique pick: duplicate.chat.stake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.duplicate.chat.stake.U",
+          "layer": "U",
+          "expectation": "Editable unique pick: duplicate.chat.stake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.duplicate.game.placeStake.B",
+          "layer": "B",
+          "expectation": "Editable unique pick: duplicate.game.placeStake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.duplicate.game.placeStake.U",
+          "layer": "U",
+          "expectation": "Editable unique pick: duplicate.game.placeStake",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.confidence-boundaries.B",
+          "layer": "B",
+          "expectation": "Editable unique pick: confidence boundaries",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.confidence-boundaries.U",
+          "layer": "U",
+          "expectation": "Editable unique pick: confidence boundaries",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.concurrent-version.B",
+          "layer": "B",
+          "expectation": "Editable unique pick: concurrent version",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        },
+        {
+          "id": "J3.3.concurrent-version.U",
+          "layer": "U",
+          "expectation": "Editable unique pick: concurrent version",
+          "status": "blocked",
+          "reason": "Canonical pick API; confidence is not legacy stake"
+        }
+      ]
+    },
+    {
+      "id": "J3.4",
+      "title": "Authoritative cutoff and reveal",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J3.4.cutoff-before-reveal.B",
+          "layer": "B",
+          "expectation": "Authoritative cutoff and reveal: cutoff before reveal",
+          "status": "blocked",
+          "reason": "Approved timing policy and canonical pick API"
+        },
+        {
+          "id": "J3.4.cutoff-before-reveal.U",
+          "layer": "U",
+          "expectation": "Authoritative cutoff and reveal: cutoff before reveal",
+          "status": "blocked",
+          "reason": "Approved timing policy and canonical pick API"
+        },
+        {
+          "id": "J3.4.boundary-writes.B",
+          "layer": "B",
+          "expectation": "Authoritative cutoff and reveal: boundary writes",
+          "status": "blocked",
+          "reason": "Approved timing policy and canonical pick API"
+        },
+        {
+          "id": "J3.4.boundary-writes.U",
+          "layer": "U",
+          "expectation": "Authoritative cutoff and reveal: boundary writes",
+          "status": "blocked",
+          "reason": "Approved timing policy and canonical pick API"
+        },
+        {
+          "id": "J3.4.client-clock-independent.B",
+          "layer": "B",
+          "expectation": "Authoritative cutoff and reveal: client clock independent",
+          "status": "blocked",
+          "reason": "Approved timing policy and canonical pick API"
+        },
+        {
+          "id": "J3.4.client-clock-independent.U",
+          "layer": "U",
+          "expectation": "Authoritative cutoff and reveal: client clock independent",
+          "status": "blocked",
+          "reason": "Approved timing policy and canonical pick API"
+        }
+      ]
+    },
+    {
+      "id": "J4.1",
+      "title": "Safe shared representations",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J4.1.sentinel-scan.B",
+          "layer": "B",
+          "expectation": "Safe shared representations: sentinel scan",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.sentinel-scan.U",
+          "layer": "U",
+          "expectation": "Safe shared representations: sentinel scan",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.sentinel-scan.R",
+          "layer": "R",
+          "expectation": "Safe shared representations: sentinel scan",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.neutral-voiceover.B",
+          "layer": "B",
+          "expectation": "Safe shared representations: neutral voiceover",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.neutral-voiceover.U",
+          "layer": "U",
+          "expectation": "Safe shared representations: neutral voiceover",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.neutral-voiceover.R",
+          "layer": "R",
+          "expectation": "Safe shared representations: neutral voiceover",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.neutral-snapshot.B",
+          "layer": "B",
+          "expectation": "Safe shared representations: neutral snapshot",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.neutral-snapshot.U",
+          "layer": "U",
+          "expectation": "Safe shared representations: neutral snapshot",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.neutral-snapshot.R",
+          "layer": "R",
+          "expectation": "Safe shared representations: neutral snapshot",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.token-free.B",
+          "layer": "B",
+          "expectation": "Safe shared representations: token free",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.token-free.U",
+          "layer": "U",
+          "expectation": "Safe shared representations: token free",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        },
+        {
+          "id": "J4.1.token-free.R",
+          "layer": "R",
+          "expectation": "Safe shared representations: token free",
+          "status": "blocked",
+          "reason": "Shared card serializer and exact RC transport"
+        }
+      ]
+    },
+    {
+      "id": "J4.2",
+      "title": "Sealed subject view",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J4.2.locked-response.B",
+          "layer": "B",
+          "expectation": "Sealed subject view: locked response",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.locked-response.U",
+          "layer": "U",
+          "expectation": "Sealed subject view: locked response",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.locked-response.R",
+          "layer": "R",
+          "expectation": "Sealed subject view: locked response",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.countdown-reactions.B",
+          "layer": "B",
+          "expectation": "Sealed subject view: countdown reactions",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.countdown-reactions.U",
+          "layer": "U",
+          "expectation": "Sealed subject view: countdown reactions",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.countdown-reactions.R",
+          "layer": "R",
+          "expectation": "Sealed subject view: countdown reactions",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.accessible-no-peek.B",
+          "layer": "B",
+          "expectation": "Sealed subject view: accessible no peek",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.accessible-no-peek.U",
+          "layer": "U",
+          "expectation": "Sealed subject view: accessible no peek",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        },
+        {
+          "id": "J4.2.accessible-no-peek.R",
+          "layer": "R",
+          "expectation": "Sealed subject view: accessible no peek",
+          "status": "blocked",
+          "reason": "Assertive native QA hierarchy and physical privacy proof"
+        }
+      ]
+    },
+    {
+      "id": "J4.3",
+      "title": "Quiet locked-card veto",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J4.3.quiet-veto.B",
+          "layer": "B",
+          "expectation": "Quiet locked-card veto: quiet veto",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.quiet-veto.U",
+          "layer": "U",
+          "expectation": "Quiet locked-card veto: quiet veto",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.quiet-veto.R",
+          "layer": "R",
+          "expectation": "Quiet locked-card veto: quiet veto",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.one-action.B",
+          "layer": "B",
+          "expectation": "Quiet locked-card veto: one action",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.one-action.U",
+          "layer": "U",
+          "expectation": "Quiet locked-card veto: one action",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.one-action.R",
+          "layer": "R",
+          "expectation": "Quiet locked-card veto: one action",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.exactly-once-void.B",
+          "layer": "B",
+          "expectation": "Quiet locked-card veto: exactly once void",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.exactly-once-void.U",
+          "layer": "U",
+          "expectation": "Quiet locked-card veto: exactly once void",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.exactly-once-void.R",
+          "layer": "R",
+          "expectation": "Quiet locked-card veto: exactly once void",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.neutral-old-open.B",
+          "layer": "B",
+          "expectation": "Quiet locked-card veto: neutral old open",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.neutral-old-open.U",
+          "layer": "U",
+          "expectation": "Quiet locked-card veto: neutral old open",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        },
+        {
+          "id": "J4.3.neutral-old-open.R",
+          "layer": "R",
+          "expectation": "Quiet locked-card veto: neutral old open",
+          "status": "blocked",
+          "reason": "Canonical veto/cascade contract and UI"
+        }
+      ]
+    },
+    {
+      "id": "J5.1",
+      "title": "Reveal refresh",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J5.1.future-clock.B",
+          "layer": "B",
+          "expectation": "Reveal refresh: future clock",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.future-clock.U",
+          "layer": "U",
+          "expectation": "Reveal refresh: future clock",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.future-clock.R",
+          "layer": "R",
+          "expectation": "Reveal refresh: future clock",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.stale-clock.B",
+          "layer": "B",
+          "expectation": "Reveal refresh: stale clock",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.stale-clock.U",
+          "layer": "U",
+          "expectation": "Reveal refresh: stale clock",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.stale-clock.R",
+          "layer": "R",
+          "expectation": "Reveal refresh: stale clock",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.resume-refresh.B",
+          "layer": "B",
+          "expectation": "Reveal refresh: resume refresh",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.resume-refresh.U",
+          "layer": "U",
+          "expectation": "Reveal refresh: resume refresh",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.resume-refresh.R",
+          "layer": "R",
+          "expectation": "Reveal refresh: resume refresh",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.pick-controls-closed.B",
+          "layer": "B",
+          "expectation": "Reveal refresh: pick controls closed",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.pick-controls-closed.U",
+          "layer": "U",
+          "expectation": "Reveal refresh: pick controls closed",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.pick-controls-closed.R",
+          "layer": "R",
+          "expectation": "Reveal refresh: pick controls closed",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.one-reveal-push.B",
+          "layer": "B",
+          "expectation": "Reveal refresh: one reveal push",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.one-reveal-push.U",
+          "layer": "U",
+          "expectation": "Reveal refresh: one reveal push",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        },
+        {
+          "id": "J5.1.one-reveal-push.R",
+          "layer": "R",
+          "expectation": "Reveal refresh: one reveal push",
+          "status": "blocked",
+          "reason": "Native reveal UI and notification workers"
+        }
+      ]
+    },
+    {
+      "id": "J5.2",
+      "title": "Provisional answer and majority challenge",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J5.2.subject-answer.B",
+          "layer": "B",
+          "expectation": "Provisional answer and majority challenge: subject answer",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.subject-answer.U",
+          "layer": "U",
+          "expectation": "Provisional answer and majority challenge: subject answer",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.eligible-unique-vote.B",
+          "layer": "B",
+          "expectation": "Provisional answer and majority challenge: eligible unique vote",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.eligible-unique-vote.U",
+          "layer": "U",
+          "expectation": "Provisional answer and majority challenge: eligible unique vote",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.minority-tie-majority.B",
+          "layer": "B",
+          "expectation": "Provisional answer and majority challenge: minority tie majority",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.minority-tie-majority.U",
+          "layer": "U",
+          "expectation": "Provisional answer and majority challenge: minority tie majority",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.deadline-race.B",
+          "layer": "B",
+          "expectation": "Provisional answer and majority challenge: deadline race",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.deadline-race.U",
+          "layer": "U",
+          "expectation": "Provisional answer and majority challenge: deadline race",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.no-early-score.B",
+          "layer": "B",
+          "expectation": "Provisional answer and majority challenge: no early score",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.no-early-score.U",
+          "layer": "U",
+          "expectation": "Provisional answer and majority challenge: no early score",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.exactly-once-finalize.B",
+          "layer": "B",
+          "expectation": "Provisional answer and majority challenge: exactly once finalize",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        },
+        {
+          "id": "J5.2.exactly-once-finalize.U",
+          "layer": "U",
+          "expectation": "Provisional answer and majority challenge: exactly once finalize",
+          "status": "blocked",
+          "reason": "Approved challenge policy and canonical settlement API"
+        }
+      ]
+    },
+    {
+      "id": "J5.3",
+      "title": "No-answer timeout",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J5.3.timeout-policy.B",
+          "layer": "B",
+          "expectation": "No-answer timeout: timeout policy",
+          "status": "blocked",
+          "reason": "Approved timeout policy and worker API"
+        },
+        {
+          "id": "J5.3.timeout-policy.U",
+          "layer": "U",
+          "expectation": "No-answer timeout: timeout policy",
+          "status": "blocked",
+          "reason": "Approved timeout policy and worker API"
+        },
+        {
+          "id": "J5.3.late-answer-race.B",
+          "layer": "B",
+          "expectation": "No-answer timeout: late answer race",
+          "status": "blocked",
+          "reason": "Approved timeout policy and worker API"
+        },
+        {
+          "id": "J5.3.late-answer-race.U",
+          "layer": "U",
+          "expectation": "No-answer timeout: late answer race",
+          "status": "blocked",
+          "reason": "Approved timeout policy and worker API"
+        },
+        {
+          "id": "J5.3.single-terminal-state.B",
+          "layer": "B",
+          "expectation": "No-answer timeout: single terminal state",
+          "status": "blocked",
+          "reason": "Approved timeout policy and worker API"
+        },
+        {
+          "id": "J5.3.single-terminal-state.U",
+          "layer": "U",
+          "expectation": "No-answer timeout: single terminal state",
+          "status": "blocked",
+          "reason": "Approved timeout policy and worker API"
+        }
+      ]
+    },
+    {
+      "id": "J5.4",
+      "title": "Proof media lifecycle",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J5.4.upload-owner.B",
+          "layer": "B",
+          "expectation": "Proof media lifecycle: upload owner",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        },
+        {
+          "id": "J5.4.upload-owner.U",
+          "layer": "U",
+          "expectation": "Proof media lifecycle: upload owner",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        },
+        {
+          "id": "J5.4.mime-size.B",
+          "layer": "B",
+          "expectation": "Proof media lifecycle: mime size",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        },
+        {
+          "id": "J5.4.mime-size.U",
+          "layer": "U",
+          "expectation": "Proof media lifecycle: mime size",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        },
+        {
+          "id": "J5.4.read-auth.B",
+          "layer": "B",
+          "expectation": "Proof media lifecycle: read auth",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        },
+        {
+          "id": "J5.4.read-auth.U",
+          "layer": "U",
+          "expectation": "Proof media lifecycle: read auth",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        },
+        {
+          "id": "J5.4.delete-revoke.B",
+          "layer": "B",
+          "expectation": "Proof media lifecycle: delete revoke",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        },
+        {
+          "id": "J5.4.delete-revoke.U",
+          "layer": "U",
+          "expectation": "Proof media lifecycle: delete revoke",
+          "status": "blocked",
+          "reason": "Proof adapter/auth API"
+        }
+      ]
+    },
+    {
+      "id": "J5.5",
+      "title": "Manual result update bound to bet",
+      "requiredLayers": [
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J5.5.correct-session.U",
+          "layer": "U",
+          "expectation": "Manual result update bound to bet: correct session",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        },
+        {
+          "id": "J5.5.correct-session.R",
+          "layer": "R",
+          "expectation": "Manual result update bound to bet: correct session",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        },
+        {
+          "id": "J5.5.room-bet-match.U",
+          "layer": "U",
+          "expectation": "Manual result update bound to bet: room bet match",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        },
+        {
+          "id": "J5.5.room-bet-match.R",
+          "layer": "R",
+          "expectation": "Manual result update bound to bet: room bet match",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        },
+        {
+          "id": "J5.5.cancel-truth.U",
+          "layer": "U",
+          "expectation": "Manual result update bound to bet: cancel truth",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        },
+        {
+          "id": "J5.5.cancel-truth.R",
+          "layer": "R",
+          "expectation": "Manual result update bound to bet: cancel truth",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        },
+        {
+          "id": "J5.5.result-all-recipients.U",
+          "layer": "U",
+          "expectation": "Manual result update bound to bet: result all recipients",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        },
+        {
+          "id": "J5.5.result-all-recipients.R",
+          "layer": "R",
+          "expectation": "Manual result update bound to bet: result all recipients",
+          "status": "blocked",
+          "reason": "Shared session model and exact RC manual transport"
+        }
+      ]
+    },
+    {
+      "id": "J6.1",
+      "title": "Suggestions and three two-choice formats",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J6.1.three-to-five.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: three to five",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.three-to-five.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: three to five",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.subject-source.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: subject source",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.subject-source.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: subject source",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.editable.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: editable",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.editable.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: editable",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.yes-no.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: yes no",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.yes-no.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: yes no",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.over-under.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: over under",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.over-under.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: over under",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.this-that.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: this that",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.this-that.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: this that",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.context-private.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: context private",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.context-private.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: context private",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.tap-count.B",
+          "layer": "B",
+          "expectation": "Suggestions and three two-choice formats: tap count",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        },
+        {
+          "id": "J6.1.tap-count.U",
+          "layer": "U",
+          "expectation": "Suggestions and three two-choice formats: tap count",
+          "status": "blocked",
+          "reason": "Suggestions/create API and native UI"
+        }
+      ]
+    },
+    {
+      "id": "J6.2",
+      "title": "Suggestion latency and resilience",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J6.2.under-three-seconds.B",
+          "layer": "B",
+          "expectation": "Suggestion latency and resilience: under three seconds",
+          "status": "blocked",
+          "reason": "Suggestions provider adapter contract and UI"
+        },
+        {
+          "id": "J6.2.under-three-seconds.U",
+          "layer": "U",
+          "expectation": "Suggestion latency and resilience: under three seconds",
+          "status": "blocked",
+          "reason": "Suggestions provider adapter contract and UI"
+        },
+        {
+          "id": "J6.2.safe-timeout-fallback.B",
+          "layer": "B",
+          "expectation": "Suggestion latency and resilience: safe timeout fallback",
+          "status": "blocked",
+          "reason": "Suggestions provider adapter contract and UI"
+        },
+        {
+          "id": "J6.2.safe-timeout-fallback.U",
+          "layer": "U",
+          "expectation": "Suggestion latency and resilience: safe timeout fallback",
+          "status": "blocked",
+          "reason": "Suggestions provider adapter contract and UI"
+        },
+        {
+          "id": "J6.2.no-stale-subject.B",
+          "layer": "B",
+          "expectation": "Suggestion latency and resilience: no stale subject",
+          "status": "blocked",
+          "reason": "Suggestions provider adapter contract and UI"
+        },
+        {
+          "id": "J6.2.no-stale-subject.U",
+          "layer": "U",
+          "expectation": "Suggestion latency and resilience: no stale subject",
+          "status": "blocked",
+          "reason": "Suggestions provider adapter contract and UI"
+        }
+      ]
+    },
+    {
+      "id": "J6.3",
+      "title": "Server safety and subject isolation",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J6.3.filter-categories.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: filter categories",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.filter-categories.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: filter categories",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.blocked-topic.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: blocked topic",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.blocked-topic.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: blocked topic",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.nonmember.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: nonmember",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.nonmember.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: nonmember",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.unsettleable.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: unsettleable",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.unsettleable.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: unsettleable",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.malformed-output.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: malformed output",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.malformed-output.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: malformed output",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.manual-edit-filter.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: manual edit filter",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.manual-edit-filter.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: manual edit filter",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.self-subject-denied.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: self subject denied",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.self-subject-denied.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: self subject denied",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.group-history.B",
+          "layer": "B",
+          "expectation": "Server safety and subject isolation: group history",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        },
+        {
+          "id": "J6.3.group-history.U",
+          "layer": "U",
+          "expectation": "Server safety and subject isolation: group history",
+          "status": "blocked",
+          "reason": "Canonical safety/create API"
+        }
+      ]
+    },
+    {
+      "id": "J6.4",
+      "title": "Training fields and deletion",
+      "requiredLayers": [
+        "B"
+      ],
+      "assertions": [
+        {
+          "id": "J6.4.context-source-persisted.B",
+          "layer": "B",
+          "expectation": "Training fields and deletion: context source persisted",
+          "status": "blocked",
+          "reason": "Context/provenance/delete contract"
+        },
+        {
+          "id": "J6.4.settlement-linked.B",
+          "layer": "B",
+          "expectation": "Training fields and deletion: settlement linked",
+          "status": "blocked",
+          "reason": "Context/provenance/delete contract"
+        },
+        {
+          "id": "J6.4.delete-training-context.B",
+          "layer": "B",
+          "expectation": "Training fields and deletion: delete training context",
+          "status": "blocked",
+          "reason": "Context/provenance/delete contract"
+        },
+        {
+          "id": "J6.4.two-outcomes.B",
+          "layer": "B",
+          "expectation": "Training fields and deletion: two outcomes",
+          "status": "blocked",
+          "reason": "Context/provenance/delete contract"
+        }
+      ]
+    },
+    {
+      "id": "J7.1",
+      "title": "Confidence scoring and streaks",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J7.1.approved-oracle.B",
+          "layer": "B",
+          "expectation": "Confidence scoring and streaks: approved oracle",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.approved-oracle.U",
+          "layer": "U",
+          "expectation": "Confidence scoring and streaks: approved oracle",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.rounding-ties.B",
+          "layer": "B",
+          "expectation": "Confidence scoring and streaks: rounding ties",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.rounding-ties.U",
+          "layer": "U",
+          "expectation": "Confidence scoring and streaks: rounding ties",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.void-missed.B",
+          "layer": "B",
+          "expectation": "Confidence scoring and streaks: void missed",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.void-missed.U",
+          "layer": "U",
+          "expectation": "Confidence scoring and streaks: void missed",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.exactly-once.B",
+          "layer": "B",
+          "expectation": "Confidence scoring and streaks: exactly once",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.exactly-once.U",
+          "layer": "U",
+          "expectation": "Confidence scoring and streaks: exactly once",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.host-extension-equal.B",
+          "layer": "B",
+          "expectation": "Confidence scoring and streaks: host extension equal",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.host-extension-equal.U",
+          "layer": "U",
+          "expectation": "Confidence scoring and streaks: host extension equal",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.no-cash.B",
+          "layer": "B",
+          "expectation": "Confidence scoring and streaks: no cash",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        },
+        {
+          "id": "J7.1.no-cash.U",
+          "layer": "U",
+          "expectation": "Confidence scoring and streaks: no cash",
+          "status": "blocked",
+          "reason": "Approved scoring/streak policy"
+        }
+      ]
+    },
+    {
+      "id": "J7.2",
+      "title": "Independent group board and history",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J7.2.group-board.B",
+          "layer": "B",
+          "expectation": "Independent group board and history: group board",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.group-board.U",
+          "layer": "U",
+          "expectation": "Independent group board and history: group board",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.group-board.R",
+          "layer": "R",
+          "expectation": "Independent group board and history: group board",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.group-history.B",
+          "layer": "B",
+          "expectation": "Independent group board and history: group history",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.group-history.U",
+          "layer": "U",
+          "expectation": "Independent group board and history: group history",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.group-history.R",
+          "layer": "R",
+          "expectation": "Independent group board and history: group history",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.no-global-wallet.B",
+          "layer": "B",
+          "expectation": "Independent group board and history: no global wallet",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.no-global-wallet.U",
+          "layer": "U",
+          "expectation": "Independent group board and history: no global wallet",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.no-global-wallet.R",
+          "layer": "R",
+          "expectation": "Independent group board and history: no global wallet",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.forwarding-policy.B",
+          "layer": "B",
+          "expectation": "Independent group board and history: forwarding policy",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.forwarding-policy.U",
+          "layer": "U",
+          "expectation": "Independent group board and history: forwarding policy",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        },
+        {
+          "id": "J7.2.forwarding-policy.R",
+          "layer": "R",
+          "expectation": "Independent group board and history: forwarding policy",
+          "status": "blocked",
+          "reason": "Canonical board/history API and serializer"
+        }
+      ]
+    },
+    {
+      "id": "J7.3",
+      "title": "Weekly recap",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J7.3.fixed-local-weekday.B",
+          "layer": "B",
+          "expectation": "Weekly recap: fixed local weekday",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        },
+        {
+          "id": "J7.3.fixed-local-weekday.U",
+          "layer": "U",
+          "expectation": "Weekly recap: fixed local weekday",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        },
+        {
+          "id": "J7.3.one-per-week.B",
+          "layer": "B",
+          "expectation": "Weekly recap: one per week",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        },
+        {
+          "id": "J7.3.one-per-week.U",
+          "layer": "U",
+          "expectation": "Weekly recap: one per week",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        },
+        {
+          "id": "J7.3.aggregate.B",
+          "layer": "B",
+          "expectation": "Weekly recap: aggregate",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        },
+        {
+          "id": "J7.3.aggregate.U",
+          "layer": "U",
+          "expectation": "Weekly recap: aggregate",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        },
+        {
+          "id": "J7.3.recipient-preferences.B",
+          "layer": "B",
+          "expectation": "Weekly recap: recipient preferences",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        },
+        {
+          "id": "J7.3.recipient-preferences.U",
+          "layer": "U",
+          "expectation": "Weekly recap: recipient preferences",
+          "status": "blocked",
+          "reason": "Approved recap schedule and worker API"
+        }
+      ]
+    },
+    {
+      "id": "J7.4",
+      "title": "Shared points-only goal",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J7.4.setter-consent.B",
+          "layer": "B",
+          "expectation": "Shared points-only goal: setter consent",
+          "status": "blocked",
+          "reason": "Approved goal confirmation policy and API"
+        },
+        {
+          "id": "J7.4.setter-consent.U",
+          "layer": "U",
+          "expectation": "Shared points-only goal: setter consent",
+          "status": "blocked",
+          "reason": "Approved goal confirmation policy and API"
+        },
+        {
+          "id": "J7.4.group-progress.B",
+          "layer": "B",
+          "expectation": "Shared points-only goal: group progress",
+          "status": "blocked",
+          "reason": "Approved goal confirmation policy and API"
+        },
+        {
+          "id": "J7.4.group-progress.U",
+          "layer": "U",
+          "expectation": "Shared points-only goal: group progress",
+          "status": "blocked",
+          "reason": "Approved goal confirmation policy and API"
+        },
+        {
+          "id": "J7.4.no-individual-reward.B",
+          "layer": "B",
+          "expectation": "Shared points-only goal: no individual reward",
+          "status": "blocked",
+          "reason": "Approved goal confirmation policy and API"
+        },
+        {
+          "id": "J7.4.no-individual-reward.U",
+          "layer": "U",
+          "expectation": "Shared points-only goal: no individual reward",
+          "status": "blocked",
+          "reason": "Approved goal confirmation policy and API"
+        }
+      ]
+    },
+    {
+      "id": "J8.1",
+      "title": "No-bets and blocked topics",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J8.1.every-create-path.B",
+          "layer": "B",
+          "expectation": "No-bets and blocked topics: every create path",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        },
+        {
+          "id": "J8.1.every-create-path.U",
+          "layer": "U",
+          "expectation": "No-bets and blocked topics: every create path",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        },
+        {
+          "id": "J8.1.existing-bet-policy.B",
+          "layer": "B",
+          "expectation": "No-bets and blocked topics: existing bet policy",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        },
+        {
+          "id": "J8.1.existing-bet-policy.U",
+          "layer": "U",
+          "expectation": "No-bets and blocked topics: existing bet policy",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        },
+        {
+          "id": "J8.1.veto.B",
+          "layer": "B",
+          "expectation": "No-bets and blocked topics: veto",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        },
+        {
+          "id": "J8.1.veto.U",
+          "layer": "U",
+          "expectation": "No-bets and blocked topics: veto",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        },
+        {
+          "id": "J8.1.report-block.B",
+          "layer": "B",
+          "expectation": "No-bets and blocked topics: report block",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        },
+        {
+          "id": "J8.1.report-block.U",
+          "layer": "U",
+          "expectation": "No-bets and blocked topics: report block",
+          "status": "blocked",
+          "reason": "Preferences/moderation contract"
+        }
+      ]
+    },
+    {
+      "id": "J8.2",
+      "title": "Leave cascade",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J8.2.void-open-picks.B",
+          "layer": "B",
+          "expectation": "Leave cascade: void open picks",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        },
+        {
+          "id": "J8.2.void-open-picks.U",
+          "layer": "U",
+          "expectation": "Leave cascade: void open picks",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        },
+        {
+          "id": "J8.2.cancel-subject-bets.B",
+          "layer": "B",
+          "expectation": "Leave cascade: cancel subject bets",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        },
+        {
+          "id": "J8.2.cancel-subject-bets.U",
+          "layer": "U",
+          "expectation": "Leave cascade: cancel subject bets",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        },
+        {
+          "id": "J8.2.revoke-reads-push.B",
+          "layer": "B",
+          "expectation": "Leave cascade: revoke reads push",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        },
+        {
+          "id": "J8.2.revoke-reads-push.U",
+          "layer": "U",
+          "expectation": "Leave cascade: revoke reads push",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        },
+        {
+          "id": "J8.2.isolate-g2.B",
+          "layer": "B",
+          "expectation": "Leave cascade: isolate g2",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        },
+        {
+          "id": "J8.2.isolate-g2.U",
+          "layer": "U",
+          "expectation": "Leave cascade: isolate g2",
+          "status": "blocked",
+          "reason": "Canonical leave operation"
+        }
+      ]
+    },
+    {
+      "id": "J8.3",
+      "title": "Deletion cascade",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J8.3.confirmed-initiation.B",
+          "layer": "B",
+          "expectation": "Deletion cascade: confirmed initiation",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.confirmed-initiation.U",
+          "layer": "U",
+          "expectation": "Deletion cascade: confirmed initiation",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.revoke-sessions.B",
+          "layer": "B",
+          "expectation": "Deletion cascade: revoke sessions",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.revoke-sessions.U",
+          "layer": "U",
+          "expectation": "Deletion cascade: revoke sessions",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.delete-context-proof-picks.B",
+          "layer": "B",
+          "expectation": "Deletion cascade: delete context proof picks",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.delete-context-proof-picks.U",
+          "layer": "U",
+          "expectation": "Deletion cascade: delete context proof picks",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.suppress-queued-push.B",
+          "layer": "B",
+          "expectation": "Deletion cascade: suppress queued push",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.suppress-queued-push.U",
+          "layer": "U",
+          "expectation": "Deletion cascade: suppress queued push",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.idempotent-delete.B",
+          "layer": "B",
+          "expectation": "Deletion cascade: idempotent delete",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.idempotent-delete.U",
+          "layer": "U",
+          "expectation": "Deletion cascade: idempotent delete",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.honest-transcript-limit.B",
+          "layer": "B",
+          "expectation": "Deletion cascade: honest transcript limit",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        },
+        {
+          "id": "J8.3.honest-transcript-limit.U",
+          "layer": "U",
+          "expectation": "Deletion cascade: honest transcript limit",
+          "status": "blocked",
+          "reason": "Canonical account/data deletion API"
+        }
+      ]
+    },
+    {
+      "id": "J8.4",
+      "title": "Two-tap accessible controls",
+      "requiredLayers": [
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J8.4.no-bets.U",
+          "layer": "U",
+          "expectation": "Two-tap accessible controls: no bets",
+          "status": "blocked",
+          "reason": "Native control IDs and clean QA simulator"
+        },
+        {
+          "id": "J8.4.topics.U",
+          "layer": "U",
+          "expectation": "Two-tap accessible controls: topics",
+          "status": "blocked",
+          "reason": "Native control IDs and clean QA simulator"
+        },
+        {
+          "id": "J8.4.veto.U",
+          "layer": "U",
+          "expectation": "Two-tap accessible controls: veto",
+          "status": "blocked",
+          "reason": "Native control IDs and clean QA simulator"
+        },
+        {
+          "id": "J8.4.leave.U",
+          "layer": "U",
+          "expectation": "Two-tap accessible controls: leave",
+          "status": "blocked",
+          "reason": "Native control IDs and clean QA simulator"
+        },
+        {
+          "id": "J8.4.delete.U",
+          "layer": "U",
+          "expectation": "Two-tap accessible controls: delete",
+          "status": "blocked",
+          "reason": "Native control IDs and clean QA simulator"
+        },
+        {
+          "id": "J8.4.large-text-voiceover.U",
+          "layer": "U",
+          "expectation": "Two-tap accessible controls: large text voiceover",
+          "status": "blocked",
+          "reason": "Native control IDs and clean QA simulator"
+        },
+        {
+          "id": "J8.4.saved-error-state.U",
+          "layer": "U",
+          "expectation": "Two-tap accessible controls: saved error state",
+          "status": "blocked",
+          "reason": "Native control IDs and clean QA simulator"
+        }
+      ]
+    },
+    {
+      "id": "J8.5",
+      "title": "Honest privacy and permissions",
+      "requiredLayers": [
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J8.5.no-chat-reading.U",
+          "layer": "U",
+          "expectation": "Honest privacy and permissions: no chat reading",
+          "status": "blocked",
+          "reason": "Native QA host and release privacy disclosures"
+        },
+        {
+          "id": "J8.5.no-fake-provenance.U",
+          "layer": "U",
+          "expectation": "Honest privacy and permissions: no fake provenance",
+          "status": "blocked",
+          "reason": "Native QA host and release privacy disclosures"
+        },
+        {
+          "id": "J8.5.least-permissions.U",
+          "layer": "U",
+          "expectation": "Honest privacy and permissions: least permissions",
+          "status": "blocked",
+          "reason": "Native QA host and release privacy disclosures"
+        },
+        {
+          "id": "J8.5.policy-matches.U",
+          "layer": "U",
+          "expectation": "Honest privacy and permissions: policy matches",
+          "status": "blocked",
+          "reason": "Native QA host and release privacy disclosures"
+        }
+      ]
+    },
+    {
+      "id": "J9.1",
+      "title": "Explicit invited admission and history interval",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J9.1.no-forward-enrollment.B",
+          "layer": "B",
+          "expectation": "Explicit invited admission and history interval: no forward enrollment",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.no-forward-enrollment.U",
+          "layer": "U",
+          "expectation": "Explicit invited admission and history interval: no forward enrollment",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.no-forward-enrollment.R",
+          "layer": "R",
+          "expectation": "Explicit invited admission and history interval: no forward enrollment",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.one-use-expiring-invite.B",
+          "layer": "B",
+          "expectation": "Explicit invited admission and history interval: one use expiring invite",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.one-use-expiring-invite.U",
+          "layer": "U",
+          "expectation": "Explicit invited admission and history interval: one use expiring invite",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.one-use-expiring-invite.R",
+          "layer": "R",
+          "expectation": "Explicit invited admission and history interval: one use expiring invite",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.account-consent.B",
+          "layer": "B",
+          "expectation": "Explicit invited admission and history interval: account consent",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.account-consent.U",
+          "layer": "U",
+          "expectation": "Explicit invited admission and history interval: account consent",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.account-consent.R",
+          "layer": "R",
+          "expectation": "Explicit invited admission and history interval: account consent",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.no-prejoin-history.B",
+          "layer": "B",
+          "expectation": "Explicit invited admission and history interval: no prejoin history",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.no-prejoin-history.U",
+          "layer": "U",
+          "expectation": "Explicit invited admission and history interval: no prejoin history",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        },
+        {
+          "id": "J9.1.no-prejoin-history.R",
+          "layer": "R",
+          "expectation": "Explicit invited admission and history interval: no prejoin history",
+          "status": "blocked",
+          "reason": "Invitation and membership interval contract"
+        }
+      ]
+    },
+    {
+      "id": "J9.2",
+      "title": "Leave and rejoin intervals",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "J9.2.no-old-history.B",
+          "layer": "B",
+          "expectation": "Leave and rejoin intervals: no old history",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        },
+        {
+          "id": "J9.2.no-old-history.U",
+          "layer": "U",
+          "expectation": "Leave and rejoin intervals: no old history",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        },
+        {
+          "id": "J9.2.no-old-token-settlement.B",
+          "layer": "B",
+          "expectation": "Leave and rejoin intervals: no old token settlement",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        },
+        {
+          "id": "J9.2.no-old-token-settlement.U",
+          "layer": "U",
+          "expectation": "Leave and rejoin intervals: no old token settlement",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        },
+        {
+          "id": "J9.2.no-reminders.B",
+          "layer": "B",
+          "expectation": "Leave and rejoin intervals: no reminders",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        },
+        {
+          "id": "J9.2.no-reminders.U",
+          "layer": "U",
+          "expectation": "Leave and rejoin intervals: no reminders",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        },
+        {
+          "id": "J9.2.cascade.B",
+          "layer": "B",
+          "expectation": "Leave and rejoin intervals: cascade",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        },
+        {
+          "id": "J9.2.cascade.U",
+          "layer": "U",
+          "expectation": "Leave and rejoin intervals: cascade",
+          "status": "blocked",
+          "reason": "Membership interval contract"
+        }
+      ]
+    },
+    {
+      "id": "J9.3",
+      "title": "Unsupported platform fallback",
+      "requiredLayers": [
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J9.3.neutral-instructions.U",
+          "layer": "U",
+          "expectation": "Unsupported platform fallback: neutral instructions",
+          "status": "blocked",
+          "reason": "Exact distributed RC and unsupported QA device"
+        },
+        {
+          "id": "J9.3.neutral-instructions.R",
+          "layer": "R",
+          "expectation": "Unsupported platform fallback: neutral instructions",
+          "status": "blocked",
+          "reason": "Exact distributed RC and unsupported QA device"
+        },
+        {
+          "id": "J9.3.no-legacy-web-bypass.U",
+          "layer": "U",
+          "expectation": "Unsupported platform fallback: no legacy web bypass",
+          "status": "blocked",
+          "reason": "Exact distributed RC and unsupported QA device"
+        },
+        {
+          "id": "J9.3.no-legacy-web-bypass.R",
+          "layer": "R",
+          "expectation": "Unsupported platform fallback: no legacy web bypass",
+          "status": "blocked",
+          "reason": "Exact distributed RC and unsupported QA device"
+        },
+        {
+          "id": "J9.3.actual-sms-representation.U",
+          "layer": "U",
+          "expectation": "Unsupported platform fallback: actual sms representation",
+          "status": "blocked",
+          "reason": "Exact distributed RC and unsupported QA device"
+        },
+        {
+          "id": "J9.3.actual-sms-representation.R",
+          "layer": "R",
+          "expectation": "Unsupported platform fallback: actual sms representation",
+          "status": "blocked",
+          "reason": "Exact distributed RC and unsupported QA device"
+        }
+      ]
+    },
+    {
+      "id": "J9.4",
+      "title": "Account-scoped conversation links",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "J9.4.no-last-room.B",
+          "layer": "B",
+          "expectation": "Account-scoped conversation links: no last room",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.no-last-room.U",
+          "layer": "U",
+          "expectation": "Account-scoped conversation links: no last room",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.no-last-room.R",
+          "layer": "R",
+          "expectation": "Account-scoped conversation links: no last room",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.account-scoped.B",
+          "layer": "B",
+          "expectation": "Account-scoped conversation links: account scoped",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.account-scoped.U",
+          "layer": "U",
+          "expectation": "Account-scoped conversation links: account scoped",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.account-scoped.R",
+          "layer": "R",
+          "expectation": "Account-scoped conversation links: account scoped",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.mismatch-denied.B",
+          "layer": "B",
+          "expectation": "Account-scoped conversation links: mismatch denied",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.mismatch-denied.U",
+          "layer": "U",
+          "expectation": "Account-scoped conversation links: mismatch denied",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.mismatch-denied.R",
+          "layer": "R",
+          "expectation": "Account-scoped conversation links: mismatch denied",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.relink-after-instability.B",
+          "layer": "B",
+          "expectation": "Account-scoped conversation links: relink after instability",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.relink-after-instability.U",
+          "layer": "U",
+          "expectation": "Account-scoped conversation links: relink after instability",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        },
+        {
+          "id": "J9.4.relink-after-instability.R",
+          "layer": "R",
+          "expectation": "Account-scoped conversation links: relink after instability",
+          "status": "blocked",
+          "reason": "Shared config/locator/session API and QA simulator"
+        }
+      ]
+    },
+    {
+      "id": "SEC1",
+      "title": "Public read authorization inventory",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "SEC1.public-export-policy.B",
+          "layer": "B",
+          "expectation": "Public read authorization inventory: public export policy",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.public-export-policy.U",
+          "layer": "U",
+          "expectation": "Public read authorization inventory: public export policy",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.read-matrix.B",
+          "layer": "B",
+          "expectation": "Public read authorization inventory: read matrix",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.read-matrix.U",
+          "layer": "U",
+          "expectation": "Public read authorization inventory: read matrix",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.eligible-members.B",
+          "layer": "B",
+          "expectation": "Public read authorization inventory: eligible members",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.eligible-members.U",
+          "layer": "U",
+          "expectation": "Public read authorization inventory: eligible members",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.subject-lock.B",
+          "layer": "B",
+          "expectation": "Public read authorization inventory: subject lock",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.subject-lock.U",
+          "layer": "U",
+          "expectation": "Public read authorization inventory: subject lock",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.revocation.B",
+          "layer": "B",
+          "expectation": "Public read authorization inventory: revocation",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.revocation.U",
+          "layer": "U",
+          "expectation": "Public read authorization inventory: revocation",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.membership-interval.B",
+          "layer": "B",
+          "expectation": "Public read authorization inventory: membership interval",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.membership-interval.U",
+          "layer": "U",
+          "expectation": "Public read authorization inventory: membership interval",
+          "status": "blocked",
+          "reason": "All public export contracts and legacy routes secured"
+        },
+        {
+          "id": "SEC1.legacy-retirement.B",
+          "layer": "B",
+          "expectation": "Every retired public query/mutation/action returns NOT_AVAILABLE for every synthetic actor without state changes",
+          "status": "blocked",
+          "reason": "Requires exact current export inventory and actual registered-handler execution"
+        }
+      ]
+    },
+    {
+      "id": "SEC2",
+      "title": "Verified identity and abuse resistance",
+      "requiredLayers": [
+        "B",
+        "U"
+      ],
+      "assertions": [
+        {
+          "id": "SEC2.wrong-expired-replay.B",
+          "layer": "B",
+          "expectation": "Verified identity and abuse resistance: wrong expired replay",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.wrong-expired-replay.U",
+          "layer": "U",
+          "expectation": "Verified identity and abuse resistance: wrong expired replay",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.bounded-attempts.B",
+          "layer": "B",
+          "expectation": "Verified identity and abuse resistance: bounded attempts",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.bounded-attempts.U",
+          "layer": "U",
+          "expectation": "Verified identity and abuse resistance: bounded attempts",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.stable-account.B",
+          "layer": "B",
+          "expectation": "Verified identity and abuse resistance: stable account",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.stable-account.U",
+          "layer": "U",
+          "expectation": "Verified identity and abuse resistance: stable account",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.session-revocation.B",
+          "layer": "B",
+          "expectation": "Verified identity and abuse resistance: session revocation",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.session-revocation.U",
+          "layer": "U",
+          "expectation": "Verified identity and abuse resistance: session revocation",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.no-username-admission.B",
+          "layer": "B",
+          "expectation": "Verified identity and abuse resistance: no username admission",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.no-username-admission.U",
+          "layer": "U",
+          "expectation": "Verified identity and abuse resistance: no username admission",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.secret-free-logs.B",
+          "layer": "B",
+          "expectation": "Verified identity and abuse resistance: secret free logs",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        },
+        {
+          "id": "SEC2.secret-free-logs.U",
+          "layer": "U",
+          "expectation": "Verified identity and abuse resistance: secret free logs",
+          "status": "blocked",
+          "reason": "OTP/session contract and fake provider injection"
+        }
+      ]
+    },
+    {
+      "id": "SEC3",
+      "title": "Card notification and media privacy",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "SEC3.locked-fields.B",
+          "layer": "B",
+          "expectation": "Card notification and media privacy: locked fields",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.locked-fields.U",
+          "layer": "U",
+          "expectation": "Card notification and media privacy: locked fields",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.locked-fields.R",
+          "layer": "R",
+          "expectation": "Card notification and media privacy: locked fields",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.shared-payload-scan.B",
+          "layer": "B",
+          "expectation": "Card notification and media privacy: shared payload scan",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.shared-payload-scan.U",
+          "layer": "U",
+          "expectation": "Card notification and media privacy: shared payload scan",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.shared-payload-scan.R",
+          "layer": "R",
+          "expectation": "Card notification and media privacy: shared payload scan",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.neutral-push.B",
+          "layer": "B",
+          "expectation": "Card notification and media privacy: neutral push",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.neutral-push.U",
+          "layer": "U",
+          "expectation": "Card notification and media privacy: neutral push",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.neutral-push.R",
+          "layer": "R",
+          "expectation": "Card notification and media privacy: neutral push",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.authenticated-media.B",
+          "layer": "B",
+          "expectation": "Card notification and media privacy: authenticated media",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.authenticated-media.U",
+          "layer": "U",
+          "expectation": "Card notification and media privacy: authenticated media",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.authenticated-media.R",
+          "layer": "R",
+          "expectation": "Card notification and media privacy: authenticated media",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.stale-cache-clear.B",
+          "layer": "B",
+          "expectation": "Card notification and media privacy: stale cache clear",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.stale-cache-clear.U",
+          "layer": "U",
+          "expectation": "Card notification and media privacy: stale cache clear",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        },
+        {
+          "id": "SEC3.stale-cache-clear.R",
+          "layer": "R",
+          "expectation": "Card notification and media privacy: stale cache clear",
+          "status": "blocked",
+          "reason": "Shared serializers/APNs/media adapter and signed RC"
+        }
+      ]
+    },
+    {
+      "id": "SEC4",
+      "title": "State timing and ledger across APIs",
+      "requiredLayers": [
+        "B"
+      ],
+      "assertions": [
+        {
+          "id": "SEC4.cutoff-matrix.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: cutoff matrix",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.global-wallet.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: global wallet",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.wrong-settler.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: wrong settler",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.invalid-pick.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: invalid pick",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.invalid-settlement.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: invalid settlement",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.mixed-routes.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: mixed routes",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.exactly-once.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: exactly once",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.left-settler.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: left settler",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        },
+        {
+          "id": "SEC4.concurrent-conflict.B",
+          "layer": "B",
+          "expectation": "State timing and ledger across APIs: concurrent conflict",
+          "status": "blocked",
+          "reason": "Canonical ledger contract; local real-backend transaction lane"
+        }
+      ]
+    },
+    {
+      "id": "SEC5",
+      "title": "Rate limits and malformed requests",
+      "requiredLayers": [
+        "B"
+      ],
+      "assertions": [
+        {
+          "id": "SEC5.bounded-create.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: bounded create",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        },
+        {
+          "id": "SEC5.bounded-pick.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: bounded pick",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        },
+        {
+          "id": "SEC5.bounded-suggest.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: bounded suggest",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        },
+        {
+          "id": "SEC5.bounded-auth.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: bounded auth",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        },
+        {
+          "id": "SEC5.request-idempotency.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: request idempotency",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        },
+        {
+          "id": "SEC5.safe-errors.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: safe errors",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        },
+        {
+          "id": "SEC5.no-test-production-routes.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: no test production routes",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        },
+        {
+          "id": "SEC5.admin-denied.B",
+          "layer": "B",
+          "expectation": "Rate limits and malformed requests: admin denied",
+          "status": "blocked",
+          "reason": "Canonical rate-limit/idempotency contract"
+        }
+      ]
+    },
+    {
+      "id": "N1",
+      "title": "Scheduled intent clock and retries",
+      "requiredLayers": [
+        "B"
+      ],
+      "assertions": [
+        {
+          "id": "N1.turn.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: turn",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        },
+        {
+          "id": "N1.pass.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: pass",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        },
+        {
+          "id": "N1.reveal.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: reveal",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        },
+        {
+          "id": "N1.finalization.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: finalization",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        },
+        {
+          "id": "N1.timeout.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: timeout",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        },
+        {
+          "id": "N1.recap.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: recap",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        },
+        {
+          "id": "N1.duplicate-crash.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: duplicate crash",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        },
+        {
+          "id": "N1.dst-zone-change.B",
+          "layer": "B",
+          "expectation": "Scheduled intent clock and retries: dst zone change",
+          "status": "blocked",
+          "reason": "Worker entrypoints and approved rule fixture"
+        }
+      ]
+    },
+    {
+      "id": "N2",
+      "title": "Permission lifecycle and open routing",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "N2.denied-provisional.B",
+          "layer": "B",
+          "expectation": "Permission lifecycle and open routing: denied provisional",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.denied-provisional.U",
+          "layer": "U",
+          "expectation": "Permission lifecycle and open routing: denied provisional",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.denied-provisional.R",
+          "layer": "R",
+          "expectation": "Permission lifecycle and open routing: denied provisional",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.foreground-background-terminated.B",
+          "layer": "B",
+          "expectation": "Permission lifecycle and open routing: foreground background terminated",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.foreground-background-terminated.U",
+          "layer": "U",
+          "expectation": "Permission lifecycle and open routing: foreground background terminated",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.foreground-background-terminated.R",
+          "layer": "R",
+          "expectation": "Permission lifecycle and open routing: foreground background terminated",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.eligible-locator.B",
+          "layer": "B",
+          "expectation": "Permission lifecycle and open routing: eligible locator",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.eligible-locator.U",
+          "layer": "U",
+          "expectation": "Permission lifecycle and open routing: eligible locator",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.eligible-locator.R",
+          "layer": "R",
+          "expectation": "Permission lifecycle and open routing: eligible locator",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.stale-event-denied.B",
+          "layer": "B",
+          "expectation": "Permission lifecycle and open routing: stale event denied",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.stale-event-denied.U",
+          "layer": "U",
+          "expectation": "Permission lifecycle and open routing: stale event denied",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.stale-event-denied.R",
+          "layer": "R",
+          "expectation": "Permission lifecycle and open routing: stale event denied",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.neutral-payload.B",
+          "layer": "B",
+          "expectation": "Permission lifecycle and open routing: neutral payload",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.neutral-payload.U",
+          "layer": "U",
+          "expectation": "Permission lifecycle and open routing: neutral payload",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        },
+        {
+          "id": "N2.neutral-payload.R",
+          "layer": "R",
+          "expectation": "Permission lifecycle and open routing: neutral payload",
+          "status": "blocked",
+          "reason": "APNs adapter/native notification handling/signed RC"
+        }
+      ]
+    },
+    {
+      "id": "N3",
+      "title": "Provider device lifecycle",
+      "requiredLayers": [
+        "B",
+        "U",
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "N3.token-refresh.B",
+          "layer": "B",
+          "expectation": "Provider device lifecycle: token refresh",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.token-refresh.U",
+          "layer": "U",
+          "expectation": "Provider device lifecycle: token refresh",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.token-refresh.R",
+          "layer": "R",
+          "expectation": "Provider device lifecycle: token refresh",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.invalid-token-cleanup.B",
+          "layer": "B",
+          "expectation": "Provider device lifecycle: invalid token cleanup",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.invalid-token-cleanup.U",
+          "layer": "U",
+          "expectation": "Provider device lifecycle: invalid token cleanup",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.invalid-token-cleanup.R",
+          "layer": "R",
+          "expectation": "Provider device lifecycle: invalid token cleanup",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.outage-backoff.B",
+          "layer": "B",
+          "expectation": "Provider device lifecycle: outage backoff",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.outage-backoff.U",
+          "layer": "U",
+          "expectation": "Provider device lifecycle: outage backoff",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.outage-backoff.R",
+          "layer": "R",
+          "expectation": "Provider device lifecycle: outage backoff",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.logout-switch.B",
+          "layer": "B",
+          "expectation": "Provider device lifecycle: logout switch",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.logout-switch.U",
+          "layer": "U",
+          "expectation": "Provider device lifecycle: logout switch",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.logout-switch.R",
+          "layer": "R",
+          "expectation": "Provider device lifecycle: logout switch",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.leave-delete-suppression.B",
+          "layer": "B",
+          "expectation": "Provider device lifecycle: leave delete suppression",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.leave-delete-suppression.U",
+          "layer": "U",
+          "expectation": "Provider device lifecycle: leave delete suppression",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.leave-delete-suppression.R",
+          "layer": "R",
+          "expectation": "Provider device lifecycle: leave delete suppression",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.recap-preference.B",
+          "layer": "B",
+          "expectation": "Provider device lifecycle: recap preference",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.recap-preference.U",
+          "layer": "U",
+          "expectation": "Provider device lifecycle: recap preference",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        },
+        {
+          "id": "N3.recap-preference.R",
+          "layer": "R",
+          "expectation": "Provider device lifecycle: recap preference",
+          "status": "blocked",
+          "reason": "Notification token and fake transport contract"
+        }
+      ]
+    },
+    {
+      "id": "R1",
+      "title": "Three-phone core loop",
+      "requiredLayers": [
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "R1.same-signed-rc.R",
+          "layer": "R",
+          "expectation": "Three-phone core loop: same signed rc",
+          "status": "blocked",
+          "reason": "Release approval, exact signed RC, dedicated QA operators"
+        },
+        {
+          "id": "R1.same-room-board.R",
+          "layer": "R",
+          "expectation": "Three-phone core loop: same room board",
+          "status": "blocked",
+          "reason": "Release approval, exact signed RC, dedicated QA operators"
+        },
+        {
+          "id": "R1.host-extension-session.R",
+          "layer": "R",
+          "expectation": "Three-phone core loop: host extension session",
+          "status": "blocked",
+          "reason": "Release approval, exact signed RC, dedicated QA operators"
+        },
+        {
+          "id": "R1.manual-send-budget.R",
+          "layer": "R",
+          "expectation": "Three-phone core loop: manual send budget",
+          "status": "blocked",
+          "reason": "Release approval, exact signed RC, dedicated QA operators"
+        },
+        {
+          "id": "R1.pick-budget.R",
+          "layer": "R",
+          "expectation": "Three-phone core loop: pick budget",
+          "status": "blocked",
+          "reason": "Release approval, exact signed RC, dedicated QA operators"
+        },
+        {
+          "id": "R1.install-return.R",
+          "layer": "R",
+          "expectation": "Three-phone core loop: install return",
+          "status": "blocked",
+          "reason": "Release approval, exact signed RC, dedicated QA operators"
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "Physical subject privacy",
+      "requiredLayers": [
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "R2.static-voiceover-safe.R",
+          "layer": "R",
+          "expectation": "Physical subject privacy: static voiceover safe",
+          "status": "blocked",
+          "reason": "Exact signed RC and three QA devices"
+        },
+        {
+          "id": "R2.offline-restart-safe.R",
+          "layer": "R",
+          "expectation": "Physical subject privacy: offline restart safe",
+          "status": "blocked",
+          "reason": "Exact signed RC and three QA devices"
+        },
+        {
+          "id": "R2.authorized-friend.R",
+          "layer": "R",
+          "expectation": "Physical subject privacy: authorized friend",
+          "status": "blocked",
+          "reason": "Exact signed RC and three QA devices"
+        },
+        {
+          "id": "R2.server-reveal-refresh.R",
+          "layer": "R",
+          "expectation": "Physical subject privacy: server reveal refresh",
+          "status": "blocked",
+          "reason": "Exact signed RC and three QA devices"
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "Physical forwarding and isolation",
+      "requiredLayers": [
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "R3.outsider-denied.R",
+          "layer": "R",
+          "expectation": "Physical forwarding and isolation: outsider denied",
+          "status": "blocked",
+          "reason": "Exact signed RC and outsider QA conversation"
+        },
+        {
+          "id": "R3.neutral-fallback.R",
+          "layer": "R",
+          "expectation": "Physical forwarding and isolation: neutral fallback",
+          "status": "blocked",
+          "reason": "Exact signed RC and outsider QA conversation"
+        },
+        {
+          "id": "R3.board-policy.R",
+          "layer": "R",
+          "expectation": "Physical forwarding and isolation: board policy",
+          "status": "blocked",
+          "reason": "Exact signed RC and outsider QA conversation"
+        },
+        {
+          "id": "R3.no-last-room.R",
+          "layer": "R",
+          "expectation": "Physical forwarding and isolation: no last room",
+          "status": "blocked",
+          "reason": "Exact signed RC and outsider QA conversation"
+        },
+        {
+          "id": "R3.account-switch.R",
+          "layer": "R",
+          "expectation": "Physical forwarding and isolation: account switch",
+          "status": "blocked",
+          "reason": "Exact signed RC and outsider QA conversation"
+        }
+      ]
+    },
+    {
+      "id": "R4",
+      "title": "Physical control and result transport",
+      "requiredLayers": [
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "R4.quiet-veto-leave.R",
+          "layer": "R",
+          "expectation": "Physical control and result transport: quiet veto leave",
+          "status": "blocked",
+          "reason": "Exact signed RC, rule approval and operator transport proof"
+        },
+        {
+          "id": "R4.approved-finalization.R",
+          "layer": "R",
+          "expectation": "Physical control and result transport: approved finalization",
+          "status": "blocked",
+          "reason": "Exact signed RC, rule approval and operator transport proof"
+        },
+        {
+          "id": "R4.correct-session-send.R",
+          "layer": "R",
+          "expectation": "Physical control and result transport: correct session send",
+          "status": "blocked",
+          "reason": "Exact signed RC, rule approval and operator transport proof"
+        },
+        {
+          "id": "R4.recipient-result.R",
+          "layer": "R",
+          "expectation": "Physical control and result transport: recipient result",
+          "status": "blocked",
+          "reason": "Exact signed RC, rule approval and operator transport proof"
+        },
+        {
+          "id": "R4.update-placement.R",
+          "layer": "R",
+          "expectation": "Physical control and result transport: update placement",
+          "status": "blocked",
+          "reason": "Exact signed RC, rule approval and operator transport proof"
+        }
+      ]
+    },
+    {
+      "id": "R5",
+      "title": "Distribution install and unsupported transport",
+      "requiredLayers": [
+        "R"
+      ],
+      "assertions": [
+        {
+          "id": "R5.actual-distributed-build.R",
+          "layer": "R",
+          "expectation": "Distribution install and unsupported transport: actual distributed build",
+          "status": "blocked",
+          "reason": "External distribution track and QA operator"
+        },
+        {
+          "id": "R5.sms-fallback.R",
+          "layer": "R",
+          "expectation": "Distribution install and unsupported transport: sms fallback",
+          "status": "blocked",
+          "reason": "External distribution track and QA operator"
+        },
+        {
+          "id": "R5.store-install-return.R",
+          "layer": "R",
+          "expectation": "Distribution install and unsupported transport: store install return",
+          "status": "blocked",
+          "reason": "External distribution track and QA operator"
+        }
+      ]
+    }
+  ]
+}

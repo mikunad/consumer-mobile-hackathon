@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { Animated, Platform, Pressable, Share, Text, View, StyleProp, ViewStyle } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { C, F, tnum } from "@/lib/theme";
@@ -186,8 +186,8 @@ export function Tile({
   dark?: boolean;
 }) {
   const [shown, setShown] = useState<TileState>(from ?? state);
-  const flip = useRef(new Animated.Value(1)).current;
-  const pop = useRef(new Animated.Value(1)).current;
+  const [flip] = useState(() => new Animated.Value(1));
+  const [pop] = useState(() => new Animated.Value(1));
   useEffect(() => {
     if (state === shown) return;
     const anim = Animated.sequence([
@@ -206,7 +206,7 @@ export function Tile({
       ]).start();
     });
     return () => anim.stop();
-  }, [state]);
+  }, [state, shown, delay, flip, pop]);
   const p = palette(shown, dark);
   return (
     <Animated.View
