@@ -11,22 +11,33 @@ struct BoardView: View {
         Group {
             SheetHeader(leading: "Back", leadingAction: { model.home() }, title: board?.room.name ?? "Board")
             if let board {
-                Text("Today's standings").font(.largeTitle.bold())
-                InsetGroup {
+                Text("Today's standings").font(Night.question(.largeTitle)).tracking(-0.6)
+                SectionTitle(text: "Leaderboard")
+                VStack(spacing: 8) {
                     ForEach(Array(board.rows.enumerated()), id: \.element.id) { index, row in
-                        InsetRow(last: index == board.rows.count - 1) {
-                            Text("\(index + 1)").font(.headline.monospacedDigit()).foregroundStyle(Theme.sub).frame(width: 20)
+                        let you = row.id == model.me?.user._id
+                        HStack(spacing: 12) {
+                            Text("\(index + 1)").font(Night.mono(.subheadline)).foregroundStyle(Theme.sub).frame(width: 20)
                             Avatar(name: row.name, size: 32)
                             VStack(alignment: .leading, spacing: 1) {
                                 HStack(spacing: 6) {
-                                    Text(row.name).font(.body.weight(index == 0 ? .semibold : .regular))
-                                    if row.streak > 0 { Text("🔥\(row.streak)").font(.footnote.weight(.semibold)) }
+                                    Text(row.name).font(.body.weight(index == 0 || you ? .semibold : .regular))
+                                    if row.streak > 0 { Text("🔥\(row.streak)").font(Night.mono(.caption)) }
                                 }
                                 Text("\(row.correct)/\(row.called) called").font(.footnote).foregroundStyle(Theme.sub)
                             }
                             Spacer()
-                            Text(pts(row.points)).font(.headline.monospacedDigit())
+                            Text(pts(row.points))
+                                .font(Night.mono(.subheadline))
+                                .foregroundStyle(Night.lime)
+                                .contentTransition(.numericText())
+                                .animation(.snappy, value: row.points)
                         }
+                        .padding(.horizontal, 14)
+                        .frame(minHeight: 56)
+                        .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Night.card))
+                        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(you ? Night.lime : Night.line, lineWidth: 1))
+                        .shadow(color: Night.lime.opacity(you ? 0.25 : 0), radius: 9)
                     }
                 }
                 PrimaryButton(title: "Send leaderboard") { model.send(Cards.board(board, session: nil)) }
@@ -38,6 +49,7 @@ struct BoardView: View {
             }
             ErrorText(text: error)
         }
+        .nightSurface()
         .task { await load() }
     }
 

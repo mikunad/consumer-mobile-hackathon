@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Easing, PanResponder, Pressable, Text, View } from "react-native";
-import { I, t } from "./ios";
+import { N, label, mono } from "./night";
 
 const DOTS = 90;
 
@@ -20,7 +20,7 @@ function Particles({ width, height }: { width: number; height: number }) {
   }, [phases]);
   const dots = useMemo(
     () =>
-      Array.from({ length: DOTS }, (_, i) => ({
+      Array.from({ length: Math.min(260, Math.max(DOTS, Math.round((width * height) / 180))) }, (_, i) => ({
         x: Math.random() * width,
         y: Math.random() * height,
         r: 1 + Math.random() * 1.8,
@@ -44,8 +44,8 @@ function Particles({ width, height }: { width: number; height: number }) {
               top: d.y,
               width: d.r * 2,
               height: d.r * 2,
-              borderRadius: d.r,
-              backgroundColor: d.dark ? "#3A3A3C" : "#8E8E93",
+              borderRadius: 0.5,
+              backgroundColor: d.dark ? "rgba(255,255,255,0.7)" : N.lime,
               opacity: p.interpolate({ inputRange: [0, 1], outputRange: i % 2 ? [0.15, 0.95] : [0.9, 0.2] }),
               transform: [
                 { translateX: p.interpolate({ inputRange: [0, 1], outputRange: [0, d.dx] }) },
@@ -78,6 +78,7 @@ export function InvisibleInk({
   const [tip, setTip] = useState(false);
   const fade = useRef(new Animated.Value(1)).current;
   const moves = useRef(0);
+  const [box, setBox] = useState({ w: width, h: height });
   const uncover = () => {
     Animated.timing(fade, { toValue: 0, duration: 700, useNativeDriver: true }).start(() => setGone(true));
   };
@@ -105,19 +106,21 @@ export function InvisibleInk({
   if (gone && children) return <>{children}</>;
   return (
     <View>
-      <View>
+      <View onLayout={(e) => setBox({ w: e.nativeEvent.layout.width, h: e.nativeEvent.layout.height })}>
       {children ? <View style={{ opacity: 0 }}>{children}</View> : <View style={{ width, height }} />}
       <Animated.View
         {...pan.panHandlers}
-        style={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0, borderRadius: 18, overflow: "hidden", backgroundColor: "#E9E9EB", opacity: fade, alignItems: "flex-start", justifyContent: "flex-start", padding: 12 }}
+        style={{ position: "absolute", left: 0, top: 0, right: 0, bottom: 0, borderRadius: 16, borderWidth: 1, borderColor: N.line, overflow: "hidden", backgroundColor: N.bg, opacity: fade, alignItems: "center", justifyContent: "center", padding: 12 }}
       >
-        <Particles width={width} height={height} />
-        <Text style={t(17, "600", "#0A7AFF")}>{name}</Text>
+        <Particles width={box.w} height={box.h} />
+        <View style={{ borderWidth: 1, borderColor: N.lime, borderRadius: 8, paddingHorizontal: 10, paddingVertical: 3, backgroundColor: "rgba(11,13,12,0.85)", shadowColor: N.lime, shadowOpacity: 0.6, shadowRadius: 10, shadowOffset: { width: 0, height: 0 } }}>
+          <Text style={mono(13, N.lime, true)}>{name}</Text>
+        </View>
       </Animated.View>
       </View>
       {tip || canRub || hint ? (
         <Pressable onLongPress={canRub ? uncover : undefined}>
-          <Text style={[t(11, "500", I.secondary), { marginTop: 4, marginLeft: 4 }]}>{canRub ? "Rub to reveal" : hint}</Text>
+          <Text style={[canRub ? label("#5C7A00") : mono(11, "#8E8E93"), { marginTop: 5, marginLeft: 4 }]}>{canRub ? "Rub to reveal" : hint}</Text>
         </Pressable>
       ) : null}
     </View>

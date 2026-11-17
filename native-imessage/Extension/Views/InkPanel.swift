@@ -4,14 +4,28 @@ struct InkNoise: View {
     var body: some View {
         TimelineView(.animation(minimumInterval: 1 / 15)) { timeline in
             Canvas { ctx, size in
-                ctx.fill(Path(CGRect(origin: .zero, size: size)), with: .color(Theme.bubble))
-                var rng = SeededRandom(seed: UInt64(timeline.date.timeIntervalSinceReferenceDate * 15))
-                let count = Int(size.width * size.height / 14)
+                ctx.fill(Path(CGRect(origin: .zero, size: size)), with: .color(Night.bg))
+                let t = timeline.date.timeIntervalSinceReferenceDate
+                var rng = SeededRandom(seed: UInt64(t * 15))
+                let count = Int(size.width * size.height / 18)
                 for _ in 0..<count {
                     let x = CGFloat(rng.next() % 10_000) / 10_000 * size.width
                     let y = CGFloat(rng.next() % 10_000) / 10_000 * size.height
                     let shade = Double(rng.next() % 100) / 100
-                    ctx.fill(Path(ellipseIn: CGRect(x: x, y: y, width: 1.6, height: 1.6)), with: .color(Color(white: 0.45 + shade * 0.35)))
+                    ctx.fill(Path(ellipseIn: CGRect(x: x, y: y, width: 1.4, height: 1.4)), with: .color(Color.white.opacity(0.15 + shade * 0.45)))
+                }
+                var drift = SeededRandom(seed: 7)
+                for _ in 0..<Int(size.width * size.height / 90) {
+                    let baseX = CGFloat(drift.next() % 10_000) / 10_000 * size.width
+                    let baseY = CGFloat(drift.next() % 10_000) / 10_000 * size.height
+                    let speed = 4 + Double(drift.next() % 100) / 100 * 10
+                    let phase = Double(drift.next() % 628) / 100
+                    let lime = drift.next() % 3 != 0
+                    let x = (baseX + CGFloat(t * speed)).truncatingRemainder(dividingBy: max(size.width, 1))
+                    let y = baseY + CGFloat(sin(t * 0.8 + phase) * 3)
+                    let glow = 0.45 + 0.55 * abs(sin(t * 2 + phase))
+                    let color = lime ? Night.lime.opacity(glow) : Color.white.opacity(glow * 0.8)
+                    ctx.fill(Path(ellipseIn: CGRect(x: x, y: y, width: 2, height: 2)), with: .color(color))
                 }
             }
         }
@@ -39,12 +53,17 @@ struct InkBubble: View {
         ZStack(alignment: .topLeading) {
             InkNoise()
             Text("@\(name)")
-                .font(.headline)
-                .foregroundStyle(Theme.accent)
-                .padding(.horizontal, 14).padding(.vertical, 10)
+                .font(Night.mono(.caption))
+                .foregroundStyle(Night.lime)
+                .padding(.horizontal, 10).padding(.vertical, 5)
+                .background(Capsule().fill(Color.black.opacity(0.6)))
+                .overlay(Capsule().stroke(Night.lime, lineWidth: 1))
+                .shadow(color: Night.lime.opacity(0.4), radius: 8)
+                .padding(.horizontal, 12).padding(.vertical, 10)
         }
         .frame(maxWidth: .infinity, minHeight: height, maxHeight: height)
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(Night.line, lineWidth: 1))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Hidden bet about \(name)")
     }
@@ -79,7 +98,7 @@ struct RubToReveal<Content: View>: View {
                     }
                     .overlay(alignment: .bottomTrailing) {
                         if strokes.isEmpty {
-                            Text("Rub to uncover").font(.footnote.weight(.semibold)).foregroundStyle(Theme.sub).padding(10)
+                            Text("Rub to uncover").font(Night.mono(.caption2, .medium)).foregroundStyle(Night.muted).padding(10)
                         }
                     }
                     .highPriorityGesture(

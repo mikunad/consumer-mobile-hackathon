@@ -313,7 +313,7 @@ export const market = query({
       canDeclare: revealed && bet.status === "open" && (bet.subjectUserId === user._id || (!bet.subjectUserId && bet.createdBy === user._id)),
       ticks: ticks.sort((a, b) => a.t - b.t).map((t) => ({ t: t.t, pct: t.pct })),
       sides: await sidesFor(ctx, bet, user._id),
-      mine: mine.length ? { option: mine[0].option, amount: mine.reduce((a, s) => a + s.amount, 0) } : null,
+      mine: mine.length ? { option: mine[0].option, amount: mine.reduce((a, s) => a + s.amount, 0), payout: mine.every((s) => s.payout !== undefined) ? mine.reduce((a, s) => a + (s.payout ?? 0), 0) : undefined } : null,
       points: me.points ?? START_POINTS,
     };
   },

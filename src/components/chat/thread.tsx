@@ -10,6 +10,7 @@ import { useStableQuery } from "@/lib/use-stable-query";
 import { clock, fmt, useNow, useQueryNow } from "@/lib/time";
 import { MarketSheet } from "./market-sheet";
 import { InvisibleInk } from "./ink";
+import { LiveDot, N, Ticker, label, mono, nightOpt, nt } from "./night";
 import { Suggestions, Draft } from "./suggestions";
 import { I, SYS, optColor, t } from "./ios";
 
@@ -122,33 +123,40 @@ function Row({ who, mine, showName, last, children, faces }: { who: Who; mine: b
   );
 }
 
-function Poll({ b, mine }: { b: BetItem; mine: boolean }) {
+function Poll({ b }: { b: BetItem }) {
   const settled = b.status === "settled" || b.status === "refunded";
-  const fg = mine ? "#fff" : I.label;
-  const sub = mine ? "rgba(255,255,255,0.8)" : I.secondary;
-  const mention = mine ? "#fff" : "#0A7AFF";
+  const open = b.status === "open";
   return (
-    <View style={{ gap: 10, width: 252, paddingVertical: 2 }}>
-      <Text style={t(17, "400", fg)}>
-        {b.subject && !b.question.toLowerCase().includes("@" + b.subject.name.toLowerCase()) ? <Text style={t(17, "600", mention)}>{b.aboutMe ? "@you " : "@" + b.subject.name + " "}</Text> : null}
-        {b.question}
-      </Text>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+    <View style={{ width: 268, backgroundColor: N.card, borderRadius: 18, borderWidth: 1, borderColor: N.line, padding: 14, gap: 10 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+        {open ? <LiveDot /> : null}
+        <Text numberOfLines={1} style={label(open ? N.lime : N.mut)}>
+          {open ? "live" : settled ? "called" : b.status}
+          {b.subject ? " · about " + (b.aboutMe ? "you" : b.subject.name) : ""}
+        </Text>
+      </View>
+      <Text style={nt(18, "800")}>{b.question}</Text>
+      <View style={{ gap: 6 }}>
         {b.options.map((o, i) => {
           const won = settled && b.winningOption === i;
           const lost = settled && b.winningOption !== i;
           const picked = b.mine?.option === i;
+          const c = nightOpt(b.kind, i);
           return (
-            <View key={i} style={{ borderRadius: 99, paddingHorizontal: 14, paddingVertical: 7, backgroundColor: won ? "#22903F" : picked ? "#0A7AFF" : "#fff", opacity: lost ? 0.5 : 1 }}>
-              <Text style={[t(15, "500", won || picked ? "#fff" : "#0A7AFF"), { fontVariant: ["tabular-nums"] }]}>
-                {won ? "✓ " : ""}
-                {o} · {Math.round(b.pct[i])}%
-              </Text>
+            <View key={i} style={{ height: 36, borderRadius: 10, backgroundColor: N.raised, overflow: "hidden", justifyContent: "center", opacity: lost ? 0.45 : 1, borderWidth: picked || won ? 1 : 0, borderColor: c }}>
+              <View style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: Math.max(2, b.pct[i]) + "%", backgroundColor: c, opacity: 0.28, borderRightWidth: 2, borderRightColor: c }} />
+              <View style={{ flexDirection: "row", alignItems: "center", paddingHorizontal: 12 }}>
+                <Text numberOfLines={1} style={[nt(15, "600"), { flex: 1 }]}>
+                  {won ? "✓ " : ""}
+                  {o}
+                </Text>
+                <Ticker value={b.pct[i]} format={(n) => n + "%"} style={mono(14, c, true)} />
+              </View>
             </View>
           );
         })}
       </View>
-      <Text style={[t(12, "400", sub), { fontVariant: ["tabular-nums"] }]}>
+      <Text style={mono(11, N.mut)}>
         {b.bettors} in · {fmt(b.total)} pts ·{" "}
         {settled
           ? b.mine?.payout !== undefined
@@ -428,11 +436,7 @@ export function Thread({ token, groupId }: { token: string; groupId: Id<"groups"
           const gap = !showTime && showName ? <View style={{ height: 8 }} /> : null;
           if (it.type === "bet") {
             const inkedForMe = it.aboutMe && it.status === "open";
-            const bubble = (
-              <Bubble mine={mine} color={mine ? I.blue : I.gray} tail={last}>
-                <Poll b={it} mine={mine} />
-              </Bubble>
-            );
+            const bubble = <Poll b={it} />;
             return (
               <View key={it._id}>
                 {time}

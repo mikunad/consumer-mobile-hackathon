@@ -21,6 +21,11 @@ struct NewBetView: View {
     private let kinds = ["yesno", "overunder", "multi"]
 
     var body: some View {
+        Group { form }
+            .nightSurface()
+    }
+
+    @ViewBuilder private var form: some View {
         if let room = model.linkedRoom, let me = model.me {
             let friends = room.members.filter { $0.id != me.user._id }
             let subject = friends.first { $0.id == subjectId }
@@ -36,7 +41,7 @@ struct NewBetView: View {
                             VStack(spacing: 6) {
                                 Avatar(name: friend.name, size: 56, ring: subjectId == friend.id ? Theme.accent : nil)
                                 Text(friend.name).font(.footnote.weight(subjectId == friend.id ? .semibold : .regular))
-                                    .foregroundStyle(subjectId == friend.id ? Theme.accent : .primary)
+                                    .foregroundStyle(subjectId == friend.id ? Night.lime : Night.text)
                                     .lineLimit(1)
                             }
                             .frame(width: 68)
@@ -70,14 +75,22 @@ struct NewBetView: View {
                 case 1:
                     InsetRow {
                         Stepper(value: $line, in: 0.5...999.5, step: 1) {
-                            HStack { Text("Line"); Spacer(); Text(String(format: "%.1f", line)).monospacedDigit().foregroundStyle(Theme.sub) }
+                            HStack {
+                                Text("Line")
+                                Spacer()
+                                Text(String(format: "%.1f", line))
+                                    .font(Night.mono(.body, .semibold))
+                                    .foregroundStyle(Night.lime)
+                                    .contentTransition(.numericText())
+                                    .animation(.snappy, value: line)
+                            }
                         }
                     }
                 case 2:
                     InsetRow { Text("Side A"); Spacer(); TextField("This", text: $optionA).multilineTextAlignment(.trailing) }
                     InsetRow { Text("Side B"); Spacer(); TextField("That", text: $optionB).multilineTextAlignment(.trailing) }
                 default:
-                    InsetRow { Text("Sides"); Spacer(); Text("Yes · No").foregroundStyle(Theme.sub) }
+                    InsetRow { Text("Sides"); Spacer(); Text("Yes · No").font(Night.mono(.subheadline, .semibold)).foregroundStyle(Theme.sub) }
                 }
                 InsetRow(last: true) {
                     DatePicker("Reveal", selection: $revealAt, displayedComponents: [.hourAndMinute, .date])
@@ -87,16 +100,20 @@ struct NewBetView: View {
             CardBox {
                 HStack(spacing: 8) {
                     ForEach(0..<2, id: \.self) { i in
-                        Chip(title: labels[i], on: side == i) { side = i }
+                        Chip(title: labels[i], on: side == i, color: Night.side(i)) { side = i }
                     }
                 }
                 HStack(spacing: 8) {
                     ForEach([50, 100, 250], id: \.self) { value in
-                        Chip(title: "\(value) pts", on: amount == value) { amount = value }
+                        Chip(title: "\(value) pts", on: amount == value) { withAnimation(.snappy) { amount = value } }
                     }
                     Spacer()
                     if let points = room.members.first(where: { $0.id == me.user._id })?.points {
-                        Text("\(pts(points)) left").font(.footnote.monospacedDigit()).foregroundStyle(Theme.sub)
+                        Text("\(pts(points)) left")
+                            .font(Night.mono(.caption, .medium))
+                            .foregroundStyle(Theme.sub)
+                            .contentTransition(.numericText())
+                            .animation(.snappy, value: points)
                     }
                 }
             }
@@ -131,11 +148,11 @@ struct NewBetView: View {
                     Button { apply(idea, friends: friends) } label: {
                         InsetRow(last: index == ideas.count - 1) {
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(idea.question).font(.subheadline.weight(.semibold)).multilineTextAlignment(.leading)
+                                Text(idea.question).font(Night.question(.subheadline)).tracking(-0.2).multilineTextAlignment(.leading)
                                 if let why = idea.why { Text(why).font(.footnote).foregroundStyle(Theme.sub).multilineTextAlignment(.leading) }
                             }
                             Spacer()
-                            Image(systemName: "plus.circle").foregroundStyle(Theme.accent)
+                            Image(systemName: "plus.circle").foregroundStyle(Night.lime)
                         }
                         .foregroundStyle(.primary)
                         .contentShape(Rectangle())

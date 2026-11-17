@@ -13,7 +13,7 @@ struct RootView: View {
                 ExpandedView()
             }
         }
-        .environment(\.colorScheme, .light)
+        .environment(\.colorScheme, .dark)
         .tint(Theme.accent)
     }
 }
@@ -94,7 +94,7 @@ struct HomeView: View {
             }
             .foregroundStyle(Theme.accent)
             .frame(maxWidth: .infinity, minHeight: 64)
-            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Color.white))
+            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(Night.card))
         }
         .buttonStyle(.plain)
     }
@@ -184,7 +184,7 @@ struct CompactView: View {
                             .font(.subheadline.weight(.semibold))
                             .padding(.horizontal, 12).padding(.vertical, 7)
                             .background(Capsule().fill(Theme.accent))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.black)
                     }
                     .buttonStyle(.plain)
                 }
